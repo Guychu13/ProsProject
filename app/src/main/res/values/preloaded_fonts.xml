@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/annie_use_your_telescope</item>
+        <item>@font/architects_daughter</item>
+        <item>@font/atma_light</item>
+        <item>@font/aubrey</item>
+        <item>@font/coming_soon</item>
+        <item>@font/indie_flower</item>
+        <item>@font/mountains_of_christmas</item>
+        <item>@font/pompiere</item>
+        <item>@font/schoolbell</item>
+        <item>@font/shadows_into_light</item>
+        <item>@font/shadows_into_light_two</item>
+        <item>@font/sue_ellen_francisco</item>
+        <item>@font/swanky_and_moo_moo</item>
+        <item>@font/the_girl_next_door</item>
+    </array>
+</resources>

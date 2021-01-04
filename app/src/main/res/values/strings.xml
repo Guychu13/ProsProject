@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Pros</string>
+
+
+    <string-array name="skin_names">
+        <item>White</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Purple</item>
+        <item>Orange</item>
+        <item>Red</item>
+        <item>Black</item>
+    </string-array>
+
+    <string-array name="skin_missions">
+        <item>Your Default Skin.</item>
+        <item>Win 5 Times.</item>
+        <item>Win 10 Times.</item>
+        <item>Win Without Taking Any Goals.</item>
+        <item>Play against 3 Different Friends.</item>//אפשר לעשות כזה תעקבו אחריי באינסטגרם וללמוד
+        איך לקשר לשם//
+        <item>Win at least 5 Times with Each Skin.</item>
+        <item>Win in Under 30 seconds.</item>
+        <item>Win 30 Times.</item>
+    </string-array>
+</resources>
