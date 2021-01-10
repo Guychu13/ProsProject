@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="90dp"
         android:fontFamily="@font/coming_soon"
-        android:text="controls:"
+        android:text="@string/settingsScreen_controls"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalDown"

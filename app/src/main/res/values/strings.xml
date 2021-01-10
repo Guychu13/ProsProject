@@ -24,4 +24,24 @@
         <item>Win in Under 30 seconds.</item>
         <item>Win 30 Times.</item>
     </string-array>
+
+    <string name="loadingScreen_title">Pros.</string>
+    <string name="enemyCpuBlockWinScreen_title">Try harder NEXT TIME.</string>
+    <string name="enemyCpuBlockWinScreen_secondText">I believe in you ;)</string>
+    <string name="enemyCpuBlockWinScreen_toMainScreenButtonText">To Main Screen</string>
+    <string name="myBlockWinScreen_title">its a WIN for you.</string>
+    <string name="myBlockWinScreen_secondText">Congratulations ;)</string>
+    <string name="myBlockWinScreen_toMainScreenButtonText">To Main Screen</string>
+    <string name="usernamePickDialog_text">Pick a<br></br> Username</string>
+    <string name="gameScreen_smileyText">:)</string>
+    <string name="loginScreen_title">Log In, Or<br></br>Create a<br></br>User</string>
+    <string name="loginScreen_email">Email</string>
+    <string name="loginScreen_password">Password</string>
+    <string name="mainScreen_title">Play.</string>
+    <string name="mainScreen_usernameGreet">Hey, </string>
+    <string name="settingsScreen_title">Settings.</string>
+    <string name="settingsScreen_sound">sound:</string>
+    <string name="settingsScreen_controls">controls:</string>
+    <string name="skinsScreen_title">Skins.</string>
+
 </resources>

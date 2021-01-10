@@ -86,7 +86,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 user = snapshot.getValue(User.class);
                 userName = user.getUserName();
                 userGreet = findViewById(R.id.textView_mainScreen_usernameGreet);
-                userGreet.setText("Hello, " + userName);
+                userGreet.setText(getResources().getString(R.string.mainScreen_usernameGreet) + userName);
 
                 if(skinImageIdFromSkinsScreen != 0 && isFromSkinsScreen){
                     currentSkinImageId = skinImageIdFromSkinsScreen;

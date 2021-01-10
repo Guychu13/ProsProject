@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/coming_soon"
-        android:text="Pick a\n Username"
+        android:text="@string/usernamePickDialog_text"
         android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalLeft"
