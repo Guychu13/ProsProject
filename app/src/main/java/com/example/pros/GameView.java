@@ -92,7 +92,7 @@ public class GameView extends SurfaceView implements Runnable{
                     enemyCpuBlock.setScore(enemyCpuBlock.getScore() + 1);
                 }
                 resetGame();
-                goalMessage.getData().putString("score_string", "" + myBlock.getScore() + "-" + enemyCpuBlock.getScore());
+                goalMessage.getData().putString("score_string", myBlock.getScore() + "-" + enemyCpuBlock.getScore());
                 goalMessage.getData().putInt("my_block_score_int", myBlock.getScore());
                 goalMessage.getData().putInt("enemy_cpu_score_int", enemyCpuBlock.getScore());
                 scoreHandler.sendMessage(goalMessage);

@@ -2,28 +2,28 @@
     <string name="app_name">Pros</string>
 
 
-    <string-array name="skin_names">
-        <item>White</item>
-        <item>Blue</item>
-        <item>Green</item>
-        <item>Yellow</item>
-        <item>Purple</item>
-        <item>Orange</item>
-        <item>Red</item>
-        <item>Black</item>
-    </string-array>
+<!--    <string-array name="skin_names">-->
+<!--        <item>White</item>-->
+<!--        <item>Blue</item>-->
+<!--        <item>Green</item>-->
+<!--        <item>Yellow</item>-->
+<!--        <item>Purple</item>-->
+<!--        <item>Orange</item>-->
+<!--        <item>Red</item>-->
+<!--        <item>Black</item>-->
+<!--    </string-array>-->
 
-    <string-array name="skin_missions">
-        <item>Your Default Skin.</item>
-        <item>Win 5 Times.</item>
-        <item>Win 10 Times.</item>
-        <item>Win Without Taking Any Goals.</item>
-        <item>Play against 3 Different Friends.</item>//אפשר לעשות כזה תעקבו אחריי באינסטגרם וללמוד
-        איך לקשר לשם//
-        <item>Win at least 5 Times with Each Skin.</item>
-        <item>Win in Under 30 seconds.</item>
-        <item>Win 30 Times.</item>
-    </string-array>
+<!--    <string-array name="skin_missions">-->
+<!--        <item>Your Default Skin.</item>-->
+<!--        <item>Win 5 Times.</item>-->
+<!--        <item>Win 10 Times.</item>-->
+<!--        <item>Win Without Taking Any Goals.</item>-->
+<!--        <item>Play against 3 Different Friends.</item>//אפשר לעשות כזה תעקבו אחריי באינסטגרם וללמוד-->
+<!--        איך לקשר לשם//-->
+<!--        <item>Win at least 5 Times with Each Skin.</item>-->
+<!--        <item>Win in Under 30 seconds.</item>-->
+<!--        <item>Win 30 Times.</item>-->
+<!--    </string-array>-->
 
     <string name="loadingScreen_title">Pros.</string>
     <string name="enemyCpuBlockWinScreen_title">Try harder NEXT TIME.</string>
@@ -43,5 +43,10 @@
     <string name="settingsScreen_sound">sound:</string>
     <string name="settingsScreen_controls">controls:</string>
     <string name="skinsScreen_title">Skins.</string>
+    <string name="loginScreen_emptyErrorMessage">Please fill in both fields</string>
+    <string name="loginScreen_notExistErrorMessage">This user does not exist, try to create a user</string>
+    <string name="usernamePickDialog_emptyError">Please choose a username and a profile picture</string>
+    <string name="loginScreen_takenOrInvalidErrorMessage">The email or the password are taken or invalid. Please try again</string>
+
 
 </resources>

@@ -89,7 +89,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
         String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
         if(emailInput.matches("") || passwordInput.matches("")){
-            Toast.makeText(AfterLoadingActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
         }
         else {
             task = mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
@@ -101,7 +101,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
                                 startActivity(new Intent(AfterLoadingActivity.this, MainScreenActivity.class));
                             }
                             else {
-                                Toast.makeText(AfterLoadingActivity.this, "This user does not exist, try to create a user", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_notExistErrorMessage), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -113,7 +113,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
         final String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
         if(emailInput.matches("") || passwordInput.matches("")){
-            Toast.makeText(AfterLoadingActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
         }
         else{
             task = mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
@@ -138,7 +138,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
                                     public void onClick(View v) {
                                         usernameChosen = usernameDialogEditText.getText().toString();
                                         if(usernameChosen.matches("") || imageUri == null){
-                                            Toast.makeText(AfterLoadingActivity.this, "Please choose a username and a profile picture", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.usernamePickDialog_emptyError), Toast.LENGTH_SHORT).show();
                                         }
                                         else {
                                             usernameChosen = usernameDialogEditText.getText().toString();
@@ -155,7 +155,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
                                 });
                             }
                             else {
-                                Toast.makeText(AfterLoadingActivity.this, "The email or the password are taken or invalid. Please try again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_takenOrInvalidErrorMessage), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

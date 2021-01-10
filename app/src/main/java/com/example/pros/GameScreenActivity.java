@@ -56,8 +56,6 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         });
         frameLayout = findViewById(R.id.frameLayout_gameScreen_gameFrameLayout);
-        scoreTextView = findViewById(R.id.textView_gameScreen_scoreTextVIew);
-        scoreTextView.setText("0-0");
 
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
         gameTimerSecondsLeft = 150;
@@ -66,6 +64,8 @@ public class GameScreenActivity extends AppCompatActivity {
         myBlockScore = 0;
         enemyCpuBlockScore = 0;
 
+        scoreTextView = findViewById(R.id.textView_gameScreen_scoreTextVIew);
+        scoreTextView.setText(myBlockScore + "-" + enemyCpuBlockScore);
         smileyTextView = findViewById(R.id.textView_gameScreen_smileyTextVIew);
         didOvertime = false;
     }
