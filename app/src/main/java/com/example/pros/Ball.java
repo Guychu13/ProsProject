@@ -7,6 +7,7 @@ public class Ball extends GameObject {
 
     private int lastPlayerTouched;
     private int xSpeed, ySpeed;
+
     public Ball(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
         super(bitmap, xPos, yPos, windowWidth, windowHeight);
         lastPlayerTouched = 0;
@@ -38,23 +39,21 @@ public class Ball extends GameObject {
         this.ySpeed = ySpeed;
     }
 
-//    @Override
+    //    @Override
     public void move() {
 
-        ballIfCollisionSideBoarders(windowWidth, windowHeight);
-        for(int i = 0; i < Math.abs(xSpeed); i++){//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
-            if(xSpeed > 0 && xPos + bitmap.getWidth() < windowWidth){
+        checkIfCollisionSideBoarders(windowWidth, windowHeight);
+        for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
+            if (xSpeed > 0 && xPos + bitmap.getWidth() < windowWidth) {
                 xPos += 1;
-            }
-            else if(xSpeed < 0 && xPos > 0){
+            } else if (xSpeed < 0 && xPos > 0) {
                 xPos -= 1;
             }
         }
-        for(int i = 0; i < Math.abs(ySpeed); i++){
-            if(ySpeed > 0 && yPos + bitmap.getHeight() < windowHeight){
+        for (int i = 0; i < Math.abs(ySpeed); i++) {
+            if (ySpeed > 0 && yPos + bitmap.getHeight() < windowHeight) {
                 yPos += 1;
-            }
-            else if(ySpeed < 0 && yPos > 0){
+            } else if (ySpeed < 0 && yPos > 0) {
                 yPos -= 1;
             }
         }
@@ -76,12 +75,12 @@ public class Ball extends GameObject {
         return false;
     }
 
-    public void ballIfCollisionSideBoarders(int boardWidth, int boardHeight) {
+    public void checkIfCollisionSideBoarders(int boardWidth, int boardHeight) {
 
-        if(xPos + bitmap.getWidth() >= boardWidth && xSpeed > 0){
+        if (xPos + bitmap.getWidth() >= boardWidth && xSpeed > 0) {
             xSpeed *= -1;
         }
-        if(xPos <= 0 && xSpeed < 0){
+        if (xPos <= 0 && xSpeed < 0) {
             xSpeed *= -1;
         }
 //        if(yPos + bitmap.getHeight() >= boardHeight || yPos <= 0){
@@ -89,11 +88,11 @@ public class Ball extends GameObject {
 //        }
     }
 
-    public int whoScored(){
-        if(yPos + bitmap.getHeight() >= windowHeight){
+    public int checkWhoScored() {
+        if (yPos + bitmap.getHeight() >= windowHeight) {
             return 2;
         }
-        if(yPos <= 0){
+        if (yPos <= 0) {
             return 1;
         }
         return 0;

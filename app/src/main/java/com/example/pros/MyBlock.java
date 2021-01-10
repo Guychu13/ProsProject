@@ -8,6 +8,7 @@ public class MyBlock extends GameObject {
     private float xTarget;
     private int score;
     private int xSpeed;
+
     public MyBlock(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
         super(bitmap, xPos, yPos, windowWidth, windowHeight);
         this.score = 0;
@@ -16,15 +17,15 @@ public class MyBlock extends GameObject {
 
     public void move() {
         if (xPos < xTarget) {
-            for(int i = 0; i < Math.abs(xSpeed); i++){//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
-                if(xPos + bitmap.getWidth() < windowWidth){
+            for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
+                if (xPos + bitmap.getWidth() < windowWidth) {
                     xPos += 1;
                 }
             }
         }
         if (xPos > xTarget) {
-            for(int i = 0; i < Math.abs(xSpeed); i++){//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
-                if(xPos > 0){
+            for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
+                if (xPos > 0) {
                     xPos -= 1;
                 }
             }
@@ -47,7 +48,7 @@ public class MyBlock extends GameObject {
         return false;
     }
 
-    public int getCollisionXLocation(GameObject other){
+    public int getCollisionXLocation(GameObject other) {
         int left = Math.max(xPos, other.xPos);
         int right = Math.min(xPos + bitmap.getWidth(), other.xPos + other.bitmap.getWidth());
         int top = Math.max(yPos, other.yPos);
@@ -65,15 +66,13 @@ public class MyBlock extends GameObject {
         return 0;
     }
 
-    public String getSideCollisionWithBall(int xCollision){
+    public String getSideCollisionWithBall(int xCollision) {
 
-        if(xPos <= xCollision && xCollision < (xPos + bitmap.getWidth()) / 2){
+        if (xPos <= xCollision && xCollision < (xPos + bitmap.getWidth()) / 2) {
             return "left";
-        }
-        else if((xPos + bitmap.getWidth()) / 2 <= xCollision && xCollision <= xPos + bitmap.getWidth()){
+        } else if ((xPos + bitmap.getWidth()) / 2 <= xCollision && xCollision <= xPos + bitmap.getWidth()) {
             return "right";
-        }
-        else{
+        } else {
             return "none";
         }
     }

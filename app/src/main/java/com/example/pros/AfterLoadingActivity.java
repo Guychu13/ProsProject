@@ -51,7 +51,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
     private ImageButton addImageButton;
     private Dialog usernameDialog;
     private EditText usernameDialogEditText;
-    private int PICK_IMAGE =100;
+    private int PICK_IMAGE = 100;
     private Uri imageUri;
 
     @Override
@@ -65,7 +65,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         imageUri = null;//בשביל התנאי בדיאלוג שזה לא יהיה נל
-        if(currentUser != null) {
+        if (currentUser != null) {
             startActivity(new Intent(AfterLoadingActivity.this, MainScreenActivity.class));
         }
         emailEditText = findViewById(R.id.editText_loginScreen_email);
@@ -85,13 +85,12 @@ public class AfterLoadingActivity extends AppCompatActivity {
     }
 
 
-    public void onLogIn(View view){
+    public void onLogIn(View view) {
         String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
-        if(emailInput.matches("") || passwordInput.matches("")){
+        if (emailInput.matches("") || passwordInput.matches("")) {
             Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             task = mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
             task.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -99,8 +98,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 finish();
                                 startActivity(new Intent(AfterLoadingActivity.this, MainScreenActivity.class));
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_notExistErrorMessage), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -109,17 +107,16 @@ public class AfterLoadingActivity extends AppCompatActivity {
         }
     }
 
-    public void onRegister(View view){
+    public void onRegister(View view) {
         final String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
-        if(emailInput.matches("") || passwordInput.matches("")){
+        if (emailInput.matches("") || passwordInput.matches("")) {
             Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             task = mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
             task.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task){
+                        public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 usernameDialog.show();
                                 usernameDialog.setCancelable(false);
@@ -137,10 +134,9 @@ public class AfterLoadingActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         usernameChosen = usernameDialogEditText.getText().toString();
-                                        if(usernameChosen.matches("") || imageUri == null){
+                                        if (usernameChosen.matches("") || imageUri == null) {
                                             Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.usernamePickDialog_emptyError), Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
+                                        } else {
                                             usernameChosen = usernameDialogEditText.getText().toString();
                                             Intent i = new Intent(AfterLoadingActivity.this, MainScreenActivity.class);
                                             User user = new User(usernameChosen, 0, 1, R.drawable.skin_basic, true);
@@ -153,19 +149,13 @@ public class AfterLoadingActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_takenOrInvalidErrorMessage), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
             );
         }
-    }
-
-    private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
     }
 
     @Override
@@ -176,12 +166,17 @@ public class AfterLoadingActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadPhotoToFirebase(final String id){
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    private void uploadPhotoToFirebase(final String id) {
 
         FirebaseStorage.getInstance().getReference().child(id).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FirebaseStorage.getInstance().getReference().child(id).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {

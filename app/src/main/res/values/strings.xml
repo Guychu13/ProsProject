@@ -34,6 +34,7 @@
     <string name="myBlockWinScreen_toMainScreenButtonText">To Main Screen</string>
     <string name="usernamePickDialog_text">Pick a<br></br> Username</string>
     <string name="gameScreen_smileyText">:)</string>
+    <string name="gameScreen_overtimeText">overtime</string>
     <string name="loginScreen_title">Log In, Or<br></br>Create a<br></br>User</string>
     <string name="loginScreen_email">Email</string>
     <string name="loginScreen_password">Password</string>

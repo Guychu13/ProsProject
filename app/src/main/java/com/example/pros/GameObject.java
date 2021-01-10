@@ -17,9 +17,9 @@ public abstract class GameObject {
         this.windowHeight = windowHeight;
     }
 
-    public void draw(Canvas canvas){
+    public void draw(Canvas canvas) {
         Paint paint = new Paint();
-        if(canvas != null){
+        if (canvas != null) {
             canvas.drawBitmap(bitmap, xPos, yPos, paint);
         }
     }

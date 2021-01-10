@@ -13,6 +13,7 @@ import java.util.TimerTask;
 public class MyBlockWinScreenActivity extends AppCompatActivity {
 
     private Button toMainScreenButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

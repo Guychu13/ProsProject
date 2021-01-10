@@ -41,7 +41,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
         });
     }
 
-    public void onLogOut(View view){
+    public void onLogOut(View view) {
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
         startActivity(new Intent(SettingsScreenActivity.this, AfterLoadingActivity.class));

@@ -30,8 +30,9 @@ public class GameScreenActivity extends AppCompatActivity {
     private int gameTimerSecondsLeft;
     private int timerPauseDurationMilliSecs;
     private int myBlockScore, enemyCpuBlockScore;
-    boolean didOvertime;
+    private boolean didOvertime;
     private boolean appeared;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
         gameTimerSecondsLeft = 150;
-        timerTextView.setText("" + gameTimerSecondsLeft / 60 + ":" + gameTimerSecondsLeft % 60);
+        timerTextView.setText(gameTimerSecondsLeft / 60 + ":" + gameTimerSecondsLeft % 60);
         timerPauseDurationMilliSecs = 0;
         myBlockScore = 0;
         enemyCpuBlockScore = 0;
@@ -77,7 +78,7 @@ public class GameScreenActivity extends AppCompatActivity {
         windowHeight = frameLayout.getHeight();
         windowWidth = frameLayout.getWidth();
         gameView = new GameView(this, windowHeight, windowWidth, userCurrentSkinImageId, new ScoreHandler());
-        new Handler().postDelayed(new GameTimer(),2000);
+        new Handler().postDelayed(new GameTimer(), 2000);
         frameLayout.addView(gameView);
     }
 
@@ -108,46 +109,41 @@ public class GameScreenActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-                if(timerPauseDurationMilliSecs != 0){
-                    new Handler().postDelayed(new GameTimer(), timerPauseDurationMilliSecs);
-                    timerPauseDurationMilliSecs = 0;
+            if (timerPauseDurationMilliSecs != 0) {
+                new Handler().postDelayed(new GameTimer(), timerPauseDurationMilliSecs);
+                timerPauseDurationMilliSecs = 0;
+            } else {
+                new Handler().postDelayed(new GameTimer(), 1000);
+                gameTimerSecondsLeft -= 1;
+                if (gameTimerSecondsLeft % 60 < 10) {
+                    timerTextView.setText(gameTimerSecondsLeft / 60 + ":0" + gameTimerSecondsLeft % 60);
+                } else {
+                    timerTextView.setText(gameTimerSecondsLeft / 60 + ":" + gameTimerSecondsLeft % 60);
                 }
-                else{
-                    new Handler().postDelayed(new GameTimer(),1000);
-                    gameTimerSecondsLeft -=1;
-                    if(gameTimerSecondsLeft % 60 < 10){
-                        timerTextView.setText("" + gameTimerSecondsLeft / 60 + ":0" + gameTimerSecondsLeft % 60);
-                    }
-                    else{
-                        timerTextView.setText("" + gameTimerSecondsLeft / 60 + ":" + gameTimerSecondsLeft % 60);
-                    }
-                    if(gameTimerSecondsLeft <= 0){
+                if (gameTimerSecondsLeft <= 0) {
 
-                        if(myBlockScore > enemyCpuBlockScore && !appeared){
-                            gameView.setGameOver();
-                            startActivity(new Intent(GameScreenActivity.this, MyBlockWinScreenActivity.class));
-                            appeared = true;
+                    if (myBlockScore > enemyCpuBlockScore && !appeared) {
+                        gameView.setGameOver();
+                        startActivity(new Intent(GameScreenActivity.this, MyBlockWinScreenActivity.class));
+                        appeared = true;
 
-                        }
-                        else if(myBlockScore < enemyCpuBlockScore && !appeared){
+                    } else if (myBlockScore < enemyCpuBlockScore && !appeared) {
+                        gameView.setGameOver();
+                        startActivity(new Intent(GameScreenActivity.this, EnemyCpuBlockWinScreenActivity.class));
+                        appeared = true;
+                    } else {
+                        if (didOvertime) {
                             gameView.setGameOver();
-                            startActivity(new Intent(GameScreenActivity.this, EnemyCpuBlockWinScreenActivity.class));
-                            appeared = true;
-                        }
-                        else{
-                            if(didOvertime){
-                                gameView.setGameOver();
 //                            new Handler().postDelayed(new GameTimer(),1000);
-                            }
-                            else{
-                                gameTimerSecondsLeft = 30;
-                                smileyTextView.setText("overtime");
-                                didOvertime = true;
-                                new Handler().postDelayed(new GameTimer(),0);
-                            }
+                        } else {
+                            gameTimerSecondsLeft = 30;
+                            smileyTextView.setText(getResources().getString(R.string.gameScreen_overtimeText));
+                            didOvertime = true;
+                            new Handler().postDelayed(new GameTimer(), 0);
                         }
                     }
                 }
+            }
 //            }
         }
     }

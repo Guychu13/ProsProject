@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 public abstract class Block extends GameObject {
 
-    float xTarget;
+    public float xTarget;
 
     public Block(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
         super(bitmap, xPos, yPos, windowWidth, windowHeight);
@@ -28,7 +28,7 @@ public abstract class Block extends GameObject {
         return false;
     }
 
-    public int[] getCollisionLocation(GameObject other){
+    public int[] getCollisionLocation(GameObject other) {
         int left = Math.max(xPos, other.xPos);
         int right = Math.min(xPos + bitmap.getWidth(), other.xPos + other.bitmap.getWidth());
         int top = Math.max(yPos, other.yPos);
@@ -37,13 +37,13 @@ public abstract class Block extends GameObject {
             for (int col = top; col < bottom; col++) {
                 if (bitmap.getPixel(row - xPos, col - yPos) != Color.TRANSPARENT &&
                         other.bitmap.getPixel(row - other.xPos, col - other.yPos) != Color.TRANSPARENT) {
-                    int[] arr = {row, col};
-                    return arr;
+
+                    return new int[]{row, col};
                 }
             }
         }
-        int [] arr = {0,0};
-        return arr;
+
+        return new int[] {0, 0};
     }
 
     public void goToTarget(float x, float y) {

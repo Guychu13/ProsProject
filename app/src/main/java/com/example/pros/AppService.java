@@ -18,16 +18,14 @@ public class AppService extends Service {
         return null;
     }
 
-    public void onCreate(){
+    public void onCreate() {
         Random rg = new Random();
         int num = rg.nextInt(3);
-        if(num == 0){
+        if (num == 0) {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_dreams);
-        }
-        else if(num == 1){
+        } else if (num == 1) {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop1);
-        }
-        else{
+        } else {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
         }
         mediaPlayer.setLooping(false);

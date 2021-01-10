@@ -13,14 +13,14 @@ import java.util.ArrayList;
 public class SkinsScreenActivity extends AppCompatActivity {
 
     private ArrayList<Skin> allSkins;
-    private int images[] = {R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button,
-            R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button};
+//    private int images[] = {R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button,
+//            R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button};
     private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skins_screen);
-
 
 
         Skin basic = new Skin("Basic", "Your Default Skin.", true, true, R.drawable.skin_basic, 0);

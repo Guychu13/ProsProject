@@ -34,6 +34,7 @@ public class MainScreenActivity extends AppCompatActivity {
     private int currentSkinImageId;
 
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +68,9 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toGameIntent = new Intent(MainScreenActivity.this, GameScreenActivity.class);
-                if(skinImageIdFromSkinsScreen == 0){
+                if (skinImageIdFromSkinsScreen == 0) {
                     toGameIntent.putExtra("chosenSkinImageId", R.drawable.skin_basic);
-                }
-                else{
+                } else {
                     toGameIntent.putExtra("chosenSkinImageId", skinImageIdFromSkinsScreen);
                 }
                 startActivity(toGameIntent);
@@ -88,7 +88,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 userGreet = findViewById(R.id.textView_mainScreen_usernameGreet);
                 userGreet.setText(getResources().getString(R.string.mainScreen_usernameGreet) + userName);
 
-                if(skinImageIdFromSkinsScreen != 0 && isFromSkinsScreen){
+                if (skinImageIdFromSkinsScreen != 0 && isFromSkinsScreen) {
                     currentSkinImageId = skinImageIdFromSkinsScreen;
                     user.setChosenSkinImageId(currentSkinImageId);
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -101,22 +101,22 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-          }
+            }
         });
     }
 
-    public void onSettingsClick(View view){
+    public void onSettingsClick(View view) {
         startActivity(new Intent(MainScreenActivity.this, SettingsScreenActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-    }
-
-    @Override
-    public void onBackPressed() {
 
     }
 

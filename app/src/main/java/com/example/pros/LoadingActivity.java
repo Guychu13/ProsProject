@@ -16,7 +16,8 @@ import java.util.TimerTask;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    Intent intent;
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
