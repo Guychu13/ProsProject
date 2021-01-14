@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -50,7 +49,7 @@ public class SkinsScreenActivity extends AppCompatActivity {
         allSkins.add(master);
 
         recyclerView = findViewById(R.id.recyclerView_skinsScreen);
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, allSkins);
+        SkinsRecyclerAdapter recyclerAdapter = new SkinsRecyclerAdapter(this, allSkins);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 

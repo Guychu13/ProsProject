@@ -1,23 +1,14 @@
 package com.example.pros;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.Manifest;
-import android.app.*;
 import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -33,12 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class AfterLoadingActivity extends AppCompatActivity {
+public class LoginSignUpActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -58,6 +44,8 @@ public class AfterLoadingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_register_screen);
+        TextView title = findViewById(R.id.textView_loginScreen_title);
+        title.setText("Log In,\nOr Create a\nUser");
         usernameDialog = new Dialog(this);
         usernameDialog.setContentView(R.layout.dialog_register_username_pick);
         usernameDialogEditText = usernameDialog.findViewById(R.id.editText_usernamePickDialog_username);
@@ -66,7 +54,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         imageUri = null;//בשביל התנאי בדיאלוג שזה לא יהיה נל
         if (currentUser != null) {
-            startActivity(new Intent(AfterLoadingActivity.this, MainScreenActivity.class));
+            startActivity(new Intent(LoginSignUpActivity.this, MainScreenActivity.class));
         }
         emailEditText = findViewById(R.id.editText_loginScreen_email);
         passwordEditText = findViewById(R.id.editText_loginScreen_password);
@@ -89,7 +77,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
         String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
         if (emailInput.matches("") || passwordInput.matches("")) {
-            Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginSignUpActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
         } else {
             task = mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
             task.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -97,9 +85,9 @@ public class AfterLoadingActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 finish();
-                                startActivity(new Intent(AfterLoadingActivity.this, MainScreenActivity.class));
+                                startActivity(new Intent(LoginSignUpActivity.this, MainScreenActivity.class));
                             } else {
-                                Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_notExistErrorMessage), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginSignUpActivity.this, getResources().getString(R.string.loginScreen_notExistErrorMessage), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -111,7 +99,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
         final String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
         if (emailInput.matches("") || passwordInput.matches("")) {
-            Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginSignUpActivity.this, getResources().getString(R.string.loginScreen_emptyErrorMessage), Toast.LENGTH_SHORT).show();
         } else {
             task = mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
             task.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -119,6 +107,8 @@ public class AfterLoadingActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 usernameDialog.show();
+                                TextView titleDialog = usernameDialog.findViewById(R.id.textView_usernamePickDialog_title);
+                                titleDialog.setText("Pick a\nUsername");
                                 usernameDialog.setCancelable(false);
                                 usernameDialog.setCanceledOnTouchOutside(false);
 
@@ -135,10 +125,10 @@ public class AfterLoadingActivity extends AppCompatActivity {
                                     public void onClick(View v) {
                                         usernameChosen = usernameDialogEditText.getText().toString();
                                         if (usernameChosen.matches("") || imageUri == null) {
-                                            Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.usernamePickDialog_emptyError), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginSignUpActivity.this, getResources().getString(R.string.usernamePickDialog_emptyError), Toast.LENGTH_SHORT).show();
                                         } else {
                                             usernameChosen = usernameDialogEditText.getText().toString();
-                                            Intent i = new Intent(AfterLoadingActivity.this, MainScreenActivity.class);
+                                            Intent i = new Intent(LoginSignUpActivity.this, MainScreenActivity.class);
                                             User user = new User(usernameChosen, 0, 1, R.drawable.skin_basic, true);
                                             currentUser = mAuth.getCurrentUser();
                                             uploadPhotoToFirebase(currentUser.getUid());
@@ -150,7 +140,7 @@ public class AfterLoadingActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(AfterLoadingActivity.this, getResources().getString(R.string.loginScreen_takenOrInvalidErrorMessage), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginSignUpActivity.this, getResources().getString(R.string.loginScreen_takenOrInvalidErrorMessage), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

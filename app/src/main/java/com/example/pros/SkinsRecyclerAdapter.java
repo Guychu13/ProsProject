@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Skin> skins;
 
-    public RecyclerAdapter(Context context, ArrayList<Skin> skins) {
+    public SkinsRecyclerAdapter(Context context, ArrayList<Skin> skins) {
         this.context = context;
         this.skins = skins;
     }

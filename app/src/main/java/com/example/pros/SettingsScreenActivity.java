@@ -3,7 +3,6 @@ package com.example.pros;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,7 +26,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 musicOffButton.setForeground(getDrawable(R.drawable.pressed_off_music_button));
                 musicOnButton.setForeground(getDrawable(R.drawable.unpressed_on_music_button));
-                stopService(new Intent(getApplicationContext(), AppService.class));
+                stopService(new Intent(getApplicationContext(), AppMusicService.class));
             }
         });
         musicOnButton = findViewById(R.id.imageButton_settingsScreen_musicOn);
@@ -36,7 +35,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 musicOffButton.setForeground(getDrawable(R.drawable.unpressed_off_music_button));
                 musicOnButton.setForeground(getDrawable(R.drawable.pressed_on_music_button));
-                startService(new Intent(getApplicationContext(), AppService.class));
+                startService(new Intent(getApplicationContext(), AppMusicService.class));
             }
         });
     }
@@ -44,7 +43,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
     public void onLogOut(View view) {
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
-        startActivity(new Intent(SettingsScreenActivity.this, AfterLoadingActivity.class));
+        startActivity(new Intent(SettingsScreenActivity.this, LoginSignUpActivity.class));
     }
 
 

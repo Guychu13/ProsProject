@@ -24,22 +24,12 @@ public abstract class GameObject {
         }
     }
 
-//    public abstract void move();
-
     public Bitmap getBitmap() {
         return bitmap;
     }
 
     public int getXPos() {
         return xPos;
-    }
-
-    public int getYPos() {
-        return yPos;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
     }
 
     public void setXPos(int xPos) {
@@ -56,21 +46,5 @@ public abstract class GameObject {
 
     public int getWindowHeight() {
         return windowHeight;
-    }
-
-    public void setxPos(int xPos) {
-        this.xPos = xPos;
-    }
-
-    public void setyPos(int yPos) {
-        this.yPos = yPos;
-    }
-
-    public void setWindowWidth(int windowWidth) {
-        this.windowWidth = windowWidth;
-    }
-
-    public void setWindowHeight(int windowHeight) {
-        this.windowHeight = windowHeight;
     }
 }

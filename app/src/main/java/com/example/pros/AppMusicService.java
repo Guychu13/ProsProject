@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Random;
 
-public class AppService extends Service {
+public class AppMusicService extends Service {
     private MediaPlayer mediaPlayer;
 
     @Nullable

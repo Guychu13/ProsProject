@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EnemyCpuBlockWinScreenActivity"
+    tools:context=".WinAndLossScreenActivity"
     android:background="@color/black"
     android:layoutDirection="ltr">
 
@@ -37,13 +37,13 @@
         app:layout_constraintGuide_percent="0.99" />
 
     <TextView
-        android:id="@+id/textView_enemyCpuBlockWinScreen_title"
+        android:id="@+id/textView_WinAndLossScreen_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/coming_soon"
         android:layoutDirection="ltr"
-        android:text="@string/enemyCpuBlockWinScreen_title"
+        android:text="WinnerTitleText"
         android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalDown"
@@ -53,31 +53,32 @@
         app:layout_constraintVertical_bias="0.2" />
 
     <TextView
-        android:id="@+id/textView_enemyCpuBlockWinScreen_secondText"
+        android:id="@+id/textView_WinAndLossScreen_secondText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/coming_soon"
         android:paddingTop="5dp"
-        android:text="@string/enemyCpuBlockWinScreen_secondText"
+        android:text="second Text"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView_enemyCpuBlockWinScreen_title"
-        app:layout_constraintStart_toStartOf="@+id/textView_enemyCpuBlockWinScreen_title"
-        app:layout_constraintTop_toBottomOf="@+id/textView_enemyCpuBlockWinScreen_title" />
+        app:layout_constraintEnd_toEndOf="@+id/textView_WinAndLossScreen_title"
+        app:layout_constraintStart_toStartOf="@+id/textView_WinAndLossScreen_title"
+        app:layout_constraintTop_toBottomOf="@+id/textView_WinAndLossScreen_title" />
 
     <Button
-        android:id="@+id/button_enemyCpuBlockWinScreen_toMainScreenButton"
+        android:id="@+id/button_WinAndLossScreen_toMainScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="255dp"
+        android:layout_marginTop="252dp"
         android:background="#000000"
         android:fontFamily="@font/coming_soon"
         android:shadowColor="#F3F3F3"
-        android:text="@string/enemyCpuBlockWinScreen_toMainScreenButtonText"
+        android:text="Button Text"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRight"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView_enemyCpuBlockWinScreen_secondText" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_WinAndLossScreen_secondText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

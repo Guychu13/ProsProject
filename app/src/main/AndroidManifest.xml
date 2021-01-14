@@ -16,8 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnemyCpuBlockWinScreenActivity"></activity>
-        <activity android:name=".MyBlockWinScreenActivity" />
+        <activity android:name=".WinAndLossScreenActivity" />
         <activity android:name=".GameScreenActivity" />
         <activity
             android:name=".LoadingActivity"
@@ -30,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AfterLoadingActivity"
+            android:name=".LoginSignUpActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -46,7 +45,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
-        <service android:name=".AppService" />
+        <service android:name=".AppMusicService" />
 
         <meta-data
             android:name="preloaded_fonts"

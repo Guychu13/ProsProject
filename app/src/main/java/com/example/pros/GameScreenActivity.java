@@ -59,7 +59,7 @@ public class GameScreenActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.frameLayout_gameScreen_gameFrameLayout);
 
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
-        gameTimerSecondsLeft = 150;
+        gameTimerSecondsLeft = 60;
         timerTextView.setText(gameTimerSecondsLeft / 60 + ":" + gameTimerSecondsLeft % 60);
         timerPauseDurationMilliSecs = 0;
         myBlockScore = 0;
@@ -124,12 +124,16 @@ public class GameScreenActivity extends AppCompatActivity {
 
                     if (myBlockScore > enemyCpuBlockScore && !appeared) {
                         gameView.setGameOver();
-                        startActivity(new Intent(GameScreenActivity.this, MyBlockWinScreenActivity.class));
+                        Intent intent = new Intent(GameScreenActivity.this, WinAndLossScreenActivity.class);
+                        intent.putExtra("winner", "myBlock");
+                        startActivity(intent);
                         appeared = true;
 
                     } else if (myBlockScore < enemyCpuBlockScore && !appeared) {
                         gameView.setGameOver();
-                        startActivity(new Intent(GameScreenActivity.this, EnemyCpuBlockWinScreenActivity.class));
+                        Intent intent = new Intent(GameScreenActivity.this, WinAndLossScreenActivity.class);
+                        intent.putExtra("winner", "enemyCpuBlock");
+                        startActivity(intent);
                         appeared = true;
                     } else {
                         if (didOvertime) {
