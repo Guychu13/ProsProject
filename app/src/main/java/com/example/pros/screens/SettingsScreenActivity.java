@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.pros.AppMusicService;
+import com.example.pros.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsScreenActivity extends AppCompatActivity {

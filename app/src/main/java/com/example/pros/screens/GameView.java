@@ -1,21 +1,21 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.example.pros.model.Background;
+import com.example.pros.model.Ball;
+import com.example.pros.model.EnemyCpuBlock;
+import com.example.pros.model.MyBlock;
+import com.example.pros.R;
+
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
 
 public class GameView extends SurfaceView implements Runnable {
 
@@ -122,7 +122,7 @@ public class GameView extends SurfaceView implements Runnable {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
             case MotionEvent.ACTION_UP:
-                myBlock.goToTarget(myBlock.xPos, myBlock.yPos);
+                myBlock.goToTarget(myBlock.getXPos(), myBlock.getYPos());
                 break;
         }
         return true;

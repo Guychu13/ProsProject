@@ -1,6 +1,8 @@
-package com.example.pros;
+package com.example.pros.model;
 
 import android.graphics.Bitmap;
+
+import com.example.pros.model.GameObject;
 
 public class GoalCorner extends GameObject {
 

@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pros.R;
+import com.example.pros.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,13 +34,14 @@ public class LoginSignUpActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Task<AuthResult> task;
 
-    private String usernameChosen;
+    private String userNameChosen;
     private ImageButton chooseDialogButton;
     private ImageButton addImageButton;
     private Dialog usernameDialog;
     private EditText usernameDialogEditText;
     private int PICK_IMAGE = 100;
     private Uri imageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class LoginSignUpActivity extends AppCompatActivity {
         chooseDialogButton = usernameDialog.findViewById(R.id.imageButton_usernamePickDialog_choose);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+//        mAuth.signOut();
         imageUri = null;//בשביל התנאי בדיאלוג שזה לא יהיה נל
         if (currentUser != null) {
             startActivity(new Intent(LoginSignUpActivity.this, MainScreenActivity.class));
@@ -123,18 +127,24 @@ public class LoginSignUpActivity extends AppCompatActivity {
                                 chooseDialogButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        usernameChosen = usernameDialogEditText.getText().toString();
-                                        if (usernameChosen.matches("") || imageUri == null) {
+                                        userNameChosen = usernameDialogEditText.getText().toString();
+                                        if (userNameChosen.matches("") || imageUri == null) {
                                             Toast.makeText(LoginSignUpActivity.this, getResources().getString(R.string.usernamePickDialog_emptyError), Toast.LENGTH_SHORT).show();
                                         } else {
-                                            usernameChosen = usernameDialogEditText.getText().toString();
+                                            userNameChosen = usernameDialogEditText.getText().toString();
                                             Intent i = new Intent(LoginSignUpActivity.this, MainScreenActivity.class);
-                                            User user = new User(usernameChosen, 0, 1, R.drawable.skin_basic, true);
-                                            currentUser = mAuth.getCurrentUser();
-                                            uploadPhotoToFirebase(currentUser.getUid());
-                                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                            DatabaseReference myRef = database.getReference().child("Pros").child("users").child(currentUser.getUid());
-                                            myRef.setValue(user);
+                                            User.getInstance().createNewUser(userNameChosen);
+//                                            User.getInstance().setUserName(userNameChosen);
+//                                            User.getInstance().setChosenSkinImageId(R.drawable.skin_basic);
+//                                            User.getInstance().setMusicOn(true);
+//                                            User.getInstance().setNumOfSkins(1);
+//                                            User.getInstance().setNumOfWins(0);
+//                                            currentUser = mAuth.getCurrentUser();
+                                            uploadPhotoToFirebase(FirebaseAuth.getInstance().getUid());
+//                                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                                            DatabaseReference myRef = database.getReference().child("Pros").child("users").child(currentUser.getUid());
+//                                            User.getInstance().setFirebaseUserId(currentUser.getUid());
+//                                            myRef.setValue(User.getInstance());
                                             startActivity(i);
                                         }
                                     }

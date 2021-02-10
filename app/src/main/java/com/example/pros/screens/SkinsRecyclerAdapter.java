@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pros.R;
+import com.example.pros.model.Skin;
 
 import java.util.ArrayList;
 

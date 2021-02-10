@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.model;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -38,6 +38,10 @@ public abstract class GameObject {
 
     public void setYPos(int yPos) {
         this.yPos = yPos;
+    }
+
+    public int getYPos() {
+        return yPos;
     }
 
     public int getWindowWidth() {

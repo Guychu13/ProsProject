@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.pros.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

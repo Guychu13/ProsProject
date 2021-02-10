@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.os.Message;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.pros.R;
+import com.example.pros.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.pros.R;
+import com.example.pros.model.Skin;
 
 import java.util.ArrayList;
 

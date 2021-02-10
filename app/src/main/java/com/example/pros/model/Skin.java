@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.model;
 
 public class Skin {
 

@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.model;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -32,15 +32,15 @@ public class MyBlock extends GameObject {
         }
     }
 
-    public boolean checkCollision(GameObject other) {//לנסות להחזיר כאן מערך שמחזיר את האיקס וואי של מיקום הפגיעה ואז לעשות במהלך המשחק בדיקה אצל הבלוק אם הכדור פגע בצד הימני או השמאלי שלו ואז שהכדור יזוז בהתאם
-        int left = Math.max(xPos, other.xPos);
-        int right = Math.min(xPos + bitmap.getWidth(), other.xPos + other.bitmap.getWidth());
-        int top = Math.max(yPos, other.yPos);
-        int bottom = Math.min(yPos + bitmap.getHeight(), other.yPos + other.bitmap.getHeight());
+    public boolean checkCollision(GameObject other) {
+        int left = Math.max(xPos, other.getXPos());
+        int right = Math.min(xPos + bitmap.getWidth(), other.getXPos() + other.getBitmap().getWidth());
+        int top = Math.max(yPos, other.getYPos());
+        int bottom = Math.min(yPos + bitmap.getHeight(), other.getYPos() + other.getBitmap().getHeight());
         for (int row = left; row < right; row++) {
             for (int col = top; col < bottom; col++) {
                 if (bitmap.getPixel(row - xPos, col - yPos) != Color.TRANSPARENT &&
-                        other.bitmap.getPixel(row - other.xPos, col - other.yPos) != Color.TRANSPARENT) {
+                        other.getBitmap().getPixel(row - other.getXPos(), col - other.getYPos()) != Color.TRANSPARENT) {
                     return true;
                 }
             }
@@ -49,17 +49,15 @@ public class MyBlock extends GameObject {
     }
 
     public int getCollisionXLocation(GameObject other) {
-        int left = Math.max(xPos, other.xPos);
-        int right = Math.min(xPos + bitmap.getWidth(), other.xPos + other.bitmap.getWidth());
-        int top = Math.max(yPos, other.yPos);
-        int bottom = Math.min(yPos + bitmap.getHeight(), other.yPos + other.bitmap.getHeight());
+        int left = Math.max(xPos, other.getXPos());
+        int right = Math.min(xPos + bitmap.getWidth(), other.getXPos() + other.getBitmap().getWidth());
+        int top = Math.max(yPos, other.getYPos());
+        int bottom = Math.min(yPos + bitmap.getHeight(), other.getYPos() + other.getBitmap().getHeight());
         for (int row = left; row < right; row++) {
             for (int col = top; col < bottom; col++) {
                 if (bitmap.getPixel(row - xPos, col - yPos) != Color.TRANSPARENT &&
-                        other.bitmap.getPixel(row - other.xPos, col - other.yPos) != Color.TRANSPARENT) {
+                        other.getBitmap().getPixel(row - other.getXPos(), col - other.getYPos()) != Color.TRANSPARENT) {
                     return row;
-//                    int[] arr = {row, col};
-//                    return arr;
                 }
             }
         }

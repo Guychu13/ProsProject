@@ -1,7 +1,9 @@
-package com.example.pros;
+package com.example.pros.model;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+
+import com.example.pros.model.GameObject;
 
 public abstract class Block extends GameObject {
 

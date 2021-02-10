@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.model;
 
 import android.graphics.Bitmap;
 

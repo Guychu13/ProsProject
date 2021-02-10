@@ -16,10 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WinAndLossScreenActivity" />
-        <activity android:name=".GameScreenActivity" />
+        <activity android:name=".screens.WinAndLossScreenActivity" />
+        <activity android:name=".screens.GameScreenActivity" />
         <activity
-            android:name=".LoadingActivity"
+            android:name=".screens.LoadingActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -29,19 +29,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginSignUpActivity"
+            android:name=".screens.LoginSignUpActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MainScreenActivity"
+            android:name=".screens.MainScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SettingsScreenActivity"
+            android:name=".screens.SettingsScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SkinsScreenActivity"
+            android:name=".screens.SkinsScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 

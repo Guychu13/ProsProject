@@ -28,7 +28,7 @@ public class AppMusicService extends Service {
         } else {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
         }
-        mediaPlayer.setLooping(false);
+        mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
 

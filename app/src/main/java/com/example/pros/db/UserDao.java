@@ -1,6 +1,6 @@
-package com.example.pros;
+package com.example.pros.db;
 
-public class User {
+public class UserDao {
 
     private String userName;
     private int numOfWins;
@@ -8,17 +8,9 @@ public class User {
     private int chosenSkinImageId;
     private boolean musicOn;
     private String photoImageURL;
+    private String firebaseUserId;
 
-    public User() {
-
-    }
-
-    public User(String userName, int numOfWins, int numOfSkins, int chosenSkinImageId, boolean musicOn) {
-        this.userName = userName;
-        this.numOfWins = numOfWins;
-        this.numOfSkins = numOfSkins;
-        this.chosenSkinImageId = chosenSkinImageId;
-        this.musicOn = musicOn;
+    public UserDao() {
     }
 
     public String getUserName() {
@@ -37,12 +29,12 @@ public class User {
         return chosenSkinImageId;
     }
 
-    public String getPhotoImageURL() {
-        return photoImageURL;
-    }
-
     public boolean isMusicOn() {
         return musicOn;
+    }
+
+    public String getPhotoImageURL() {
+        return photoImageURL;
     }
 
     public void setUserName(String userName) {
@@ -67,5 +59,13 @@ public class User {
 
     public void setPhotoImageURL(String photoImageURL) {
         this.photoImageURL = photoImageURL;
+    }
+
+    public String getFirebaseUserId() {
+        return firebaseUserId;
+    }
+
+    public void setFirebaseUserId(String firebaseUserId) {
+        this.firebaseUserId = firebaseUserId;
     }
 }
