@@ -84,5 +84,7 @@ public class Repository {
         DatabaseReference myRef = database.getReference("Pros").child("users").child(FirebaseAuth.getInstance().getUid()).child("chosenSkinImageId");
 //        DatabaseReference myRef = database.getReference("users/"+ FirebaseAuth.getInstance().getUid() + "/chosenSkinImageId");
         myRef.setValue(newChosenSkinImageID);
+//        instance = new Repository();//////////////////שמתי את זה כדי שהוא יחזור לפיירבייס וישים פה בתכונה של היוזר את היוזר החדש
+        notifyObservers();
     }
 }
