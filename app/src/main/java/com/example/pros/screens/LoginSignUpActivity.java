@@ -55,7 +55,7 @@ public class LoginSignUpActivity extends AppCompatActivity {
         chooseDialogButton = usernameDialog.findViewById(R.id.imageButton_usernamePickDialog_choose);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        mAuth.signOut();
+//        mAuth.signOut();
         imageUri = null;//בשביל התנאי בדיאלוג שזה לא יהיה נל
         if (currentUser != null) {
             startActivity(new Intent(LoginSignUpActivity.this, MainScreenActivity.class));
