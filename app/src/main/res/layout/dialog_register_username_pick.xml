@@ -31,6 +31,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="176dp"
         android:ems="10"
+        android:hint="Type your username"
         android:inputType="textPersonName"
         android:lines="@android:integer/config_mediumAnimTime"
         android:textColor="@color/white"

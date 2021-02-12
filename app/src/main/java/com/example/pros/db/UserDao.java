@@ -1,10 +1,15 @@
 package com.example.pros.db;
 
+import com.example.pros.model.Skin;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDao {
 
     private String userName;
     private int numOfWins;
-    private int numOfSkins;
+    private ArrayList<Skin> allSkins;
     private int chosenSkinImageId;
     private boolean musicOn;
     private String photoImageURL;
@@ -19,10 +24,6 @@ public class UserDao {
 
     public int getNumOfWins() {
         return numOfWins;
-    }
-
-    public int getNumOfSkins() {
-        return numOfSkins;
     }
 
     public int getChosenSkinImageId() {
@@ -45,10 +46,6 @@ public class UserDao {
         this.numOfWins = numOfWins;
     }
 
-    public void setNumOfSkins(int numOfSkins) {
-        this.numOfSkins = numOfSkins;
-    }
-
     public void setChosenSkinImageId(int chosenSkinImageId) {
         this.chosenSkinImageId = chosenSkinImageId;
     }
@@ -67,5 +64,13 @@ public class UserDao {
 
     public void setFirebaseUserId(String firebaseUserId) {
         this.firebaseUserId = firebaseUserId;
+    }
+
+    public ArrayList<Skin> getAllSkins() {
+        return allSkins;
+    }
+
+    public void setAllSkins(ArrayList<Skin> allSkins) {
+        this.allSkins = allSkins;
     }
 }

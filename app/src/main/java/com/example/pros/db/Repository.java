@@ -39,14 +39,11 @@ public class Repository {
 
     private Repository(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //לעשות את המירף כמו שורה 110
-        //כאן אני ישר ניגש לאוטנתיקיישן ולוקח את מי שמחובר
-        //לי אין צורך במאפ, אני יכול פשוט לבנות תכונה של יוזר דאו ואז לשמור את מה שלקחתי מהפיירבייס, לא צריך יותר פור
-//        DatabaseReference myRef = database.getReference("users");
-        DatabaseReference myRef = database.getReference("users/"+ FirebaseAuth.getInstance().getUid());
+        DatabaseReference myRef = database.getReference("Pros").child("users").child(FirebaseAuth.getInstance().getUid());
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserDao temp = snapshot.getValue(UserDao.class);
                 user = snapshot.getValue(UserDao.class);
                 notifyObservers();
             }
@@ -73,12 +70,19 @@ public class Repository {
 //    }
 
     public UserDao getUser() {
-        return user;
+        return this.user;
     }
 
     public void saveUser(UserDao userDao){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users/"+ FirebaseAuth.getInstance().getUid());
+        DatabaseReference myRef = database.getReference("Pros").child("users").child(FirebaseAuth.getInstance().getUid());
         myRef.setValue(userDao);
+    }
+
+    public void saveNewChosenSkinImageID(int newChosenSkinImageID){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("users").child(FirebaseAuth.getInstance().getUid()).child("chosenSkinImageId");
+//        DatabaseReference myRef = database.getReference("users/"+ FirebaseAuth.getInstance().getUid() + "/chosenSkinImageId");
+        myRef.setValue(newChosenSkinImageID);
     }
 }

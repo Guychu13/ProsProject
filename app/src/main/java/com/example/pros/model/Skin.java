@@ -9,6 +9,10 @@ public class Skin {
     private int image;
     private int wins;
 
+    public Skin(){
+
+    }
+
     public Skin(String name, String mission, Boolean selected, Boolean unlocked, int image, int wins) {
         this.name = name;
         this.mission = mission;

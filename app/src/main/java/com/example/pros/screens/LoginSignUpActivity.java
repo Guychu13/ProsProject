@@ -55,7 +55,7 @@ public class LoginSignUpActivity extends AppCompatActivity {
         chooseDialogButton = usernameDialog.findViewById(R.id.imageButton_usernamePickDialog_choose);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-//        mAuth.signOut();
+        mAuth.signOut();
         imageUri = null;//בשביל התנאי בדיאלוג שזה לא יהיה נל
         if (currentUser != null) {
             startActivity(new Intent(LoginSignUpActivity.this, MainScreenActivity.class));
@@ -182,7 +182,7 @@ public class LoginSignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Uri> task) {
                             String url = task.getResult().toString();
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            database.getReference().child("Pros").child("users").child(currentUser.getUid()).child("photoImageURL").setValue(url);
+                            database.getReference().child("Pros").child("users").child(FirebaseAuth.getInstance().getUid()).child("photoImageURL").setValue(url);
                         }
                     });
                 }

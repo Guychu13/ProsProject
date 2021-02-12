@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pros.R;
 import com.example.pros.model.Skin;
+import com.example.pros.model.User;
 
 import java.util.ArrayList;
 
@@ -42,10 +43,11 @@ public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdap
         holder.rowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MainScreenActivity.class);
-                intent.putExtra("chosenSkinImageId", skins.get(position).getImage());
-                intent.putExtra("isFromSkinsScreen", true);
-                context.startActivity(intent);
+//                Intent intent = new Intent(context, MainScreenActivity.class);
+//                intent.putExtra("chosenSkinImageId", skins.get(position).getImage());
+//                intent.putExtra("isFromSkinsScreen", true);
+                User.getInstance().setChosenSkinImageId(skins.get(position).getImage());
+                context.startActivity(new Intent(context, MainScreenActivity.class));
             }
         });
     }
