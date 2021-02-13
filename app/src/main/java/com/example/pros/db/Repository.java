@@ -43,7 +43,6 @@ public class Repository {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserDao temp = snapshot.getValue(UserDao.class);
                 user = snapshot.getValue(UserDao.class);
                 notifyObservers();
             }
@@ -85,6 +84,24 @@ public class Repository {
 //        DatabaseReference myRef = database.getReference("users/"+ FirebaseAuth.getInstance().getUid() + "/chosenSkinImageId");
         myRef.setValue(newChosenSkinImageID);
 //        instance = new Repository();//////////////////שמתי את זה כדי שהוא יחזור לפיירבייס וישים פה בתכונה של היוזר את היוזר החדש
-        notifyObservers();
+//        updateUserCodeDetails();
+//        notifyObservers();
     }
+
+//    public void updateUserCodeDetails(){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Pros").child("users").child(FirebaseAuth.getInstance().getUid());
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                user = snapshot.getValue(UserDao.class);
+//                notifyObservers();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 }
