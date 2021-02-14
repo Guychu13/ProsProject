@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainScreenActivity extends AppCompatActivity {
 
     private User user;
-    private String userName;
+//    private String userName;
 
     private TextView userGreet;
 //    private ImageButton skinsButton;
