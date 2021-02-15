@@ -57,7 +57,7 @@ public class MyBlock extends GameObject {
             for (int col = top; col < bottom; col++) {
                 if (bitmap.getPixel(row - xPos, col - yPos) != Color.TRANSPARENT &&
                         other.getBitmap().getPixel(row - other.getXPos(), col - other.getYPos()) != Color.TRANSPARENT) {
-                    return row;
+                    return col;
                 }
             }
         }

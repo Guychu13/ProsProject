@@ -13,7 +13,7 @@ import com.example.pros.model.User;
 
 import java.util.ArrayList;
 
-public class SkinsScreenActivity extends AppCompatActivity {
+public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyclerAdapter.ItemClickListener {
 
     private ArrayList<Skin> allSkins;
 //    private int images[] = {R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button,
@@ -24,7 +24,6 @@ public class SkinsScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skins_screen);
-
 
 //        Skin basic = new Skin("Basic", "Your Default Skin.", true, true, R.drawable.skin_basic, 0);
 //        Skin peace = new Skin("Peace", "Play 3 matches.", false, false, R.drawable.skin_peace, 0);
@@ -54,7 +53,7 @@ public class SkinsScreenActivity extends AppCompatActivity {
 
         allSkins = User.getInstance().getAllSkins();
         recyclerView = findViewById(R.id.recyclerView_skinsScreen);
-        SkinsRecyclerAdapter recyclerAdapter = new SkinsRecyclerAdapter(this, User.getInstance().getAllSkins());
+        SkinsRecyclerAdapter recyclerAdapter = new SkinsRecyclerAdapter(this, User.getInstance().getAllSkins(), this);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -64,5 +63,11 @@ public class SkinsScreenActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onClick(int position) {
+        User.getInstance().setChosenSkinImageId(allSkins.get(position).getImage());
+        finish();
     }
 }

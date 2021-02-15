@@ -77,11 +77,11 @@ public class GameView extends SurfaceView implements Runnable {
                 gameBall.setySpeed(gameBall.getySpeed() * -1);
                 int collisionXLocation = myBlock.getCollisionXLocation(gameBall);
                 if (myBlock.getXPos() <= collisionXLocation && collisionXLocation < (myBlock.getXPos() + myBlock.getBitmap().getWidth()) / 2) {
-                    if (gameBall.getxSpeed() < 0) {
+                    if (gameBall.getxSpeed() > 0) {
                         gameBall.setxSpeed(gameBall.getxSpeed() * -1);
                     }
                 } else if ((myBlock.getXPos() + myBlock.getBitmap().getWidth()) / 2 <= collisionXLocation && collisionXLocation <= myBlock.getXPos() + myBlock.getBitmap().getWidth()) {
-                    if (gameBall.getxSpeed() > 0) {
+                    if (gameBall.getxSpeed() < 0) {
                         gameBall.setxSpeed(gameBall.getxSpeed() * -1);
                     }
                 }

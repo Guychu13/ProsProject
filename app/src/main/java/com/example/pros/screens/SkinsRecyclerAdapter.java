@@ -21,10 +21,12 @@ import java.util.ArrayList;
 public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Skin> skins;
+    private ItemClickListener listener;
 
-    public SkinsRecyclerAdapter(Context context, ArrayList<Skin> skins) {
+    public SkinsRecyclerAdapter(Context context, ArrayList<Skin> skins, ItemClickListener listener) {
         this.context = context;
         this.skins = skins;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,11 +45,8 @@ public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdap
         holder.rowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(context, MainScreenActivity.class);
-//                intent.putExtra("chosenSkinImageId", skins.get(position).getImage());
-//                intent.putExtra("isFromSkinsScreen", true);
-                User.getInstance().setChosenSkinImageId(skins.get(position).getImage());
-                context.startActivity(new Intent(context, MainScreenActivity.class));
+                listener.onClick(position);
+
             }
         });
     }
@@ -71,5 +70,10 @@ public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdap
             image = itemView.findViewById(R.id.imageView_skinsRow_image);
             rowLayout = itemView.findViewById(R.id.rowLayout);
         }
+    }
+
+    public interface ItemClickListener {
+
+        void onClick(int position);
     }
 }

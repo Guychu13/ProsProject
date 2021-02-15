@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 import com.example.pros.AppMusicService;
 import com.example.pros.R;
+import com.example.pros.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsScreenActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
                 musicOffButton.setForeground(getDrawable(R.drawable.pressed_off_music_button));
                 musicOnButton.setForeground(getDrawable(R.drawable.unpressed_on_music_button));
                 stopService(new Intent(getApplicationContext(), AppMusicService.class));
+                User.getInstance().setMusicOn(false);
             }
         });
         musicOnButton = findViewById(R.id.imageButton_settingsScreen_musicOn);
@@ -38,6 +40,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
                 musicOffButton.setForeground(getDrawable(R.drawable.unpressed_off_music_button));
                 musicOnButton.setForeground(getDrawable(R.drawable.pressed_on_music_button));
                 startService(new Intent(getApplicationContext(), AppMusicService.class));
+                User.getInstance().setMusicOn(true);
             }
         });
     }

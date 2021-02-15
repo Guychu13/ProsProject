@@ -44,20 +44,20 @@ public class GameScreenActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userReference = database.getReference().child("Pros").child("users").child(firebaseUser.getUid());
-        userReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                currentUser = snapshot.getValue(User.class);
-                userCurrentSkinImageId = currentUser.getChosenSkinImageId();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference userReference = database.getReference().child("Pros").child("users").child(firebaseUser.getUid());
+//        userReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                currentUser = snapshot.getValue(User.class);
+//                userCurrentSkinImageId = currentUser.getChosenSkinImageId();
+//            }
+//        @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        userCurrentSkinImageId = User.getInstance().getChosenSkinImageId();
         frameLayout = findViewById(R.id.frameLayout_gameScreen_gameFrameLayout);
 
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
