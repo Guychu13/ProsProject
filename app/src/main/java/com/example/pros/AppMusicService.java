@@ -8,6 +8,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.example.pros.model.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Random;
 
@@ -21,20 +22,28 @@ public class AppMusicService extends Service {
     }
 
     public void onCreate() {
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            if(User.getInstance().isMusicOn()){
+                playMusic();
+            }
+        }
+        else{
+            playMusic();
+        }
+    }
+
+    public void playMusic(){
         Random rg = new Random();
         int num = rg.nextInt(3);
-        /////לעשות if של תכונה בסינגלטון
-        if(User.getInstance().isMusicOn()){
-            if (num == 0) {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_dreams);
-            } else if (num == 1) {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop1);
-            } else {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
-            }
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
+        if (num == 0) {
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_dreams);
+        } else if (num == 1) {
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop1);
+        } else {
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
         }
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
     }
 
     @Override
