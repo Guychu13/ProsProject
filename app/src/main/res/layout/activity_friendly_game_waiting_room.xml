@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FriendlyGameWaitingRoomActivity"
+    android:background="@color/black"
+    android:layoutDirection="ltr"
+    android:fontFamily="@font/coming_soon">
+
+    <TextView
+        android:id="@+id/textView_friendlyGameWaitingRoomScreen_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/coming_soon"
+        android:text="@string/friendlyGameWaitingRoomScreen_title"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_friendlyGameWaitingRoomScreen_belowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/coming_soon"
+        android:text="@string/friendlyGameWaitingRoomScreen_belowTitle"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textView_friendlyGameWaitingRoomScreen_title"
+        app:layout_constraintTop_toBottomOf="@+id/textView_friendlyGameWaitingRoomScreen_title" />
+
+    <TextView
+        android:id="@+id/textView_friendlyGameWaitingRoomScreen_lobbyCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/coming_soon"
+        android:text="XXXXXXX"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView_friendlyGameWaitingRoomScreen_title"
+        app:layout_constraintStart_toEndOf="@+id/textView_friendlyGameWaitingRoomScreen_belowTitle"
+        app:layout_constraintTop_toTopOf="@+id/textView_friendlyGameWaitingRoomScreen_belowTitle" />
+
+    <TextView
+        android:id="@+id/textView_friendlyGameWaitingRoomScreen_myPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/coming_soon"
+        android:text="My Name"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView_friendlyGameWaitingRoomScreen_vs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_friendlyGameWaitingRoomScreen_vs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/coming_soon"
+        android:text="@string/friendlyGameWaitingRoomScreen_vs"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_friendlyGameWaitingRoomScreen_myPlayerName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_friendlyGameWaitingRoomScreen_myPlayerName" />
+
+    <TextView
+        android:id="@+id/textView_friendlyGameWaitingRoomScreen_enemyPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/coming_soon"
+        android:text="???"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_friendlyGameWaitingRoomScreen_myPlayerName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_friendlyGameWaitingRoomScreen_vs"
+        app:layout_constraintTop_toTopOf="@+id/textView_friendlyGameWaitingRoomScreen_myPlayerName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

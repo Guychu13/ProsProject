@@ -2,28 +2,28 @@
     <string name="app_name">Pros</string>
 
 
-<!--    <string-array name="skin_names">-->
-<!--        <item>White</item>-->
-<!--        <item>Blue</item>-->
-<!--        <item>Green</item>-->
-<!--        <item>Yellow</item>-->
-<!--        <item>Purple</item>-->
-<!--        <item>Orange</item>-->
-<!--        <item>Red</item>-->
-<!--        <item>Black</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="skin_names">-->
+    <!--        <item>White</item>-->
+    <!--        <item>Blue</item>-->
+    <!--        <item>Green</item>-->
+    <!--        <item>Yellow</item>-->
+    <!--        <item>Purple</item>-->
+    <!--        <item>Orange</item>-->
+    <!--        <item>Red</item>-->
+    <!--        <item>Black</item>-->
+    <!--    </string-array>-->
 
-<!--    <string-array name="skin_missions">-->
-<!--        <item>Your Default Skin.</item>-->
-<!--        <item>Win 5 Times.</item>-->
-<!--        <item>Win 10 Times.</item>-->
-<!--        <item>Win Without Taking Any Goals.</item>-->
-<!--        <item>Play against 3 Different Friends.</item>//אפשר לעשות כזה תעקבו אחריי באינסטגרם וללמוד-->
-<!--        איך לקשר לשם//-->
-<!--        <item>Win at least 5 Times with Each Skin.</item>-->
-<!--        <item>Win in Under 30 seconds.</item>-->
-<!--        <item>Win 30 Times.</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="skin_missions">-->
+    <!--        <item>Your Default Skin.</item>-->
+    <!--        <item>Win 5 Times.</item>-->
+    <!--        <item>Win 10 Times.</item>-->
+    <!--        <item>Win Without Taking Any Goals.</item>-->
+    <!--        <item>Play against 3 Different Friends.</item>//אפשר לעשות כזה תעקבו אחריי באינסטגרם וללמוד-->
+    <!--        איך לקשר לשם//-->
+    <!--        <item>Win at least 5 Times with Each Skin.</item>-->
+    <!--        <item>Win in Under 30 seconds.</item>-->
+    <!--        <item>Win 30 Times.</item>-->
+    <!--    </string-array>-->
 
     <string name="loadingScreen_title">Pros.</string>
     <string name="WinAndLossScreen_enemyCpuBlockWin_title">Try harder NEXT TIME.</string>
@@ -34,7 +34,7 @@
     <string name="usernamePickDialog_text">Pick a<br></br> Username</string>
     <string name="gameScreen_smileyText">:)</string>
     <string name="gameScreen_overtimeText">overtime</string>
-    <string name="loginScreen_title">Log In, <br/> Or Create a<br/>User</string>
+    <string name="loginScreen_title">Log In, <br /> Or Create a<br />User</string>
     <string name="loginScreen_email">Email</string>
     <string name="loginScreen_password">Password</string>
     <string name="mainScreen_title">Play.</string>
@@ -47,6 +47,9 @@
     <string name="loginScreen_notExistErrorMessage">This user does not exist, try to create a user</string>
     <string name="usernamePickDialog_emptyError">Please choose a username and a profile picture</string>
     <string name="loginScreen_takenOrInvalidErrorMessage">The email or the password are taken or invalid. Please try again</string>
+    <string name="friendlyGameWaitingRoomScreen_title">Invite your enemy ;)</string>
+    <string name="friendlyGameWaitingRoomScreen_belowTitle">Lobby code:</string>
+    <string name="friendlyGameWaitingRoomScreen_vs">VS</string>
 
 
 </resources>

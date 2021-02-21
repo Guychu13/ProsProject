@@ -61,8 +61,8 @@ public class GameScreenActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.frameLayout_gameScreen_gameFrameLayout);
 
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
-        gameTimerSecondsLeft = 60;
-        timerTextView.setText(gameTimerSecondsLeft / 60 + ":" + gameTimerSecondsLeft % 60);
+        gameTimerSecondsLeft = 5;
+        timerTextView.setText(gameTimerSecondsLeft / 60 + ":0" + gameTimerSecondsLeft % 60);
         timerPauseDurationMilliSecs = 0;
         myBlockScore = 0;
         enemyCpuBlockScore = 0;
@@ -145,7 +145,7 @@ public class GameScreenActivity extends AppCompatActivity {
                             gameTimerSecondsLeft = 30;
                             smileyTextView.setText(getResources().getString(R.string.gameScreen_overtimeText));
                             didOvertime = true;
-                            new Handler().postDelayed(new GameTimer(), 0);
+//                            new Handler().postDelayed(new GameTimer(), 0);
                         }
                     }
                 }

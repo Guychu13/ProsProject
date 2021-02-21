@@ -10,7 +10,7 @@ public class EnemyCpuBlock extends GameObject {
     public EnemyCpuBlock(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
         super(bitmap, xPos, yPos, windowWidth, windowHeight);
         this.score = 0;
-        xSpeed = 13;
+        xSpeed = 12;
     }
 
     public void move(int xTarget) {
