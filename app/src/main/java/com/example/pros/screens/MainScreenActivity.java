@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pros.FriendlyGameWaitingRoomActivity;
 import com.example.pros.R;
 import com.example.pros.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -141,5 +142,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
     public void goToGameScreen(View view){
         startActivity(new Intent(MainScreenActivity.this, GameScreenActivity.class));
+    }
+
+    public void goToFriendlyGameLobbyScreen(View view){
+        startActivity(new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class));
     }
 }

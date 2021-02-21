@@ -50,6 +50,7 @@
     <string name="friendlyGameWaitingRoomScreen_title">Invite your enemy ;)</string>
     <string name="friendlyGameWaitingRoomScreen_belowTitle">Lobby code:</string>
     <string name="friendlyGameWaitingRoomScreen_vs">VS</string>
+    <string name="friendlyGameWaitingRoomScreen_questionMarks">-???-</string>
 
 
 </resources>

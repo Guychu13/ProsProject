@@ -77,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/coming_soon"
-        android:text="???"
+        android:text="@string/friendlyGameWaitingRoomScreen_questionMarks"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_friendlyGameWaitingRoomScreen_myPlayerName"
