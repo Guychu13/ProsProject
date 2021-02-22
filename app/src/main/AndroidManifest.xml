@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FriendlyGameWaitingRoomActivity"></activity>
+        <activity android:name=".screens.FriendlyGameWaitingRoomActivity"></activity>
         <activity android:name=".screens.WinAndLossScreenActivity" />
         <activity android:name=".screens.GameScreenActivity" />
         <activity

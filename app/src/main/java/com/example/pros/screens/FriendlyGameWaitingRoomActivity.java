@@ -1,10 +1,11 @@
-package com.example.pros;
+package com.example.pros.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.pros.R;
 import com.example.pros.model.User;
 
 import java.util.Random;
