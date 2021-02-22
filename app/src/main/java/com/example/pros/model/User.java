@@ -3,6 +3,7 @@ package com.example.pros.model;
 import com.example.pros.R;
 import com.example.pros.db.Repository;
 import com.example.pros.db.UserDao;
+import com.example.pros.screens.MainScreenActivity;
 import com.example.pros.screens.MainScreenPresenter;
 import com.example.pros.utils.Observer;
 import com.google.firebase.auth.FirebaseAuth;

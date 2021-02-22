@@ -38,78 +38,7 @@ public class MainScreenActivity extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         mainScreenPresenter = new MainScreenPresenter(this);
-
-
-//        mAuth = FirebaseAuth.getInstance();
-//        firebaseUser = mAuth.getCurrentUser();
-
-//        currentSkinImage = findViewById(R.id.imageView_mainScreen_chosenSkin);
-//        joinButton = findViewById(R.id.imageButton_mainScreen_joinButton);
-
-//        Intent intentSkinChosen = getIntent();
-//        final int skinImageIdFromSkinsScreen = intentSkinChosen.getIntExtra("chosenSkinImageId", 0);
-//        final boolean isFromSkinsScreen = intentSkinChosen.getBooleanExtra("isFromSkinsScreen", false);
-
-//        currentSkinImage.setOnClickListener(new View.OnClickListener() {זה היה למעבר למסך הסקינים מלחיצה על הסקין שנבחר בנוסף לכפתור סקינים
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainScreenActivity.this, SkinsScreenActivity.class));
-//            }
-//        });
-
-//        skinsButton = findViewById(R.id.imageButton_mainScreen_skinsButton);
-//        skinsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainScreenActivity.this, SkinsScreenActivity.class));
-//            }
-//        });
-
-//        joinButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent toGameIntent = new Intent(MainScreenActivity.this, GameScreenActivity.class);
-////                if (skinImageIdFromSkinsScreen == 0) {
-////                    toGameIntent.putExtra("chosenSkinImageId", R.drawable.skin_basic);
-////                } else {
-////                    toGameIntent.putExtra("chosenSkinImageId", skinImageIdFromSkinsScreen);
-////                }
-////                toGameIntent.putExtra("chosenSkinImageId", skinImageIdFromSkinsScreen);
-//                startActivity(toGameIntent);
-//            }
-//        });
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        final DatabaseReference myRef = database.getReference().child("Pros").child("users").child(firebaseUser.getUid());
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                user = snapshot.getValue(User.class);
-//                userName = user.getUserName();
-//                userGreet = findViewById(R.id.textView_mainScreen_usernameGreet);
-//                userGreet.setText(getResources().getString(R.string.mainScreen_usernameGreet) + " " + userName);
-//
-//                if (skinImageIdFromSkinsScreen != 0 && isFromSkinsScreen) {
-//                    currentSkinImageId = skinImageIdFromSkinsScreen;
-//                    user.setChosenSkinImageId(currentSkinImageId);
-//                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                    database.getReference().child("Pros").child("users").child(firebaseUser.getUid()).child("chosenSkinImageId").setValue(currentSkinImageId);
-//                }
-//
-//                currentSkin.setImageResource(user.getChosenSkinImageId());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
     }
-
-//    public void onSettingsClick(View view) {
-//        startActivity(new Intent(MainScreenActivity.this, SettingsScreenActivity.class));
-//    }
 
     @Override
     public void onBackPressed() {

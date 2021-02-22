@@ -29,7 +29,7 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
     }
 
 
-    private String createLobbyCode(){
+    private String createLobbyCode(){//אין כרגע בדיקה אם הקוד קיים או לא
         StringBuilder code = new StringBuilder();
         int limit;
         if (new Random().nextInt(10) == 0)

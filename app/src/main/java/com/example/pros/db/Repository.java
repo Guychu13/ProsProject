@@ -87,21 +87,4 @@ public class Repository {
 //        updateUserCodeDetails();
 //        notifyObservers();
     }
-
-//    public void updateUserCodeDetails(){
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Pros").child("users").child(FirebaseAuth.getInstance().getUid());
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                user = snapshot.getValue(UserDao.class);
-//                notifyObservers();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 }

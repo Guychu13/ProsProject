@@ -19,13 +19,12 @@ public class MainScreenPresenter implements Observer {
     public MainScreenPresenter(MainScreenActivity activity){
         this.activity = activity;
         User.getInstance().register(this);
-
-
     }
 
 
     @Override
     public void update() {
+
         String userName = User.getInstance().getUserName();
         int chosenSkinImageId = User.getInstance().getChosenSkinImageId();
 

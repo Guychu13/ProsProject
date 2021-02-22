@@ -22,14 +22,15 @@ public class AppMusicService extends Service {
     }
 
     public void onCreate() {
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
-            if(User.getInstance().isMusicOn()){
-                playMusic();
-            }
-        }
-        else{
-            playMusic();
-        }
+        playMusic();
+//        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+//            if(User.getInstance().isMusicOn()){
+//                playMusic();
+//            }
+//        }
+//        else{
+//            playMusic();
+//        }
     }
 
     public void playMusic(){
