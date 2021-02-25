@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.pros.R;
@@ -16,40 +18,12 @@ import java.util.ArrayList;
 public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyclerAdapter.ItemClickListener {
 
     private ArrayList<Skin> allSkins;
-//    private int images[] = {R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button,
-//            R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button, R.drawable.choose_username_button};
     private RecyclerView recyclerView;
-
+    private float xStart, yStart, xEnd, yEnd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skins_screen);
-
-//        Skin basic = new Skin("Basic", "Your Default Skin.", true, true, R.drawable.skin_basic, 0);
-//        Skin peace = new Skin("Peace", "Play 3 matches.", false, false, R.drawable.skin_peace, 0);
-//        Skin pizza = new Skin("Pizza?", "I don't know yet", false, false, R.drawable.skin_pizza, 0);
-//        Skin musical = new Skin("Musical", "Win 5 matches.", false, false, R.drawable.skin_musical, 0);
-//        Skin hamburger = new Skin("Burger", "I don't know yet", false, false, R.drawable.skin_hamburger, 0);
-//        Skin smile = new Skin("Smile", "Win in Under 1 minute \nand 30 seconds.", false, false, R.drawable.skin_smile, 0);
-//        Skin ocean = new Skin("Ocean", "I don't know yet", false, false, R.drawable.skin_ocean, 0);
-//        Skin telescope = new Skin("Telescope", "Win Without Taking Any Goals.", false, false, R.drawable.skin_telescope, 0);
-//        Skin playin = new Skin("Playin'", "Win 10 matches.", false, false, R.drawable.skin_playin, 0);
-//        Skin crystal = new Skin("Crystal", "I don't know yet", false, false, R.drawable.skin_crystal, 0);
-//        Skin master = new Skin("Master", "Win in Under 30 seconds.", false, false, R.drawable.skin_master, 0);
-//
-//
-//        allSkins = new ArrayList<>();
-//        allSkins.add(basic);
-//        allSkins.add(peace);
-//        allSkins.add(pizza);
-//        allSkins.add(musical);
-//        allSkins.add(hamburger);
-//        allSkins.add(smile);
-//        allSkins.add(ocean);
-//        allSkins.add(telescope);
-//        allSkins.add(playin);
-//        allSkins.add(crystal);
-//        allSkins.add(master);
 
         allSkins = User.getInstance().getAllSkins();
         recyclerView = findViewById(R.id.recyclerView_skinsScreen);
@@ -69,5 +43,32 @@ public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyc
     public void onClick(int position) {
         User.getInstance().setChosenSkinImageId(allSkins.get(position).getImage());
         finish();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                xStart = touchEvent.getX();
+                yStart = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                xEnd = touchEvent.getX();
+                yEnd = touchEvent.getY();
+                if(xStart < xEnd && xEnd - xStart > 30){//Right Swipe
+//                    Intent intent = new Intent(SkinsScreenActivity.this, MainScreenActivity.class);
+//                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                }
+                break;
+        }
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -16,7 +17,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ImageButton logOutButton, musicOnButton, musicOffButton;
-
+    private float xStart, yStart, xEnd, yEnd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,4 +58,31 @@ public class SettingsScreenActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                xStart = touchEvent.getX();
+                yStart = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                xEnd = touchEvent.getX();
+                yEnd = touchEvent.getY();
+                if(xEnd < xStart && xStart - xEnd > 30){//Left Swipe
+//                    Intent intent = new Intent(SettingsScreenActivity.this, MainScreenActivity.class);
+//                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                break;
+        }
+        return false;
+    }
 }

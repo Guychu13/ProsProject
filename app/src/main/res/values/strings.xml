@@ -43,6 +43,7 @@
     <string name="settingsScreen_sound">sound:</string>
     <string name="settingsScreen_controls">controls:</string>
     <string name="skinsScreen_title">Skins.</string>
+    <string name="skinsScreen_secondTitle">Choose yours ;)</string>
     <string name="loginScreen_emptyErrorMessage">Please fill in both fields</string>
     <string name="loginScreen_notExistErrorMessage">This user does not exist, try to create a user</string>
     <string name="usernamePickDialog_emptyError">Please choose a username and a profile picture</string>

@@ -2,6 +2,7 @@ package com.example.pros.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,18 +14,11 @@ import com.example.pros.model.User;
 
 public class MainScreenActivity extends AppCompatActivity {
 
-    private User user;
-//    private String userName;
-
     private TextView userGreet;
-//    private ImageButton skinsButton;
-//    private ImageButton joinButton;
     private ImageView currentSkinImage;
-//    private FirebaseAuth mAuth;
-//    private FirebaseUser firebaseUser;
-//    private int currentSkinImageId;
     private MainScreenPresenter mainScreenPresenter;
 
+    private float xStart, yStart, xEnd, yEnd;
     //private SharedPreferences sharedPreferences;
 
     @Override
@@ -38,6 +32,31 @@ public class MainScreenActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                xStart = touchEvent.getX();
+                yStart = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                xEnd = touchEvent.getX();
+                yEnd = touchEvent.getY();
+                if(xStart < xEnd && xEnd - xStart > 30){//Right Swipe
+                    Intent intent = new Intent(MainScreenActivity.this, SettingsScreenActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                }
+                if(xEnd < xStart && xStart - xEnd > 30){//Left Swipe
+                    Intent intent = new Intent(MainScreenActivity.this, SkinsScreenActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                break;
+        }
+        return false;
     }
 
     @Override
@@ -58,10 +77,12 @@ public class MainScreenActivity extends AppCompatActivity {
 
     public void goToSettingsScreen(View view){
         startActivity(new Intent(MainScreenActivity.this, SettingsScreenActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     public void goToSkinsScreen(View view){
         startActivity(new Intent(MainScreenActivity.this, SkinsScreenActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void goToGameScreen(View view){
