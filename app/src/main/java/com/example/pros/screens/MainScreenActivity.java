@@ -1,22 +1,37 @@
 package com.example.pros.screens;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pros.R;
-import com.example.pros.model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import javax.xml.datatype.Duration;
 
 public class MainScreenActivity extends AppCompatActivity {
 
     private TextView userGreet;
     private ImageView currentSkinImage;
     private MainScreenPresenter mainScreenPresenter;
+    private EditText dialogGameCodeEditText;
+    private ImageView dialogJoinGameImageView;
+    private String dialogGameCodeTyped;
+    private Dialog dialogJoinOfflineGame;
 
     private float xStart, yStart, xEnd, yEnd;
     //private SharedPreferences sharedPreferences;
@@ -91,5 +106,41 @@ public class MainScreenActivity extends AppCompatActivity {
 
     public void goToFriendlyGameLobbyScreen(View view){
         startActivity(new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class));
+    }
+
+    public void goToJoinOnlineGame(View view){
+        dialogJoinOfflineGame = new Dialog(MainScreenActivity.this);
+        dialogJoinOfflineGame.setContentView(R.layout.join_offline_game_dialog);
+        dialogGameCodeEditText = dialogJoinOfflineGame.findViewById(R.id.editText_joinOfflineGameDialog_gameCodeEditText);
+        dialogJoinGameImageView = findViewById(R.id.imageVIew_joinOfflineGameDialog_join);
+        dialogJoinOfflineGame.show();
+        dialogJoinOfflineGame.setCancelable(true);
+        dialogJoinOfflineGame.setCanceledOnTouchOutside(true);
+
+        dialogJoinGameImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogGameCodeTyped = dialogGameCodeEditText.getText().toString();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference().child("Pros").child("gameCodes").child(dialogGameCodeTyped);
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getValue() == null){
+                            Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                /////////////////////////////////////////////////////////////////////////here to check if the code matches an existing code in the firebase databade
+            }
+        });
     }
 }

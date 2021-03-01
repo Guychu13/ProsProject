@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.pros.R;
+import com.example.pros.model.MultiPlayerGameDao;
 import com.example.pros.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,10 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
         allExistingGameCodes = new ArrayList<>();//לצורך הבדיקה אם יש כבר קוד כזה
         gameCode = createGameCode();
         lobbyCodeTextView.setText(gameCode);
+
+//        MultiPlayerGameDao multiPlayerGameDao = new MultiPlayerGameDao()
+
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);

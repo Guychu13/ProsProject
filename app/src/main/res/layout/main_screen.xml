@@ -60,34 +60,47 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontalUp">
-
     </ImageView>
 <!--        app:srcCompat="@drawable/skin_basic" />-->
 
     <ImageButton
         android:id="@+id/imageButton_mainScreen_joinButton"
-        android:layout_width="129dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="114dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="50dp"
         android:foreground="@drawable/join_button"
         android:layoutDirection="ltr"
-        android:onClick="goToGameScreen"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalMiddle"
-        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="goToJoinOnlineGame"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_mainScreen_createButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_mainScreen_createButton"
         app:layout_constraintTop_toBottomOf="@+id/imageView_mainScreen_chosenSkin"
         app:srcCompat="@drawable/join_button" />
 
     <ImageButton
+        android:id="@+id/imageButton_mainScreen_playOfflineButton"
+        android:layout_width="114dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:foreground="@drawable/play_offline_button"
+        android:layoutDirection="ltr"
+        android:onClick="goToGameScreen"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_mainScreen_createButton"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_mainScreen_createButton"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_mainScreen_createButton"
+        app:srcCompat="@drawable/play_offline_button" />
+
+    <ImageButton
         android:id="@+id/imageButton_mainScreen_createButton"
-        android:layout_width="129dp"
-        android:layout_height="51dp"
+        android:layout_width="114dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
         android:foreground="@drawable/create_button"
         android:layoutDirection="ltr"
         android:onClick="goToFriendlyGameLobbyScreen"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton_mainScreen_joinButton"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalMiddle"
-        app:layout_constraintTop_toTopOf="@+id/imageButton_mainScreen_joinButton"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalLeft"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_mainScreen_joinButton"
         app:srcCompat="@drawable/join_button" />
 
     <ImageButton

@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
@@ -51,7 +50,7 @@ public class LoginSignUpActivity extends AppCompatActivity {
         title.setText("Log In,\nOr Create a\nUser");
         usernameDialog = new Dialog(this);
         usernameDialog.setContentView(R.layout.dialog_register_username_pick);
-        usernameDialogEditText = usernameDialog.findViewById(R.id.editText_usernamePickDialog_username);
+        usernameDialogEditText = usernameDialog.findViewById(R.id.editText_joinOfflineGameDialog_lobbyCodeEditText);
         chooseDialogButton = usernameDialog.findViewById(R.id.imageButton_usernamePickDialog_choose);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();

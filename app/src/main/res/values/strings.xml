@@ -52,6 +52,7 @@
     <string name="friendlyGameWaitingRoomScreen_belowTitle">Lobby code:</string>
     <string name="friendlyGameWaitingRoomScreen_vs">VS</string>
     <string name="friendlyGameWaitingRoomScreen_questionMarks">-???-</string>
+    <string name="joinOfflineGameDialog_typeCode">Type your<br></br>game code</string>
 
 
 </resources>
