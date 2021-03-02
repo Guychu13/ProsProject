@@ -23,8 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 public class GameScreenActivity extends AppCompatActivity {
 
     private FrameLayout frameLayout;
-    private int windowHeight, windowWidth, userCurrentSkinImageId;
-    private User currentUser;
+    private int windowHeight, windowWidth;
     private GameView gameView;
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
@@ -57,7 +56,6 @@ public class GameScreenActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        userCurrentSkinImageId = User.getInstance().getChosenSkinImageId();
         frameLayout = findViewById(R.id.frameLayout_gameScreen_gameFrameLayout);
 
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
@@ -79,7 +77,7 @@ public class GameScreenActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         windowHeight = frameLayout.getHeight();
         windowWidth = frameLayout.getWidth();
-        gameView = new GameView(this, windowHeight, windowWidth, userCurrentSkinImageId, new ScoreHandler());
+        gameView = new GameView(this, windowHeight, windowWidth, User.getInstance().getChosenSkinImageId(), new ScoreHandler());
         new Handler().postDelayed(new GameTimer(), 2000);
         frameLayout.addView(gameView);
     }

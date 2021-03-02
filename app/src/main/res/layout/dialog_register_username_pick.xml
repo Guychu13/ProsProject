@@ -15,14 +15,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="0dp" />
+        app:layout_constraintGuide_percent="0.01" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVerticalLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="0dp" />
+        app:layout_constraintGuide_percent="0.01" />
 
     <EditText
         android:id="@+id/editText_usernamePickDialog_username"
@@ -32,6 +32,9 @@
         android:layout_marginTop="176dp"
         android:ems="10"
         android:hint="Type your username"
+        android:textColorHint="@color/white"
+        android:textSize="13sp"
+        android:fontFamily="@font/coming_soon"
         android:inputType="textPersonName"
         android:lines="@android:integer/config_mediumAnimTime"
         android:textColor="@color/white"

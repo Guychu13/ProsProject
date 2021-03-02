@@ -85,4 +85,15 @@
         app:layout_constraintStart_toEndOf="@+id/textView_friendlyGameWaitingRoomScreen_vs"
         app:layout_constraintTop_toTopOf="@+id/textView_friendlyGameWaitingRoomScreen_myPlayerName" />
 
+    <Button
+        android:id="@+id/button_friendlyGameWaitingRoomScreen_startGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:foreground="@drawable/choose_username_button"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

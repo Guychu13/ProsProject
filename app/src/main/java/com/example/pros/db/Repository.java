@@ -87,4 +87,28 @@ public class Repository {
 //        updateUserCodeDetails();
 //        notifyObservers();
     }
+
+    public void saveUsernameGameDao(String gameCode, String name, int pNum){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        if(pNum == 1){
+            DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p1PlayerName");
+            myRef.setValue(name);
+        }
+        if(pNum == 2){
+            DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p2PlayerName");
+            myRef.setValue(name);
+        }
+    }
+
+    public void saveSkinImageIdGameDao(String gameCode, int skinImageId, int pNum){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        if(pNum == 1){
+            DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p1SkinImageID");
+            myRef.setValue(skinImageId);
+        }
+        if(pNum == 2){
+            DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p2SkinImageID");
+            myRef.setValue(skinImageId);
+        }
+    }
 }

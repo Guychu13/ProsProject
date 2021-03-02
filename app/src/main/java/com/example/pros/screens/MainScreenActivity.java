@@ -1,18 +1,36 @@
 package com.example.pros.screens;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pros.R;
+import com.example.pros.db.MultiPlayerGameDao;
 import com.example.pros.model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainScreenActivity extends AppCompatActivity {
+
+    private Dialog joinGameDialog;
+    private EditText gameCodeDialogEditText;
+    private ImageButton joinGameDialogImageButton;
+    private String gameCodeTyped;
+
+    private MultiPlayerGameDao multiPlayerGameDao;
 
     private TextView userGreet;
     private ImageView currentSkinImage;
@@ -90,6 +108,54 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     public void goToFriendlyGameLobbyScreen(View view){
-        startActivity(new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class));
+        Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
+        intent.putExtra("isHost", true);
+        startActivity(intent);
+    }
+
+    public void openJoinGameDialog(View view) {
+        joinGameDialog = new Dialog(MainScreenActivity.this);
+        joinGameDialog.setContentView(R.layout.dialog_join_offline_game);
+        joinGameDialog.setCanceledOnTouchOutside(true);
+        joinGameDialog.setCancelable(true);
+        joinGameDialog.show();
+
+        gameCodeDialogEditText = joinGameDialog.findViewById(R.id.editText_joinGameDialog_codeEditText);
+        joinGameDialogImageButton = joinGameDialog.findViewById(R.id.imageButton_mainScreen_joinButton);
+
+        joinGameDialogImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameCodeTyped = gameCodeDialogEditText.getText().toString();
+            }
+        });
+
+        boolean gameCodeExists = checkIfGameCodeExists(gameCodeTyped);
+        if(!gameCodeExists){
+            Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
+            intent.putExtra("isHost", false);
+            startActivity(intent);
+        }
+    }
+
+    public boolean checkIfGameCodeExists(String gameCode){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                multiPlayerGameDao = snapshot.getValue(MultiPlayerGameDao.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return multiPlayerGameDao != null;
     }
 }

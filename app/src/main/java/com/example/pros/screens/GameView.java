@@ -13,6 +13,7 @@ import com.example.pros.model.Ball;
 import com.example.pros.model.EnemyCpuBlock;
 import com.example.pros.model.MyBlock;
 import com.example.pros.R;
+import com.example.pros.model.User;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,7 +54,6 @@ public class GameView extends SurfaceView implements Runnable {
         gameOver = false;
 
     }
-
 
     public void setGameOver() {
         gameOver = true;
