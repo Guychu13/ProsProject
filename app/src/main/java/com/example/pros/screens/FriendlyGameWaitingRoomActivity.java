@@ -1,5 +1,6 @@
 package com.example.pros.screens;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -29,11 +30,15 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
     private String gameCode;
     private Button startGameButton;
 
+    private MultiPlayerGameDao tempMultiPlayerGameDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friendly_game_waiting_room);
+
         final MultiPlayerGameDao multiPlayerGameDao = new MultiPlayerGameDao();
+        tempMultiPlayerGameDao = null;
 
         p1NameTextView = findViewById(R.id.textView_friendlyGameWaitingRoomScreen_myPlayerName);
         p2NameTextView = findViewById(R.id.textView_friendlyGameWaitingRoomScreen_enemyPlayerName);
@@ -41,19 +46,19 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
 
         allExistingGameCodes = new ArrayList<>();//To check if the code is already taken
         gameCode = createGameCode();
+        multiPlayerGameDao.setGameCode(gameCode);
         lobbyCodeTextView.setText(gameCode);
 
         Intent intent = getIntent();
         boolean isHost = intent.getExtras().getBoolean("isHost");
         if(isHost){
-            multiPlayerGameDao.setP1PlayerName(gameCode, User.getInstance().getUserName());
-            multiPlayerGameDao.setP1SkinImageID(gameCode, User.getInstance().getChosenSkinImageId());
+            multiPlayerGameDao.setP1PlayerName(User.getInstance().getUserName());
+            multiPlayerGameDao.setP1SkinImageID(User.getInstance().getChosenSkinImageId());
         }
         else{
-            multiPlayerGameDao.setP2PlayerName(gameCode, User.getInstance().getUserName());
-            multiPlayerGameDao.setP2SkinImageID(gameCode, User.getInstance().getChosenSkinImageId());
+            multiPlayerGameDao.setP2PlayerName(User.getInstance().getUserName());
+            multiPlayerGameDao.setP2SkinImageID(User.getInstance().getChosenSkinImageId());
         }
-
 
         p1NameTextView.setText(multiPlayerGameDao.getP1PlayerName());
         if(multiPlayerGameDao.getP2PlayerName() == null){
@@ -71,7 +76,7 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FriendlyGameWaitingRoomActivity.this, "It worked!" + multiPlayerGameDao.getP1PlayerName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(FriendlyGameWaitingRoomActivity.this, "It worked! , " + multiPlayerGameDao.getP1PlayerName(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -89,27 +94,46 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
         for (int i=0; i< limit; i++){
             code.append(new Random().nextInt(10));
         }
-        if(!gameCodeExists(code.toString())){
+        if(!GameCodeExists(code.toString())){
             return code.toString();
         }
         return createGameCode();
     }
 
-    private boolean gameCodeExists(final String newGameCode){
-        allExistingGameCodes.clear();
-        FirebaseDatabase.getInstance().getReference("Pros").child("gameCodes")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {/////////////לטפל פה לברר איזה טיפוס אני מקבל מהפיירבייס כי זה לא סטרינג כנראה
-                            String code = snapshot.getValue(String.class);
-                            allExistingGameCodes.add(code);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-        return allExistingGameCodes.contains(newGameCode);
+//    private boolean gameCodeExists(final String newGameCode){
+//        allExistingGameCodes.clear();
+//        FirebaseDatabase.getInstance().getReference("Pros").child("gameCodes")
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {/////////////לטפל פה לברר איזה טיפוס אני מקבל מהפיירבייס כי זה לא סטרינג כנראה
+//                            String code = snapshot.getValue(String.class);
+//                            allExistingGameCodes.add(code);
+//                        }
+//                    }
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                    }
+//                });
+//        return allExistingGameCodes.contains(newGameCode);
+//    }
+
+    public boolean GameCodeExists(String gameCode){
+
+        tempMultiPlayerGameDao = null;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                tempMultiPlayerGameDao = snapshot.getValue(MultiPlayerGameDao.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return tempMultiPlayerGameDao != null;
     }
 }
