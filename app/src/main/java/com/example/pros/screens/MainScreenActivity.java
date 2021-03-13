@@ -45,6 +45,7 @@ public class MainScreenActivity extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         mainScreenPresenter = new MainScreenPresenter(this);
+        mainScreenPresenter.update();
     }
 
     @Override
