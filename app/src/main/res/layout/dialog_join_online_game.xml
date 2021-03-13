@@ -46,6 +46,7 @@
         android:textColorHint="@color/white"
         android:fontFamily="@font/coming_soon"
         android:textSize="13sp"
+        android:textColor="@color/white"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalLeft"

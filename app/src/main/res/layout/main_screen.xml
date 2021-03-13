@@ -71,7 +71,7 @@
         android:layout_marginTop="48dp"
         android:foreground="@drawable/join_button"
         android:layoutDirection="ltr"
-        android:onClick="openJoinGameDialog"
+        android:onClick="goToJoinGameDialog"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalMiddle"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
