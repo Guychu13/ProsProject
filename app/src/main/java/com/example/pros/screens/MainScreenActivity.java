@@ -142,7 +142,7 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     public boolean checkIfGameCodeExists(String gameCode){
-
+        multiPlayerGameDao = null;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
