@@ -50,8 +50,9 @@ public class LoginSignUpActivity extends AppCompatActivity {
         title.setText("Log In,\nOr Create a\nUser");
         usernameDialog = new Dialog(this);
         usernameDialog.setContentView(R.layout.dialog_register_username_pick);
-        usernameDialogEditText = usernameDialog.findViewById(R.id.editText_joinOfflineGameDialog_lobbyCodeEditText);
         chooseDialogButton = usernameDialog.findViewById(R.id.imageButton_usernamePickDialog_choose);
+        userNameChosen = "";
+        usernameDialogEditText = (EditText)usernameDialog.findViewById(R.id.editText_usernamePickDialog_userNameEditText);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 //        mAuth.signOut();
@@ -130,7 +131,6 @@ public class LoginSignUpActivity extends AppCompatActivity {
                                         if (userNameChosen.matches("") || imageUri == null) {
                                             Toast.makeText(LoginSignUpActivity.this, getResources().getString(R.string.usernamePickDialog_emptyError), Toast.LENGTH_SHORT).show();
                                         } else {
-                                            userNameChosen = usernameDialogEditText.getText().toString();
                                             Intent i = new Intent(LoginSignUpActivity.this, MainScreenActivity.class);
                                             User.getInstance().createNewUser(userNameChosen);
 //                                            User.getInstance().setUserName(userNameChosen);

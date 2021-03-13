@@ -25,7 +25,7 @@
         app:layout_constraintGuide_percent="0.01" />
 
     <EditText
-        android:id="@+id/editText_joinOfflineGameDialog_gameCodeEditText"
+        android:id="@+id/editText_usernamePickDialog_userNameEditText"
         android:layout_width="144dp"
         android:layout_height="51dp"
         android:layout_marginStart="16dp"
