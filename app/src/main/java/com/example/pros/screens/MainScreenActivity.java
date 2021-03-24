@@ -37,7 +37,8 @@ public class MainScreenActivity extends AppCompatActivity {
     private MainScreenPresenter mainScreenPresenter;
 
     private float xStart, yStart, xEnd, yEnd;
-    //private SharedPreferences sharedPreferences;
+
+    private boolean codeExists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,27 +129,80 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gameCodeTyped = gameCodeDialogEditText.getText().toString();
-                gameCodeExists = checkIfGameCodeExists(gameCodeTyped);
-                if(!gameCodeExists){
-                    Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
-                    intent.putExtra("isHost", false);
-                    startActivity(intent);
-                }
+
+
+//                codeExists = false;
+//                multiPlayerGameDao = null;
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Pros").child("gameCodes");
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.hasChild(gameCodeTyped)){
+                            Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
+                            intent.putExtra("isHost", false);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+//                gameCodeExists = checkIfGameCodeExists(gameCodeTyped);
+//                if(!codeExists){
+//                    Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
+//                }
+//                else{
+//                    Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
+//                    intent.putExtra("isHost", false);
+//                    startActivity(intent);
+//                }
             }
         });
     }
 
-    public boolean checkIfGameCodeExists(String gameCode){
+//    public boolean checkIfGameCodeExists(String gameCode){//לא מזהה כשמקלידים קוד שכן קיים, לא מבין למה
+//        codeExists = false;
+//        multiPlayerGameDao = null;
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
+//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                multiPlayerGameDao = snapshot.getValue(MultiPlayerGameDao.class);
+//                if(multiPlayerGameDao != null){
+//                    codeExists = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return codeExists;
+//    }
+
+    public void checkIfGameCodeExists(final String gameCode){//לא מזהה כשמקלידים קוד שכן קיים, לא מבין למה
+        codeExists = false;
         multiPlayerGameDao = null;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                multiPlayerGameDao = snapshot.getValue(MultiPlayerGameDao.class);
+                if(snapshot.hasChild(gameCode)){
+                    codeExists = true;
+                }
+                else{
+                    codeExists = false;
+                }
             }
 
             @Override
@@ -156,6 +210,5 @@ public class MainScreenActivity extends AppCompatActivity {
 
             }
         });
-        return multiPlayerGameDao != null;
     }
 }

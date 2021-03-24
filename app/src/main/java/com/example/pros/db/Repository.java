@@ -111,4 +111,10 @@ public class Repository {
             myRef.setValue(skinImageId);
         }
     }
+//
+//    public void saveGameCodeGameDao(String gameCode){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("gameCode");
+//        myRef.setValue(gameCode);
+//    }
 }
