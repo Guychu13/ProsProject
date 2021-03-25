@@ -141,6 +141,7 @@ public class MainScreenActivity extends AppCompatActivity {
                         if(snapshot.hasChild(gameCodeTyped)){
                             Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
                             intent.putExtra("isHost", false);
+                            intent.putExtra("gameCode", gameCodeTyped);
                             startActivity(intent);
                         }
                         else{

@@ -27,6 +27,7 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
 
     private TextView p1NameTextView, p2NameTextView, lobbyCodeTextView;
     private String gameCode;
+    String guestGameCodeEntered;
     private Button startGameButton;
 
     private MultiPlayerGameDao multiPlayerGameDao;
@@ -43,33 +44,45 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         boolean isHost = intent.getExtras().getBoolean("isHost");
+        guestGameCodeEntered = intent.getExtras().getString("gameCode");
 
         if(isHost){
             multiPlayerGameDao  = new MultiPlayerGameDao();
             tempMultiPlayerGameDao = null;
 
             gameCode = createGameCode();
+            multiPlayerGameDao.setGameCode(gameCode);
             lobbyCodeTextView.setText(gameCode);
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
             myRef.setValue(multiPlayerGameDao);
 
-//            multiPlayerGameDao.setGameCode(gameCode);
+
             multiPlayerGameDao.setP1PlayerName(gameCode, User.getInstance().getUserName());
             multiPlayerGameDao.setP1SkinImageID(gameCode, User.getInstance().getChosenSkinImageId());
-        }
-        else{
-            multiPlayerGameDao.setP2PlayerName(gameCode, User.getInstance().getUserName());
-            multiPlayerGameDao.setP2SkinImageID(gameCode, User.getInstance().getChosenSkinImageId());
-        }
 
-        p1NameTextView.setText(multiPlayerGameDao.getP1PlayerName());
-        if(multiPlayerGameDao.getP2PlayerName().equals("")){
+            p1NameTextView.setText(multiPlayerGameDao.getP1PlayerName());
             p2NameTextView.setText(getResources().getString(R.string.friendlyGameWaitingRoomScreen_questionMarks));
         }
         else{
-            p2NameTextView.setText(multiPlayerGameDao.getP2PlayerName());
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(guestGameCodeEntered);
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    multiPlayerGameDao = snapshot.getValue(MultiPlayerGameDao.class);
+                    multiPlayerGameDao.setP2PlayerName(guestGameCodeEntered, User.getInstance().getUserName());
+                    multiPlayerGameDao.setP2SkinImageID(guestGameCodeEntered, User.getInstance().getChosenSkinImageId());
+                    p2NameTextView.setText(multiPlayerGameDao.getP2PlayerName());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
 
         startGameButton = findViewById(R.id.button_friendlyGameWaitingRoomScreen_startGame);
