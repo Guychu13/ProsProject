@@ -3,11 +3,14 @@ package com.example.pros.db;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.example.pros.model.MultiPlayerGame;
 import com.example.pros.model.User;
 import com.example.pros.utils.Observer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +27,9 @@ public class Repository {
 
     private static Repository instance = null;
     private ArrayList<Observer> observers = new ArrayList<>();
-//    private Map<String, UserDao> users = new HashMap<>();
+
     private UserDao user;
+    private MultiPlayerGameDao multiPlayerGame;
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -64,9 +68,6 @@ public class Repository {
         }
     }
 
-//    public Map<String, UserDao> getUsers() {
-//        return users;
-//    }
 
     public UserDao getUser() {
         return this.user;
@@ -81,11 +82,7 @@ public class Repository {
     public void saveNewChosenSkinImageID(int newChosenSkinImageID){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Pros").child("users").child(FirebaseAuth.getInstance().getUid()).child("chosenSkinImageId");
-//        DatabaseReference myRef = database.getReference("users/"+ FirebaseAuth.getInstance().getUid() + "/chosenSkinImageId");
         myRef.setValue(newChosenSkinImageID);
-//        instance = new Repository();//////////////////שמתי את זה כדי שהוא יחזור לפיירבייס וישים פה בתכונה של היוזר את היוזר החדש
-//        updateUserCodeDetails();
-//        notifyObservers();
     }
 
     public void saveUsernameGameDao(String gameCode, String name, int pNum){
@@ -113,9 +110,56 @@ public class Repository {
     }
 
 
-//    public void setGameCode(String gameCode) {
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("gameCode");
-//        myRef.setValue(gameCode);
-//    }
+    public void saveMultiPlayerGame(MultiPlayerGameDao multiPlayerGameDao){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(multiPlayerGameDao.getGameCode());
+        myRef.setValue(multiPlayerGameDao);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                multiPlayerGame = snapshot.getValue(MultiPlayerGameDao.class);
+                notifyObservers();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void updateCodeMultiPlayerGame(String gameCode){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                multiPlayerGame = snapshot.getValue(MultiPlayerGameDao.class);
+                notifyObservers();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void saveP2PlayerName(String gameCode , String p2PlayerName){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p2PlayerName");
+        myRef.setValue(p2PlayerName);
+    }
+
+    public void saveP2SkinImageId(String gameCode, int p2SkinImageID){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p2SkinImageID");
+        myRef.setValue(p2SkinImageID);
+    }
+
+    public MultiPlayerGameDao getMultiPlayerGameDao(){
+        return multiPlayerGame;
+    }
 }

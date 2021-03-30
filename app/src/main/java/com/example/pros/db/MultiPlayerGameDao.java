@@ -1,16 +1,16 @@
 package com.example.pros.db;
 
+import com.example.pros.screens.FriendlyGameWaitingRoomActivity;
+
 public class MultiPlayerGameDao {
 
     public int p1BitmapXPos, p2BitmapXPos;
     public String  p1PlayerName, p2PlayerName;
     public int p1SkinImageID, p2SkinImageID;
     public String gameCode;
-    //אם צריך לשמור כאן גם את התוצאה של המשחק בלייב או לא, לא יודע אם יש בזה צורך
 
     public MultiPlayerGameDao() {
-        p2PlayerName = "";
-        gameCode = "";
+
     }
 
     public int getP1BitmapXPos() {
@@ -35,7 +35,6 @@ public class MultiPlayerGameDao {
 
     public void setP1PlayerName(String gameCode, String p1PlayerName) {
         this.p1PlayerName = p1PlayerName;
-        Repository.getInstance().saveUsernameGameDao(gameCode, p1PlayerName, 1);
     }
 
     public String getP2PlayerName() {
@@ -44,7 +43,6 @@ public class MultiPlayerGameDao {
 
     public void setP2PlayerName(String gameCode, String p2PlayerName) {
         this.p2PlayerName = p2PlayerName;
-        Repository.getInstance().saveUsernameGameDao(gameCode, p2PlayerName, 2);
     }
 
     public int getP1SkinImageID() {
@@ -53,7 +51,6 @@ public class MultiPlayerGameDao {
 
     public void setP1SkinImageID(String gameCode, int p1SkinImageID) {
         this.p1SkinImageID = p1SkinImageID;
-        Repository.getInstance().saveSkinImageIdGameDao(gameCode, p1SkinImageID, 1);
     }
 
     public int getP2SkinImageID() {
@@ -62,7 +59,6 @@ public class MultiPlayerGameDao {
 
     public void setP2SkinImageID(String gameCode, int p2SkinImageID) {
         this.p2SkinImageID = p2SkinImageID;
-        Repository.getInstance().saveSkinImageIdGameDao(gameCode, p2SkinImageID, 2);
     }
 
     public String getGameCode() {
@@ -71,6 +67,5 @@ public class MultiPlayerGameDao {
 
     public void setGameCode(String gameCode) {
         this.gameCode = gameCode;
-//        Repository.getInstance().setGameCode(gameCode);
     }
 }

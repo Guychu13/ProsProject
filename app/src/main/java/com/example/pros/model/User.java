@@ -135,7 +135,6 @@ public class User implements Observer{
 
     @Override
     public void update() {
-
         UserDao user = Repository.getInstance().getUser();
         this.userName = user.getUserName();
         this.chosenSkinImageId = user.getChosenSkinImageId();
