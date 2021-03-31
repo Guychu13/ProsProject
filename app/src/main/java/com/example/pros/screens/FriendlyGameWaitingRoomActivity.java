@@ -81,6 +81,7 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
         }
         else{
             startGameButton.setVisibility(View.INVISIBLE);
+
             Repository.getInstance().updateCodeMultiPlayerGame(guestGameCodeEntered);
             MultiPlayerGame.getInstance().setP2PlayerName(guestGameCodeEntered, User.getInstance().getUserName());
             MultiPlayerGame.getInstance().setP2SkinImageID(guestGameCodeEntered, User.getInstance().getChosenSkinImageId());
