@@ -39,27 +39,38 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friendly_game_waiting_room);
+
+        lobbyCodeTextView = findViewById(R.id.textView_friendlyGameWaitingRoomScreen_lobbyCode);
         p1NameTextView = findViewById(R.id.textView_friendlyGameWaitingRoomScreen_myPlayerName);
         p2NameTextView = findViewById(R.id.textView_friendlyGameWaitingRoomScreen_enemyPlayerName);
-        lobbyCodeTextView = findViewById(R.id.textView_friendlyGameWaitingRoomScreen_lobbyCode);
+        startGameButton = findViewById(R.id.button_friendlyGameWaitingRoomScreen_startGame);
+
         Intent intent = getIntent();
         boolean isHost = intent.getExtras().getBoolean("isHost");
         guestGameCodeEntered = intent.getExtras().getString("gameCode");
+
         MultiPlayerGame.getInstance().register(this);
 
         if(isHost){
+            startGameButton.setVisibility(View.VISIBLE);
+
             gameCode = createGameCode();
             lobbyCodeTextView.setText(gameCode);
 
-            MultiPlayerGame.getInstance();
             MultiPlayerGame.getInstance().createNewMultiPlayerGame(gameCode, User.getInstance().getUserName(), User.getInstance().getChosenSkinImageId());
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p2PlayerName");
+
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    p2NameTextView.setText(snapshot.getValue(String.class));
+                    if(snapshot.getValue(String.class).equals("")){
+                        p2NameTextView.setText(getResources().getString(R.string.friendlyGameWaitingRoomScreen_questionMarks));
+                    }
+                    else{
+                        p2NameTextView.setText(snapshot.getValue(String.class));
+                    }
                 }
 
                 @Override
@@ -69,6 +80,7 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
             });
         }
         else{
+            startGameButton.setVisibility(View.INVISIBLE);
             Repository.getInstance().updateCodeMultiPlayerGame(guestGameCodeEntered);
             MultiPlayerGame.getInstance().setP2PlayerName(guestGameCodeEntered, User.getInstance().getUserName());
             MultiPlayerGame.getInstance().setP2SkinImageID(guestGameCodeEntered, User.getInstance().getChosenSkinImageId());
@@ -77,7 +89,6 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
         }
 
 
-        startGameButton = findViewById(R.id.button_friendlyGameWaitingRoomScreen_startGame);
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

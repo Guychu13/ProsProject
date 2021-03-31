@@ -87,11 +87,10 @@
 
     <Button
         android:id="@+id/button_friendlyGameWaitingRoomScreen_startGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="100dp"
-        android:foreground="@drawable/choose_username_button"
-        android:text="Button"
+        android:background="@drawable/start_game_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
