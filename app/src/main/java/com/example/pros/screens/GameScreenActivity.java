@@ -74,16 +74,6 @@ public class GameScreenActivity extends AppCompatActivity {
         }
     }
 
-//    public class FinalScoreHandler extends Handler {
-//
-//        @Override
-//        public void handleMessage(@NonNull Message msg) {
-//
-//            myBlockFinalScore = msg.getData().getIntegerArrayList("final_score").get(0);
-//            enemyCpuClockFinalScore = msg.getData().getIntegerArrayList("final_score").get(1);
-//        }
-//    }
-
     public class GameTimer implements Runnable {
 
         @Override
