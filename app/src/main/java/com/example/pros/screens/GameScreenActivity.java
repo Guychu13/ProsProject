@@ -14,11 +14,6 @@ import com.example.pros.R;
 import com.example.pros.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class GameScreenActivity extends AppCompatActivity {
 
@@ -32,34 +27,19 @@ public class GameScreenActivity extends AppCompatActivity {
     private int timerPauseDurationMilliSecs;
     private int myBlockScore, enemyCpuBlockScore;
     private boolean didOvertime;
-    private boolean appeared;
+    private boolean winScreenHasAppeared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_screen);
 
-        appeared = false;
+        winScreenHasAppeared = false;
 
-        mAuth = FirebaseAuth.getInstance();
-        firebaseUser = mAuth.getCurrentUser();
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference userReference = database.getReference().child("Pros").child("users").child(firebaseUser.getUid());
-//        userReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                currentUser = snapshot.getValue(User.class);
-//                userCurrentSkinImageId = currentUser.getChosenSkinImageId();
-//            }
-//        @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
         frameLayout = findViewById(R.id.frameLayout_gameScreen_gameFrameLayout);
 
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
-        gameTimerSecondsLeft = 5;
+        gameTimerSecondsLeft = 60;
         timerTextView.setText(gameTimerSecondsLeft / 60 + ":0" + gameTimerSecondsLeft % 60);
         timerPauseDurationMilliSecs = 0;
         myBlockScore = 0;
@@ -122,19 +102,19 @@ public class GameScreenActivity extends AppCompatActivity {
                 }
                 if (gameTimerSecondsLeft <= 0) {
 
-                    if (myBlockScore > enemyCpuBlockScore && !appeared) {
+                    if (myBlockScore > enemyCpuBlockScore && !winScreenHasAppeared) {
                         gameView.setGameOver();
                         Intent intent = new Intent(GameScreenActivity.this, WinAndLossScreenActivity.class);
                         intent.putExtra("winner", "myBlock");
                         startActivity(intent);
-                        appeared = true;
+                        winScreenHasAppeared = true;
 
-                    } else if (myBlockScore < enemyCpuBlockScore && !appeared) {
+                    } else if (myBlockScore < enemyCpuBlockScore && !winScreenHasAppeared) {
                         gameView.setGameOver();
                         Intent intent = new Intent(GameScreenActivity.this, WinAndLossScreenActivity.class);
                         intent.putExtra("winner", "enemyCpuBlock");
                         startActivity(intent);
-                        appeared = true;
+                        winScreenHasAppeared = true;
                     } else {
                         if (didOvertime) {
                             gameView.setGameOver();
