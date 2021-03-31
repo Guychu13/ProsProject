@@ -53,6 +53,12 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
 
         if(isHost){
             startGameButton.setVisibility(View.VISIBLE);
+            startGameButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(FriendlyGameWaitingRoomActivity.this, "It worked! , " + MultiPlayerGame.getInstance().getP1PlayerName(), Toast.LENGTH_LONG).show();
+                }
+            });
 
             gameCode = createGameCode();
             lobbyCodeTextView.setText(gameCode);
@@ -88,14 +94,6 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
             lobbyCodeTextView.setText(guestGameCodeEntered);
             update();
         }
-
-
-        startGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(FriendlyGameWaitingRoomActivity.this, "It worked! , " + MultiPlayerGame.getInstance().getP1PlayerName(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
 
