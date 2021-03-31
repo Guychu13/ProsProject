@@ -106,7 +106,9 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     public void goToGameScreen(View view){
-        startActivity(new Intent(MainScreenActivity.this, GameScreenActivity.class));
+        Intent intent = new Intent(MainScreenActivity.this, GameScreenActivity.class);
+        intent.putExtra("is_multiplayer", false);
+        startActivity(intent);
     }
 
     public void goToFriendlyGameLobbyScreen(View view){
@@ -130,9 +132,6 @@ public class MainScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gameCodeTyped = gameCodeDialogEditText.getText().toString();
 
-
-//                codeExists = false;
-//                multiPlayerGameDao = null;
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Pros").child("gameCodes");
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -154,61 +153,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
                     }
                 });
-
-//                gameCodeExists = checkIfGameCodeExists(gameCodeTyped);
-//                if(!codeExists){
-//                    Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
-//                }
-//                else{
-//                    Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
-//                    intent.putExtra("isHost", false);
-//                    startActivity(intent);
-//                }
-            }
-        });
-    }
-
-//    public boolean checkIfGameCodeExists(String gameCode){//לא מזהה כשמקלידים קוד שכן קיים, לא מבין למה
-//        codeExists = false;
-//        multiPlayerGameDao = null;
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode);
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                multiPlayerGameDao = snapshot.getValue(MultiPlayerGameDao.class);
-//                if(multiPlayerGameDao != null){
-//                    codeExists = true;
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        return codeExists;
-//    }
-
-    public void checkIfGameCodeExists(final String gameCode){//לא מזהה כשמקלידים קוד שכן קיים, לא מבין למה
-        codeExists = false;
-        multiPlayerGameDao = null;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Pros").child("gameCodes");
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild(gameCode)){
-                    codeExists = true;
-                }
-                else{
-                    codeExists = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

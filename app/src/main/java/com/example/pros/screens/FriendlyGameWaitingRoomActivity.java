@@ -56,7 +56,13 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
             startGameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(FriendlyGameWaitingRoomActivity.this, "It worked! , " + MultiPlayerGame.getInstance().getP1PlayerName(), Toast.LENGTH_LONG).show();
+                    if(p2NameTextView.getText().toString().equals(R.string.friendlyGameWaitingRoomScreen_questionMarks)){
+                        Toast.makeText(FriendlyGameWaitingRoomActivity.this, "Can't play multiplayer by yourself ;)", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Intent intentToGameScreenActivity = new Intent(FriendlyGameWaitingRoomActivity.this, GameScreenActivity.class);
+                        intentToGameScreenActivity.putExtra("is_multiplayer", true);
+                    }
                 }
             });
 
