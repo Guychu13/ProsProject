@@ -29,6 +29,11 @@ public class GameScreenActivity extends AppCompatActivity {
     private boolean didOvertime;
     private boolean winScreenHasAppeared;
 
+    private Intent originIntent;
+    private boolean isMultiplayer;
+    private boolean isP1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +42,25 @@ public class GameScreenActivity extends AppCompatActivity {
         winScreenHasAppeared = false;
 
         frameLayout = findViewById(R.id.frameLayout_gameScreen_gameFrameLayout);
-
         timerTextView = findViewById(R.id.textView_gameScreen_timerTextVIew);
+        scoreTextView = findViewById(R.id.textView_gameScreen_scoreTextVIew);
+        smileyTextView = findViewById(R.id.textView_gameScreen_smileyTextVIew);
+
+        timerPauseDurationMilliSecs = 0;//שהייה לאחרי גול
         gameTimerSecondsLeft = 60;
         timerTextView.setText(gameTimerSecondsLeft / 60 + ":0" + gameTimerSecondsLeft % 60);
-        timerPauseDurationMilliSecs = 0;
+
+
         myBlockScore = 0;
         enemyCpuBlockScore = 0;
-
-        scoreTextView = findViewById(R.id.textView_gameScreen_scoreTextVIew);
         scoreTextView.setText(myBlockScore + "-" + enemyCpuBlockScore);
-        smileyTextView = findViewById(R.id.textView_gameScreen_smileyTextVIew);
+
         didOvertime = false;
+
+
+        originIntent = getIntent();
+        isMultiplayer = originIntent.getExtras().getBoolean("isMultiplayer");
+        isP1 = originIntent.getExtras().getBoolean("isP1", false);
     }
 
 
@@ -57,7 +69,7 @@ public class GameScreenActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         windowHeight = frameLayout.getHeight();
         windowWidth = frameLayout.getWidth();
-        gameView = new GameView(this, windowHeight, windowWidth, User.getInstance().getChosenSkinImageId(), new ScoreHandler());
+        gameView = new GameView(this, isMultiplayer, isP1, windowHeight, windowWidth, User.getInstance().getChosenSkinImageId(), new ScoreHandler());
         new Handler().postDelayed(new GameTimer(), 2000);
         frameLayout.addView(gameView);
     }

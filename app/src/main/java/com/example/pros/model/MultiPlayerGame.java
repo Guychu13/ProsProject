@@ -34,16 +34,18 @@ public class MultiPlayerGame implements Observer {
         return p1BitmapXPos;
     }
 
-    public void setP1BitmapXPos(int p1BitmapXPos) {
+    public void setP1BitmapXPos(String gameCode, int p1BitmapXPos) {
         this.p1BitmapXPos = p1BitmapXPos;
+        Repository.getInstance().saveP1BitmapXPos(gameCode, p1BitmapXPos);
     }
 
     public int getP2BitmapXPos() {
         return p2BitmapXPos;
     }
 
-    public void setP2BitmapXPos(int p2BitmapXPos) {
+    public void setP2BitmapXPos(String gameCode, int p2BitmapXPos) {
         this.p2BitmapXPos = p2BitmapXPos;
+        Repository.getInstance().saveP2BitmapXPos(gameCode, p2BitmapXPos);
     }
 
     public String getP1PlayerName() {

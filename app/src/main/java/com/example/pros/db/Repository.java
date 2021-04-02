@@ -159,6 +159,18 @@ public class Repository {
         myRef.setValue(p2SkinImageID);
     }
 
+    public void saveP1BitmapXPos(String gameCode, int p1BitmapXPos) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p1BitmapXPos");
+        myRef.setValue(p1BitmapXPos);
+    }
+
+    public void saveP2BitmapXPos(String gameCode, int p2BitmapXPos) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p2BitmapXPos");
+        myRef.setValue(p2BitmapXPos);
+    }
+
     public MultiPlayerGameDao getMultiPlayerGameDao(){
         return multiPlayerGame;
     }

@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 import com.example.pros.model.Background;
 import com.example.pros.model.Ball;
 import com.example.pros.model.EnemyCpuBlock;
+import com.example.pros.model.MultiPlayerGame;
 import com.example.pros.model.MyBlock;
 import com.example.pros.R;
 import com.example.pros.model.User;
@@ -28,31 +29,59 @@ public class GameView extends SurfaceView implements Runnable {
     private GameScreenActivity.ScoreHandler scoreHandler;
     private boolean gameOver;
 
-    public GameView(Context context, int windowHeight, int windowWidth, int myPlayerSkinImageID, GameScreenActivity.ScoreHandler scoreHandler) {
+    private Bitmap myBlockBitmap;
+    private Bitmap enemyCpuBlockBitmap;
+
+    public GameView(Context context, boolean isMultiplayer, boolean isP1, int windowHeight, int windowWidth, int myPlayerSkinImageID, GameScreenActivity.ScoreHandler scoreHandler) {
         super(context);
 
         this.scoreHandler = scoreHandler;
         gameTread = new Thread(this);
-        Bitmap myBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
-        myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
 
-        Bitmap enemyCpuBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
-        enemyCpuBlockBitmap = Bitmap.createScaledBitmap(enemyCpuBlockBitmap, 250, 50, false);
+        if(isMultiplayer){
+            if(isP1){
+                myBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP1SkinImageID());
+                myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
+                myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
+                MultiPlayerGame.getInstance().setP1BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), myBlock.getXPos());
+
+                enemyCpuBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP2SkinImageID());
+                enemyCpuBlockBitmap = Bitmap.createScaledBitmap(enemyCpuBlockBitmap, 250, 50, false);
+                enemyCpuBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
+                MultiPlayerGame.getInstance().setP2BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), enemyCpuBlock.getXPos());
+            }
+            else{
+                myBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP2SkinImageID());
+                myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
+                myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
+                MultiPlayerGame.getInstance().setP2BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), myBlock.getXPos());
+
+                enemyCpuBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP1SkinImageID());
+                enemyCpuBlockBitmap = Bitmap.createScaledBitmap(enemyCpuBlockBitmap, 250, 50, false);
+                enemyCpuBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
+                MultiPlayerGame.getInstance().setP1BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), enemyCpuBlock.getXPos());
+            }
+        }
+        else{
+            myBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
+            myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
+            myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
+
+            enemyCpuBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
+            enemyCpuBlockBitmap = Bitmap.createScaledBitmap(enemyCpuBlockBitmap, 250, 50, false);
+            enemyCpuBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
+        }
 
         Bitmap gameBallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
         gameBallBitmap = Bitmap.createScaledBitmap(gameBallBitmap, 70, 70, false);
+        gameBall = new Ball(gameBallBitmap, (int) (windowWidth * 0.5) - (gameBallBitmap.getWidth() / 2), (int) (windowHeight * 0.5) - (gameBallBitmap.getHeight() / 2), windowWidth, windowHeight);
 
         Bitmap backgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.game_background_black);
         backgroundBitmap = Bitmap.createScaledBitmap(backgroundBitmap, windowWidth, windowHeight, false);
-
-        myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
-        enemyCpuBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
-        gameBall = new Ball(gameBallBitmap, (int) (windowWidth * 0.5) - (gameBallBitmap.getWidth() / 2), (int) (windowHeight * 0.5) - (gameBallBitmap.getHeight() / 2), windowWidth, windowHeight);
         gameBackground = new Background(backgroundBitmap, 0, 0, windowWidth, windowHeight);
+
         gameTread.start();
-
         gameOver = false;
-
     }
 
     public void setGameOver() {

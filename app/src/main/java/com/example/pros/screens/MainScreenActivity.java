@@ -107,7 +107,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
     public void goToOfflineGameScreen(View view){
         Intent intent = new Intent(MainScreenActivity.this, GameScreenActivity.class);
-        intent.putExtra("is_multiplayer", false);
+        intent.putExtra("isMultiplayer", false);
         startActivity(intent);
     }
 

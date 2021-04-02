@@ -86,7 +86,8 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
                     }
                     else{
                         Intent intentToGameScreenActivity = new Intent(FriendlyGameWaitingRoomActivity.this, GameScreenActivity.class);
-                        intentToGameScreenActivity.putExtra("is_multiplayer", true);
+                        intentToGameScreenActivity.putExtra("isMultiplayer", true);
+                        intentToGameScreenActivity.putExtra("isP1", true);
                         //////////////////////////////////////////////////////////////////צריך לעשות פה אינטנט למסך גיימ סקרין אקטיביטי ואז שם לעשות את ההבדל בין מולטיפלייר לאופליין
                         //גם לעשות את ההפרדה של אונליין ואופליין אנמיז עם המחלקת אב וכל זה
                     }
