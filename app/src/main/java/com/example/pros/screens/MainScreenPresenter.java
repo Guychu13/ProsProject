@@ -24,33 +24,10 @@ public class MainScreenPresenter implements Observer {
 
     @Override
     public void update() {
-
         String userName = User.getInstance().getUserName();
         int chosenSkinImageId = User.getInstance().getChosenSkinImageId();
 
         activity.setUserNameGreetText(userName);
         activity.setChosenSkinImage(chosenSkinImageId);
-
-//        toSettingsScreenButton = (activity).findViewById(R.id.imageButton_mainScreen_settingsButton);
-//        toSettingsScreenButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                activity.goToSettingsScreen();
-//            }
-//        });
-//        toSkinsScreenButton = (activity).findViewById(R.id.imageButton_mainScreen_skinsButton);
-//        toSkinsScreenButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                activity.goToSkinsScreen();
-//            }
-//        });
-//        toJoinGameButton = (activity).findViewById(R.id.imageButton_mainScreen_joinButton);
-//        toJoinGameButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                activity.goToGameScreen();
-//            }
-//        });
     }
 }
