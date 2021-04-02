@@ -98,7 +98,7 @@
         android:layout_marginTop="60dp"
         android:foreground="@drawable/play_offline_button"
         android:layoutDirection="ltr"
-        android:onClick="goToGameScreen"
+        android:onClick="goToOfflineGameScreen"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalLeft"
         app:layout_constraintTop_toBottomOf="@+id/imageButton_mainScreen_joinButton"

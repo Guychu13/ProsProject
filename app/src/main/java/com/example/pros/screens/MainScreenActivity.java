@@ -105,7 +105,7 @@ public class MainScreenActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    public void goToGameScreen(View view){
+    public void goToOfflineGameScreen(View view){
         Intent intent = new Intent(MainScreenActivity.this, GameScreenActivity.class);
         intent.putExtra("is_multiplayer", false);
         startActivity(intent);
