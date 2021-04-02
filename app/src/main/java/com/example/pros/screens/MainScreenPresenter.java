@@ -12,9 +12,6 @@ import com.example.pros.utils.Observer;
 public class MainScreenPresenter implements Observer {
 
     private MainScreenActivity activity;
-    private ImageButton toSkinsScreenButton;
-    private ImageButton toJoinGameButton;
-    private ImageButton toSettingsScreenButton;
 
     public MainScreenPresenter(MainScreenActivity activity){
         this.activity = activity;
