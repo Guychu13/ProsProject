@@ -52,22 +52,6 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
         MultiPlayerGame.getInstance().register(this);
 
         if(isHost){
-            startGameButton.setVisibility(View.VISIBLE);
-            startGameButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(p2NameTextView.getText().toString().equals(R.string.friendlyGameWaitingRoomScreen_questionMarks)){
-                        Toast.makeText(FriendlyGameWaitingRoomActivity.this, "Can't play multiplayer by yourself ;)", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Intent intentToGameScreenActivity = new Intent(FriendlyGameWaitingRoomActivity.this, GameScreenActivity.class);
-                        intentToGameScreenActivity.putExtra("is_multiplayer", true);
-                        //////////////////////////////////////////////////////////////////צריך לעשות פה אינטנט למסך גיימ סקרין אקטיביטי ואז שם לעשות את ההבדל בין מולטיפלייר לאופליין
-                        //גם לעשות את ההפרדה של אונליין ואופליין אנמיז עם המחלקת אב וכל זה
-                    }
-                }
-            });
-
             gameCode = createGameCode();
             lobbyCodeTextView.setText(gameCode);
 
@@ -92,15 +76,31 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
 
                 }
             });
+
+            startGameButton.setVisibility(View.VISIBLE);
+            startGameButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(p2NameTextView.getText().toString().equals(getResources().getString(R.string.friendlyGameWaitingRoomScreen_questionMarks))){
+                        Toast.makeText(FriendlyGameWaitingRoomActivity.this, "Can't play multiplayer by yourself ;)", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Intent intentToGameScreenActivity = new Intent(FriendlyGameWaitingRoomActivity.this, GameScreenActivity.class);
+                        intentToGameScreenActivity.putExtra("is_multiplayer", true);
+                        //////////////////////////////////////////////////////////////////צריך לעשות פה אינטנט למסך גיימ סקרין אקטיביטי ואז שם לעשות את ההבדל בין מולטיפלייר לאופליין
+                        //גם לעשות את ההפרדה של אונליין ואופליין אנמיז עם המחלקת אב וכל זה
+                    }
+                }
+            });
         }
         else{
-            startGameButton.setVisibility(View.INVISIBLE);
-
             Repository.getInstance().updateCodeMultiPlayerGame(guestGameCodeEntered);
             MultiPlayerGame.getInstance().setP2PlayerName(guestGameCodeEntered, User.getInstance().getUserName());
             MultiPlayerGame.getInstance().setP2SkinImageID(guestGameCodeEntered, User.getInstance().getChosenSkinImageId());
             lobbyCodeTextView.setText(guestGameCodeEntered);
             update();
+
+            startGameButton.setVisibility(View.INVISIBLE);
         }
     }
 
