@@ -10,11 +10,12 @@ import android.view.SurfaceView;
 
 import com.example.pros.model.Background;
 import com.example.pros.model.Ball;
+import com.example.pros.model.EnemyBlock;
 import com.example.pros.model.EnemyCpuBlock;
+import com.example.pros.model.EnemyMultiplayerBlock;
 import com.example.pros.model.MultiPlayerGame;
 import com.example.pros.model.MyBlock;
 import com.example.pros.R;
-import com.example.pros.model.User;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,20 +24,26 @@ public class GameView extends SurfaceView implements Runnable {
 
     protected Thread gameTread;
     private MyBlock myBlock;
-    private EnemyCpuBlock enemyCpuBlock;
+    private EnemyBlock enemyBlock;
     private Ball gameBall;
     private Background gameBackground;
     private GameScreenActivity.ScoreHandler scoreHandler;
     private boolean gameOver;
 
     private Bitmap myBlockBitmap;
-    private Bitmap enemyCpuBlockBitmap;
+    private Bitmap enemyBlockBitmap;
+
+    private boolean isMultiplayer;
+    private boolean isP1;
 
     public GameView(Context context, boolean isMultiplayer, boolean isP1, int windowHeight, int windowWidth, int myPlayerSkinImageID, GameScreenActivity.ScoreHandler scoreHandler) {
         super(context);
 
         this.scoreHandler = scoreHandler;
         gameTread = new Thread(this);
+
+        this.isMultiplayer = isMultiplayer;
+        this.isP1 = isP1;
 
         if(isMultiplayer){
             if(isP1){
@@ -45,10 +52,11 @@ public class GameView extends SurfaceView implements Runnable {
                 myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
                 MultiPlayerGame.getInstance().setP1BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), myBlock.getXPos());
 
-                enemyCpuBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP2SkinImageID());
-                enemyCpuBlockBitmap = Bitmap.createScaledBitmap(enemyCpuBlockBitmap, 250, 50, false);
-                enemyCpuBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
-                MultiPlayerGame.getInstance().setP2BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), enemyCpuBlock.getXPos());
+                enemyBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP2SkinImageID());
+                enemyBlockBitmap = Bitmap.createScaledBitmap(enemyBlockBitmap, 250, 50, false);
+                enemyBlock = new EnemyMultiplayerBlock(enemyBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
+                ((EnemyMultiplayerBlock)enemyBlock).setP1(false);
+                MultiPlayerGame.getInstance().setP2BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), enemyBlock.getXPos());
             }
             else{
                 myBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP2SkinImageID());
@@ -56,10 +64,11 @@ public class GameView extends SurfaceView implements Runnable {
                 myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
                 MultiPlayerGame.getInstance().setP2BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), myBlock.getXPos());
 
-                enemyCpuBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP1SkinImageID());
-                enemyCpuBlockBitmap = Bitmap.createScaledBitmap(enemyCpuBlockBitmap, 250, 50, false);
-                enemyCpuBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
-                MultiPlayerGame.getInstance().setP1BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), enemyCpuBlock.getXPos());
+                enemyBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP1SkinImageID());
+                enemyBlockBitmap = Bitmap.createScaledBitmap(enemyBlockBitmap, 250, 50, false);
+                enemyBlock = new EnemyMultiplayerBlock(enemyBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
+                ((EnemyMultiplayerBlock)enemyBlock).setP1(true);
+                MultiPlayerGame.getInstance().setP1BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), enemyBlock.getXPos());
             }
         }
         else{
@@ -67,9 +76,10 @@ public class GameView extends SurfaceView implements Runnable {
             myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
             myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
 
-            enemyCpuBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
-            enemyCpuBlockBitmap = Bitmap.createScaledBitmap(enemyCpuBlockBitmap, 250, 50, false);
-            enemyCpuBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
+            enemyBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
+            enemyBlockBitmap = Bitmap.createScaledBitmap(enemyBlockBitmap, 250, 50, false);
+            enemyBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
+
         }
 
         Bitmap gameBallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
@@ -99,12 +109,11 @@ public class GameView extends SurfaceView implements Runnable {
                 giveBallInitialSpeed();
             }
         }, 2000);
-//        resetGame();
-//        giveBallInitialSpeed();
+
         while (!gameOver) {
-            if (gameBall.checkCollision(myBlock) || gameBall.checkCollision(enemyCpuBlock)) {
+            if (gameBall.checkCollision(myBlock) || gameBall.checkCollision(enemyBlock)) {
                 gameBall.setySpeed(gameBall.getySpeed() * -1);
-                int collisionXLocation = myBlock.getCollisionXLocation(gameBall);
+                float collisionXLocation = myBlock.getCollisionXLocation(gameBall);
                 if (myBlock.getXPos() <= collisionXLocation && collisionXLocation < (myBlock.getXPos() + myBlock.getBitmap().getWidth()) / 2) {
                     if (gameBall.getxSpeed() > 0) {
                         gameBall.setxSpeed(gameBall.getxSpeed() * -1);
@@ -121,16 +130,16 @@ public class GameView extends SurfaceView implements Runnable {
                     myBlock.setScore(myBlock.getScore() + 1);
                 }
                 if (gameBall.checkWhoScored() == 2) {
-                    enemyCpuBlock.setScore(enemyCpuBlock.getScore() + 1);
+                    enemyBlock.setScore(enemyBlock.getScore() + 1);
                 }
                 resetGame();
-                goalMessage.getData().putString("score_string", myBlock.getScore() + "-" + enemyCpuBlock.getScore());
+                goalMessage.getData().putString("score_string", myBlock.getScore() + "-" + enemyBlock.getScore());
                 goalMessage.getData().putInt("my_block_score_int", myBlock.getScore());
-                goalMessage.getData().putInt("enemy_cpu_score_int", enemyCpuBlock.getScore());
+                goalMessage.getData().putInt("enemy_cpu_score_int", enemyBlock.getScore());
                 scoreHandler.sendMessage(goalMessage);
                 drawSurface();
                 try {
-                    myBlock.setXTarget((int) (myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
+                    myBlock.setXTarget((float)(myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -146,12 +155,11 @@ public class GameView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        myBlock.goToTarget(event.getX(), event.getY());
+        myBlock.setXTarget(event.getX());
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
             case MotionEvent.ACTION_UP:
-                myBlock.goToTarget(myBlock.getXPos(), myBlock.getYPos());
+                myBlock.setXTarget(myBlock.getXPos());
                 break;
         }
         return true;
@@ -163,7 +171,7 @@ public class GameView extends SurfaceView implements Runnable {
             if (canvas != null) {
                 gameBackground.draw(canvas);
                 myBlock.draw(canvas);
-                enemyCpuBlock.draw(canvas);
+                enemyBlock.draw(canvas);
                 gameBall.draw(canvas);
                 getHolder().unlockCanvasAndPost(canvas);
             }
@@ -172,8 +180,15 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void move() {
         myBlock.move();
-        enemyCpuBlock.move(gameBall.getXPos());
         gameBall.move();
+
+        if(isMultiplayer){
+            ((EnemyMultiplayerBlock)enemyBlock).setNewXTargetFromFirebase();
+        }
+        else{
+            enemyBlock.setxTarget(gameBall.getXPos());
+        }
+        enemyBlock.move();
     }
 
     private boolean someoneScored() {
@@ -181,10 +196,10 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void resetGame() {
-        gameBall.setXPos((int) (gameBall.getWindowWidth() * 0.5) - (gameBall.getBitmap().getWidth() / 2));
-        gameBall.setYPos((int) (gameBall.getWindowHeight() * 0.5) - (gameBall.getBitmap().getHeight() / 2));
-        myBlock.setXPos((int) (myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
-        enemyCpuBlock.setXPos((int) (enemyCpuBlock.getWindowWidth() * 0.5) - (enemyCpuBlock.getBitmap().getWidth() / 2));
+        gameBall.setXPos((float) (gameBall.getWindowWidth() * 0.5) - (gameBall.getBitmap().getWidth() / 2));
+        gameBall.setYPos((float) (gameBall.getWindowHeight() * 0.5) - (gameBall.getBitmap().getHeight() / 2));
+        myBlock.setXPos((float) (myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
+        enemyBlock.setXPos((float) (enemyBlock.getWindowWidth() * 0.5) - (enemyBlock.getBitmap().getWidth() / 2));
         drawSurface();
     }
 

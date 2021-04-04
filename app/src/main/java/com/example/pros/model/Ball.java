@@ -60,14 +60,14 @@ public class Ball extends GameObject {
     }
 
     public boolean checkCollision(GameObject other) {
-        int left = Math.max(xPos, other.getXPos());
-        int right = Math.min(xPos + bitmap.getWidth(), other.getXPos() + other.getBitmap().getWidth());
-        int top = Math.max(yPos, other.getYPos());
-        int bottom = Math.min(yPos + bitmap.getHeight(), other.getYPos() + other.getBitmap().getHeight());
-        for (int row = left; row < right; row++) {
-            for (int col = top; col < bottom; col++) {
-                if (bitmap.getPixel(row - xPos, col - yPos) != Color.TRANSPARENT &&
-                        other.getBitmap().getPixel(row - other.getXPos(), col - other.getYPos()) != Color.TRANSPARENT) {
+        float left = Math.max(xPos, other.getXPos());
+        float right = Math.min(xPos + bitmap.getWidth(), other.getXPos() + other.getBitmap().getWidth());
+        float top = Math.max(yPos, other.getYPos());
+        float bottom = Math.min(yPos + bitmap.getHeight(), other.getYPos() + other.getBitmap().getHeight());
+        for (float row = left; row < right; row++) {
+            for (float col = top; col < bottom; col++) {
+                if (bitmap.getPixel((int)(row - xPos), (int)(col - yPos)) != Color.TRANSPARENT &&
+                        other.getBitmap().getPixel((int)(row - other.getXPos()), (int)(col - other.getYPos())) != Color.TRANSPARENT) {
                     return true;
                 }
             }

@@ -8,6 +8,7 @@ public class MultiPlayerGameDao {
     public String  p1PlayerName, p2PlayerName;
     public int p1SkinImageID, p2SkinImageID;
     public String gameCode;
+    public boolean gameStarted;
 
     public MultiPlayerGameDao() {
 
@@ -67,5 +68,13 @@ public class MultiPlayerGameDao {
 
     public void setGameCode(String gameCode) {
         this.gameCode = gameCode;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
     }
 }

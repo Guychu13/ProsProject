@@ -7,9 +7,10 @@ import android.graphics.Paint;
 public abstract class GameObject {
 
     protected Bitmap bitmap;
-    protected int xPos, yPos, windowWidth, windowHeight;
+    protected float xPos, yPos;
+    protected int windowWidth, windowHeight;
 
-    public GameObject(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
+    public GameObject(Bitmap bitmap, float xPos, float yPos, int windowWidth, int windowHeight) {
         this.bitmap = bitmap;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -28,19 +29,19 @@ public abstract class GameObject {
         return bitmap;
     }
 
-    public int getXPos() {
+    public float getXPos() {
         return xPos;
     }
 
-    public void setXPos(int xPos) {
+    public void setXPos(float xPos) {
         this.xPos = xPos;
     }
 
-    public void setYPos(int yPos) {
+    public void setYPos(float yPos) {
         this.yPos = yPos;
     }
 
-    public int getYPos() {
+    public float getYPos() {
         return yPos;
     }
 

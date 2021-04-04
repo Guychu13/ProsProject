@@ -11,11 +11,12 @@ import java.util.ArrayList;
 
 public class MultiPlayerGame implements Observer {
 
-    public int p1BitmapXPos, p2BitmapXPos;
+    public float p1BitmapXPos, p2BitmapXPos;
     public String  p1PlayerName, p2PlayerName;
     public int p1SkinImageID, p2SkinImageID;
     public String gameCode;
     private ArrayList<Observer> observers = new ArrayList<>();
+    public boolean gameStarted;
 
     private static MultiPlayerGame instance = null;
 
@@ -30,20 +31,20 @@ public class MultiPlayerGame implements Observer {
         return instance;
     }
 
-    public int getP1BitmapXPos() {
+    public float getP1BitmapXPos() {
         return p1BitmapXPos;
     }
 
-    public void setP1BitmapXPos(String gameCode, int p1BitmapXPos) {
+    public void setP1BitmapXPos(String gameCode, float p1BitmapXPos) {
         this.p1BitmapXPos = p1BitmapXPos;
         Repository.getInstance().saveP1BitmapXPos(gameCode, p1BitmapXPos);
     }
 
-    public int getP2BitmapXPos() {
+    public float getP2BitmapXPos() {
         return p2BitmapXPos;
     }
 
-    public void setP2BitmapXPos(String gameCode, int p2BitmapXPos) {
+    public void setP2BitmapXPos(String gameCode, float p2BitmapXPos) {
         this.p2BitmapXPos = p2BitmapXPos;
         Repository.getInstance().saveP2BitmapXPos(gameCode, p2BitmapXPos);
     }
@@ -90,6 +91,15 @@ public class MultiPlayerGame implements Observer {
         this.gameCode = gameCode;
     }
 
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(String gameCode ,boolean gameStarted) {
+        this.gameStarted = gameStarted;
+        Repository.getInstance().saveGameStarted(gameCode, gameStarted);
+    }
+
     @Override
     public void update() {
         MultiPlayerGameDao multiPlayerGameDao = Repository.getInstance().getMultiPlayerGameDao();
@@ -100,6 +110,7 @@ public class MultiPlayerGame implements Observer {
         this.p2BitmapXPos = multiPlayerGameDao.getP2BitmapXPos();
         this.p2PlayerName = multiPlayerGameDao.getP2PlayerName();
         this.p2SkinImageID = multiPlayerGameDao.getP2SkinImageID();
+        this.gameStarted = multiPlayerGameDao.isGameStarted();
         notifyObservers();
     }
 
@@ -118,6 +129,7 @@ public class MultiPlayerGame implements Observer {
         newMultiPlayerGameDao.setP1BitmapXPos(0);
         newMultiPlayerGameDao.setP2BitmapXPos(0);
         newMultiPlayerGameDao.setP2SkinImageID(gameCode, 0);
+        newMultiPlayerGameDao.setGameStarted(false);
         Repository.getInstance().saveMultiPlayerGame(newMultiPlayerGameDao);
     }
 

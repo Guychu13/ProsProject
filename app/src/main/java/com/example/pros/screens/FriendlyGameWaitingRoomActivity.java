@@ -56,6 +56,8 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
             lobbyCodeTextView.setText(gameCode);
 
             MultiPlayerGame.getInstance().createNewMultiPlayerGame(gameCode, User.getInstance().getUserName(), User.getInstance().getChosenSkinImageId());
+            //את זה אפשר להפריד ליצירה של משחק ואז לעשות סטים לשם של שחקן 1 ולסקין שלו אבל זה דרך קיצור
+            //לעשות הכל בפעולה שיוצרת משחק כי תמיד יהיו לי התכונות האלו ביד כשנוצר משחק
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("p2PlayerName");
@@ -85,23 +87,60 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
                         Toast.makeText(FriendlyGameWaitingRoomActivity.this, "Can't play multiplayer by yourself ;)", Toast.LENGTH_LONG).show();
                     }
                     else{
+                        MultiPlayerGame.getInstance().setGameStarted(MultiPlayerGame.getInstance().getGameCode(),true);
                         Intent intentToGameScreenActivity = new Intent(FriendlyGameWaitingRoomActivity.this, GameScreenActivity.class);
                         intentToGameScreenActivity.putExtra("isMultiplayer", true);
                         intentToGameScreenActivity.putExtra("isP1", true);
-                        //////////////////////////////////////////////////////////////////צריך לעשות פה אינטנט למסך גיימ סקרין אקטיביטי ואז שם לעשות את ההבדל בין מולטיפלייר לאופליין
-                        //גם לעשות את ההפרדה של אונליין ואופליין אנמיז עם המחלקת אב וכל זה
+                        startActivity(intentToGameScreenActivity);
                     }
                 }
             });
         }
         else{
-            Repository.getInstance().updateCodeMultiPlayerGame(guestGameCodeEntered);
-            MultiPlayerGame.getInstance().setP2PlayerName(guestGameCodeEntered, User.getInstance().getUserName());
-            MultiPlayerGame.getInstance().setP2SkinImageID(guestGameCodeEntered, User.getInstance().getChosenSkinImageId());
-            lobbyCodeTextView.setText(guestGameCodeEntered);
-            update();
-
             startGameButton.setVisibility(View.INVISIBLE);
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(guestGameCodeEntered);
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    tempMultiPlayerGameDao = snapshot.getValue(MultiPlayerGameDao.class);
+                    Repository.getInstance().setMultiPlayerGame(tempMultiPlayerGameDao);
+                    MultiPlayerGame.getInstance().update();
+                    MultiPlayerGame.getInstance().setP2PlayerName(MultiPlayerGame.getInstance().getGameCode(), User.getInstance().getUserName());
+                    MultiPlayerGame.getInstance().setP2SkinImageID(MultiPlayerGame.getInstance().getGameCode(), User.getInstance().getChosenSkinImageId());
+                    lobbyCodeTextView.setText(MultiPlayerGame.getInstance().getGameCode());
+                    update();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+//            Repository.getInstance().updateCodeMultiPlayerGame(guestGameCodeEntered);
+
+
+            //בדיקה אם המשחק התחיל או לא
+            myRef = database.getReference("Pros").child("gameCodes").child(guestGameCodeEntered).child("gameStarted");
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Boolean started = snapshot.getValue(Boolean.class);
+                    if(started){
+                        Intent intentToGameScreenActivity = new Intent(FriendlyGameWaitingRoomActivity.this, GameScreenActivity.class);
+                        intentToGameScreenActivity.putExtra("isMultiplayer", true);
+                        intentToGameScreenActivity.putExtra("isP1", false);
+                        startActivity(intentToGameScreenActivity);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 
