@@ -35,7 +35,7 @@ public abstract class EnemyBlock extends GameObject {
         if (xPos + bitmap.getWidth() / 2 < xTarget) {
             for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
                 if (xPos + bitmap.getWidth() < windowWidth) {
-                    setXPos(xPos + 1);
+                    this.setXPos(xPos + 1);
 //                    xPos += 1;
                 }
             }
@@ -43,7 +43,7 @@ public abstract class EnemyBlock extends GameObject {
         if (xPos + bitmap.getWidth() / 2 > xTarget) {
             for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
                 if (xPos > 0) {
-                    setXPos(xPos - 1);
+                    this.setXPos(xPos - 1);
 //                    xPos -= 1;
                 }
             }

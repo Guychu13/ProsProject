@@ -34,6 +34,8 @@ public class Repository {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
+    private float enemyXPos;
+
     public static Repository getInstance(){
         if(instance == null){
             instance = new Repository();
@@ -183,5 +185,31 @@ public class Repository {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("gameStarted");
         myRef.setValue(gameStarted);
+    }
+
+    public void setListenerOnEnemyXPos(boolean isP1){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef;
+        if(isP1){
+            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
+        }
+        else{
+            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+        }
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                enemyXPos = snapshot.getValue(Float.class);
+                notifyObservers();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public float getEnemyXPos() {
+        return enemyXPos;
     }
 }

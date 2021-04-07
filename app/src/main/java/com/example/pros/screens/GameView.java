@@ -181,14 +181,13 @@ public class GameView extends SurfaceView implements Runnable {
     private void move() {
         myBlock.move();
         gameBall.move();
-
-        if(isMultiplayer){
-            ((EnemyMultiplayerBlock)enemyBlock).setNewXTargetFromFirebase();
-        }
-        else{
-            enemyBlock.setxTarget(gameBall.getXPos());
-        }
         enemyBlock.move();
+//        if(isMultiplayer){
+//            ((EnemyMultiplayerBlock)enemyBlock).setNewXTargetFromFirebase();
+//        }
+//        else{
+//            enemyBlock.setxTarget(gameBall.getXPos());
+//        }
     }
 
     private boolean someoneScored() {
