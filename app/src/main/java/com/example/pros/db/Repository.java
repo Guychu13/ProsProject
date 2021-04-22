@@ -31,10 +31,10 @@ public class Repository {
     private UserDao user;
     private MultiPlayerGameDao multiPlayerGame;
 
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
+//    private FirebaseAuth mAuth;
+//    private FirebaseUser currentUser;
 
-    private float enemyXPos;
+//    private float enemyXPos;
 
     public static Repository getInstance(){
         if(instance == null){
@@ -162,29 +162,30 @@ public class Repository {
         myRef.setValue(gameStarted);
     }
 
-    public void setListenerOnEnemyXPos(boolean isP1){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef;
-        if(isP1){
-            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-        }
-        else{
-            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-        }
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                enemyXPos = snapshot.getValue(Float.class);
-                notifyObservers();
-            }
+//    public void setListenerOnEnemyXPos(boolean isP1){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef;
+//        if(isP1){
+//            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
+//        }
+//        else{
+//            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+//        }
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                enemyXPos = snapshot.getValue(Float.class);
+//                notifyObservers();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-    public float getEnemyXPos() {
-        return enemyXPos;
-    }
+//    public float getEnemyXPos() {
+//        return enemyXPos;
+//    }
 }

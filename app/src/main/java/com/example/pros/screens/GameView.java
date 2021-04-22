@@ -49,7 +49,8 @@ public class GameView extends SurfaceView implements Runnable {
             if(isP1){
                 myBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP1SkinImageID());
                 myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
-                myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
+                myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight, true);
+                myBlock.setP1(true);
                 MultiPlayerGame.getInstance().setP1BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), myBlock.getXPos());
 
                 enemyBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP2SkinImageID());
@@ -61,7 +62,8 @@ public class GameView extends SurfaceView implements Runnable {
             else{
                 myBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP2SkinImageID());
                 myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
-                myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
+                myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight, true);
+                myBlock.setP1(false);
                 MultiPlayerGame.getInstance().setP2BitmapXPos(MultiPlayerGame.getInstance().getGameCode(), myBlock.getXPos());
 
                 enemyBlockBitmap = BitmapFactory.decodeResource(getResources(), MultiPlayerGame.getInstance().getP1SkinImageID());
@@ -74,7 +76,7 @@ public class GameView extends SurfaceView implements Runnable {
         else{
             myBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
             myBlockBitmap = Bitmap.createScaledBitmap(myBlockBitmap, 250, 50, false);
-            myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight);
+            myBlock = new MyBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.9), windowWidth, windowHeight, false);
 
             enemyBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
             enemyBlockBitmap = Bitmap.createScaledBitmap(enemyBlockBitmap, 250, 50, false);
@@ -182,12 +184,12 @@ public class GameView extends SurfaceView implements Runnable {
         myBlock.move();
         gameBall.move();
         enemyBlock.move();
-        if(isMultiplayer){
-            ((EnemyMultiplayerBlock)enemyBlock).setNewXTargetFromFirebase();
-        }
-        else{
-            enemyBlock.setxTarget(gameBall.getXPos());
-        }
+//        if(isMultiplayer){
+//            ((EnemyMultiplayerBlock)enemyBlock).setNewXTargetFromFirebase();
+//        }
+//        else{
+//            enemyBlock.setxTarget(gameBall.getXPos());
+//        }
     }
 
     private boolean someoneScored() {

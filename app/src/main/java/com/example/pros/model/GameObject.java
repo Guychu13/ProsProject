@@ -21,7 +21,7 @@ public abstract class GameObject {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         if (canvas != null) {
-            canvas.drawBitmap(bitmap, xPos, yPos, paint);
+            canvas.drawBitmap(bitmap, getXPos(), getYPos(), paint);
         }
     }
 

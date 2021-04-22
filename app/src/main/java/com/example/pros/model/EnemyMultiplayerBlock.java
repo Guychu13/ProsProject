@@ -13,13 +13,33 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class EnemyMultiplayerBlock extends EnemyBlock implements Observer {
+public class EnemyMultiplayerBlock extends EnemyBlock {//מחקתי את האימפלמנטס אובזרבר
 
     boolean isP1;
     public EnemyMultiplayerBlock(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
         super(bitmap, xPos, yPos, windowWidth, windowHeight);
-        Repository.getInstance().register(this);
-        Repository.getInstance().setListenerOnEnemyXPos(isP1);
+//        Repository.getInstance().register(this);
+//        Repository.getInstance().setListenerOnEnemyXPos(isP1);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef;
+        if(isP1){
+            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
+        }
+        else{
+            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+        }
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                setXPos(snapshot.getValue(Float.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public boolean isP1() {
@@ -30,39 +50,40 @@ public class EnemyMultiplayerBlock extends EnemyBlock implements Observer {
         isP1 = p1;
     }
 
-    public void setNewXTargetFromFirebase() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                setxTarget(snapshot.getValue(Float.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    @Override
-    public void setXPos(float xPos) {
-        this.xPos = xPos;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef;
-        if(isP1){
-            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-        }
-        else{
-            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-        }
-        myRef.setValue(this.xPos);
-    }
+//    public void setNewXTargetFromFirebase() {
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                setXPos(snapshot.getValue(Float.class));
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
 
-    @Override
-    public void update() {
-        this.xPos = Repository.getInstance().getEnemyXPos();
-    }
+//    @Override
+//    public void setXPos(float xPos) {//לא צריך כתיבה של האויב, כל אחד כותב את שלו וקורא את של האוייב
+//        this.xPos = xPos;
+////        FirebaseDatabase database = FirebaseDatabase.getInstance();
+////        DatabaseReference myRef;
+////        if(isP1){
+////            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
+////        }
+////        else{
+////            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+////        }
+////        myRef.setValue(this.xPos);
+//    }
+
+
+//    @Override
+//    public void update() {
+//        this.xPos = Repository.getInstance().getEnemyXPos();
+//    }
 }
