@@ -52,42 +52,4 @@ public class EnemyMultiplayerBlock extends EnemyBlock {
     public void move() {//המיקום שלו מתעדכן אוטמטית מהפעולה הבונה כבר אז אין צורך בפעולה של מוב כאן
 
     }
-
-
-    //    public void setNewXTargetFromFirebase() {
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                setXPos(snapshot.getValue(Float.class));
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
-
-
-//    @Override
-//    public void setXPos(float xPos) {//לא צריך כתיבה של האויב, כל אחד כותב את שלו וקורא את של האוייב
-//        this.xPos = xPos;
-////        FirebaseDatabase database = FirebaseDatabase.getInstance();
-////        DatabaseReference myRef;
-////        if(isP1){
-////            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-////        }
-////        else{
-////            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-////        }
-////        myRef.setValue(this.xPos);
-//    }
-
-
-//    @Override
-//    public void update() {
-//        this.xPos = Repository.getInstance().getEnemyXPos();
-//    }
 }
