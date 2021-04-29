@@ -30,42 +30,43 @@ public class MyBlock extends GameObject
         this.score = 0;
         xSpeed = 15;
         this.isMultiplayer = isMultiplayer;
+        this.xTarget = xPos;
     }
 
     public void move() {
         if (xPos < xTarget) {
             for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
                 if (xPos + bitmap.getWidth() < windowWidth) {
-                    xPos += 1;
-                    if(isMultiplayer){
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef;
-                        if(isP1){
-                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-                        }
-                        else{
-                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-                        }
-                        myRef.setValue(xPos);
-                    }
+                    setXPos(xPos + 1);
+//                    if(isMultiplayer){
+//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                        DatabaseReference myRef;
+//                        if(isP1){
+//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
+//                        }
+//                        else{
+//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+//                        }
+//                        myRef.setValue(xPos);
+//                    }
                 }
             }
         }
         if (xPos > xTarget) {
             for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
                 if (xPos > 0) {
-                    xPos -= 1;
-                    if(isMultiplayer){
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef;
-                        if(isP1){
-                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-                        }
-                        else{
-                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-                        }
-                        myRef.setValue(xPos);
-                    }
+                    setXPos(xPos - 1);
+//                    if(isMultiplayer){
+//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                        DatabaseReference myRef;
+//                        if(isP1){
+//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
+//                        }
+//                        else{
+//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+//                        }
+//                        myRef.setValue(xPos);
+//                    }
                 }
             }
         }
@@ -77,47 +78,6 @@ public class MyBlock extends GameObject
     //בפעולה אפדייט כאן אני אפעיל את הפעולת ציור שלי וכך הציור יתבצע רק כאשר אני קיבלתי את הנתונים שלי מהפיירבייס
     //הפעולה הרגילה של הדראו ריקה כי אני רוצה שכלום יצוייר עד שאני אקבל את הנתונים הדרושים
 
-//    public float getXPosFromFirebase(){
-//        if(isMultiplayer) {
-//            FirebaseDatabase database = FirebaseDatabase.getInstance();
-//            DatabaseReference myRef;
-//            if (isP1) {
-//                myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-//            } else {
-//                myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-//            }
-//            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    setXPos(snapshot.getValue(Float.class));
-//                    notifyObservers();
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//        }
-//    }
-
-//    @Override
-//    public void draw(Canvas canvas) {//לא רוצה שהדראו הזה יפעל, כי אני רוצה להפעיל את הדראו אני. מתי שאקבל את הנתונים מהפיירבייס, ולא מתי שכולם מופעלים
-//        this.canvas = canvas;
-//        getXPosFromFirebase();
-//    }
-
-//    public void realDraw(Canvas canvas) {
-//        Paint paint = new Paint();
-//        if (canvas != null) {
-//            canvas.drawBitmap(bitmap, getXPos(), getYPos(), paint);
-//        }
-//    }
-
-//    @Override
-//    public void update() {
-//        realDraw(canvas);
-//    }
 
     public boolean checkCollision(GameObject other) {
         float left = Math.max(xPos, other.getXPos());
@@ -159,6 +119,22 @@ public class MyBlock extends GameObject
             return "right";
         } else {
             return "none";
+        }
+    }
+
+    @Override
+    public void setXPos(float xPos) {
+        this.xPos = xPos;
+        if(isMultiplayer){
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef;
+            if(isP1){
+                myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
+            }
+            else{
+                myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
+            }
+            myRef.setValue(xPos);
         }
     }
 

@@ -81,7 +81,6 @@ public class GameView extends SurfaceView implements Runnable {
             enemyBlockBitmap = BitmapFactory.decodeResource(getResources(), myPlayerSkinImageID);
             enemyBlockBitmap = Bitmap.createScaledBitmap(enemyBlockBitmap, 250, 50, false);
             enemyBlock = new EnemyCpuBlock(myBlockBitmap, (int) (windowWidth * 0.5) - (myBlockBitmap.getWidth() / 2), (int) (windowHeight * 0.1), windowWidth, windowHeight);
-
         }
 
         Bitmap gameBallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
@@ -102,54 +101,49 @@ public class GameView extends SurfaceView implements Runnable {
 
     @Override
     public void run() {
-
-        drawSurface();
+        resetGame();
         new Timer().schedule(new TimerTask() {
-            @Override
             public void run() {
-                resetGame();
                 giveBallInitialSpeed();
+                while (!gameOver) {
+                    if (gameBall.checkCollision(myBlock) || gameBall.checkCollision(enemyBlock)) {
+                        gameBall.setySpeed(gameBall.getySpeed() * -1);
+                        float collisionXLocation = myBlock.getCollisionXLocation(gameBall);
+                        if (myBlock.getXPos() <= collisionXLocation && collisionXLocation < (myBlock.getXPos() + myBlock.getBitmap().getWidth()) / 2) {
+                            if (gameBall.getxSpeed() > 0) {
+                                gameBall.setxSpeed(gameBall.getxSpeed() * -1);
+                            }
+                        } else if ((myBlock.getXPos() + myBlock.getBitmap().getWidth()) / 2 <= collisionXLocation && collisionXLocation <= myBlock.getXPos() + myBlock.getBitmap().getWidth()) {
+                            if (gameBall.getxSpeed() < 0) {
+                                gameBall.setxSpeed(gameBall.getxSpeed() * -1);
+                            }
+                        }
+                    }
+                    if (someoneScored()) {
+                        Message goalMessage = scoreHandler.obtainMessage();
+                        if (gameBall.checkWhoScored() == 1) {
+                            myBlock.setScore(myBlock.getScore() + 1);
+                        }
+                        if (gameBall.checkWhoScored() == 2) {
+                            enemyBlock.setScore(enemyBlock.getScore() + 1);
+                        }
+                        resetGame();
+                        goalMessage.getData().putString("score_string", myBlock.getScore() + "-" + enemyBlock.getScore());
+                        goalMessage.getData().putInt("my_block_score_int", myBlock.getScore());
+                        goalMessage.getData().putInt("enemy_cpu_score_int", enemyBlock.getScore());
+                        scoreHandler.sendMessage(goalMessage);
+                        try {
+//                            myBlock.setXTarget((float)(myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    move();
+                    drawSurface();
+                }
             }
         }, 2000);
-
-        while (!gameOver) {
-            if (gameBall.checkCollision(myBlock) || gameBall.checkCollision(enemyBlock)) {
-                gameBall.setySpeed(gameBall.getySpeed() * -1);
-                float collisionXLocation = myBlock.getCollisionXLocation(gameBall);
-                if (myBlock.getXPos() <= collisionXLocation && collisionXLocation < (myBlock.getXPos() + myBlock.getBitmap().getWidth()) / 2) {
-                    if (gameBall.getxSpeed() > 0) {
-                        gameBall.setxSpeed(gameBall.getxSpeed() * -1);
-                    }
-                } else if ((myBlock.getXPos() + myBlock.getBitmap().getWidth()) / 2 <= collisionXLocation && collisionXLocation <= myBlock.getXPos() + myBlock.getBitmap().getWidth()) {
-                    if (gameBall.getxSpeed() < 0) {
-                        gameBall.setxSpeed(gameBall.getxSpeed() * -1);
-                    }
-                }
-            }
-            if (someoneScored()) {
-                Message goalMessage = scoreHandler.obtainMessage();
-                if (gameBall.checkWhoScored() == 1) {
-                    myBlock.setScore(myBlock.getScore() + 1);
-                }
-                if (gameBall.checkWhoScored() == 2) {
-                    enemyBlock.setScore(enemyBlock.getScore() + 1);
-                }
-                resetGame();
-                goalMessage.getData().putString("score_string", myBlock.getScore() + "-" + enemyBlock.getScore());
-                goalMessage.getData().putInt("my_block_score_int", myBlock.getScore());
-                goalMessage.getData().putInt("enemy_cpu_score_int", enemyBlock.getScore());
-                scoreHandler.sendMessage(goalMessage);
-                drawSurface();
-                try {
-                    myBlock.setXTarget((float)(myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            move();
-            drawSurface();
-        }
 //        Message finalScoreMessage = finalScoreHandler.obtainMessage();
 //        finalScoreMessage.getData().putIntegerArrayList("final_score", new ArrayList<Integer>(Arrays.asList(myBlock.getScore(), enemyCpuBlock.getScore())));
 //        finalScoreHandler.sendMessage(finalScoreMessage);
@@ -183,13 +177,13 @@ public class GameView extends SurfaceView implements Runnable {
     private void move() {
         myBlock.move();
         gameBall.move();
-        enemyBlock.move();
-//        if(isMultiplayer){
-//            ((EnemyMultiplayerBlock)enemyBlock).setNewXTargetFromFirebase();
-//        }
-//        else{
-//            enemyBlock.setxTarget(gameBall.getXPos());
-//        }
+        if(!isMultiplayer){
+            enemyBlock.setxTarget(gameBall.getXPos());
+        }
+        else{
+            //לא צריך פה כלום כי מהפעולה הבונה של האנמי מולטיפלייר בלוק זה כבר יעדכן את המיקום בקוד
+//            enemyBlock.move();
+        }
     }
 
     private boolean someoneScored() {
@@ -200,7 +194,10 @@ public class GameView extends SurfaceView implements Runnable {
         gameBall.setXPos((float) (gameBall.getWindowWidth() * 0.5) - (gameBall.getBitmap().getWidth() / 2));
         gameBall.setYPos((float) (gameBall.getWindowHeight() * 0.5) - (gameBall.getBitmap().getHeight() / 2));
         myBlock.setXPos((float) (myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
-        enemyBlock.setXPos((float) (enemyBlock.getWindowWidth() * 0.5) - (enemyBlock.getBitmap().getWidth() / 2));
+        myBlock.setXTarget(myBlock.getXPos());
+        if(!isMultiplayer){
+            enemyBlock.setXPos((float) (enemyBlock.getWindowWidth() * 0.5) - (enemyBlock.getBitmap().getWidth() / 2));
+        }
         drawSurface();
     }
 

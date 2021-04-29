@@ -50,7 +50,13 @@ public class EnemyMultiplayerBlock extends EnemyBlock {//מחקתי את האי�
         isP1 = p1;
     }
 
-//    public void setNewXTargetFromFirebase() {
+    @Override
+    public void move() {//המיקום שלו מתעדכן אוטמטית מהפעולה הבונה כבר אז אין צורך בפעולה של מוב כאן
+
+    }
+
+
+    //    public void setNewXTargetFromFirebase() {
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
 //        myRef.addListenerForSingleValueEvent(new ValueEventListener() {

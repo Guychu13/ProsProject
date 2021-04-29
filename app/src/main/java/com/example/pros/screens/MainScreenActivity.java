@@ -130,29 +130,35 @@ public class MainScreenActivity extends AppCompatActivity {
         joinGameDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameCodeTyped = gameCodeDialogEditText.getText().toString();
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Pros").child("gameCodes");
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.hasChild(gameCodeTyped)){
-                            Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
-                            intent.putExtra("isHost", false);
-                            intent.putExtra("gameCode", gameCodeTyped);
-                            startActivity(intent);
-                        }
-                        else{
-                            Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                gameCodeTyped = gameCodeDialogEditText.getText().toString();
 
-                    }
-                });
+                if(gameCodeTyped.equals("")){
+                    Toast.makeText(MainScreenActivity.this, "Please type the game code", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.hasChild(gameCodeTyped)){
+                                Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
+                                intent.putExtra("isHost", false);
+                                intent.putExtra("gameCode", gameCodeTyped);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
             }
         });
     }
