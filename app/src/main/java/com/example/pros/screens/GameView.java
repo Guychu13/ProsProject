@@ -181,10 +181,6 @@ public class GameView extends SurfaceView implements Runnable {
             enemyBlock.setxTarget(gameBall.getXPos());
             enemyBlock.move();
         }
-        else{
-            //לא צריך פה כלום כי מהפעולה הבונה של האנמי מולטיפלייר בלוק זה כבר יעדכן את המיקום בקוד
-//            enemyBlock.move();
-        }
     }
 
     private boolean someoneScored() {
