@@ -38,17 +38,6 @@ public class MyBlock extends GameObject
             for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
                 if (xPos + bitmap.getWidth() < windowWidth) {
                     setXPos(xPos + 1);
-//                    if(isMultiplayer){
-//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                        DatabaseReference myRef;
-//                        if(isP1){
-//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-//                        }
-//                        else{
-//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-//                        }
-//                        myRef.setValue(xPos);
-//                    }
                 }
             }
         }
@@ -56,28 +45,10 @@ public class MyBlock extends GameObject
             for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
                 if (xPos > 0) {
                     setXPos(xPos - 1);
-//                    if(isMultiplayer){
-//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                        DatabaseReference myRef;
-//                        if(isP1){
-//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-//                        }
-//                        else{
-//                            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-//                        }
-//                        myRef.setValue(xPos);
-//                    }
                 }
             }
         }
     }
-
-    ///התיכנון שלי פה הוא כזה
-    //הפעולה שפה למטה בעצם הולכת לפיירבייס ומביאה משם את המיקום X שלי
-    //אחרי שהיא עושה את זה היא תתריע לאובזרבר שבעצם יהיה הקלאס הזה שמשהו השתנה
-    //בפעולה אפדייט כאן אני אפעיל את הפעולת ציור שלי וכך הציור יתבצע רק כאשר אני קיבלתי את הנתונים שלי מהפיירבייס
-    //הפעולה הרגילה של הדראו ריקה כי אני רוצה שכלום יצוייר עד שאני אקבל את הנתונים הדרושים
-
 
     public boolean checkCollision(GameObject other) {
         float left = Math.max(xPos, other.getXPos());
