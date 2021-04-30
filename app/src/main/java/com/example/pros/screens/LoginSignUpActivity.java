@@ -175,7 +175,6 @@ public class LoginSignUpActivity extends AppCompatActivity {
     }
 
     private void uploadPhotoToFirebase(final String id) {
-
         FirebaseStorage.getInstance().getReference().child(id).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
