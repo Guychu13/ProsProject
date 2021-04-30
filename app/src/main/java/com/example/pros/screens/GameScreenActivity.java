@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.pros.R;
 import com.example.pros.model.User;
+import com.example.pros.utils.SpotifyReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,6 +35,8 @@ public class GameScreenActivity extends AppCompatActivity {
     private boolean isMultiplayer;
     private boolean isP1;
 
+    private SpotifyReceiver spotifyBroadcastReciever;
+    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +91,8 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     public class GameTimer implements Runnable {
-
         @Override
         public void run() {
-
             if (timerPauseDurationMilliSecs != 0) {
                 new Handler().postDelayed(new GameTimer(), timerPauseDurationMilliSecs);
                 timerPauseDurationMilliSecs = 0;
@@ -130,7 +132,23 @@ public class GameScreenActivity extends AppCompatActivity {
                     }
                 }
             }
-//            }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        spotifyBroadcastReciever = new SpotifyReceiver();
+        filter = new IntentFilter();
+        filter.addAction("com.spotify.music.playbackstatechanged");
+        filter.addAction("com.spotify.music.metadatachanged");
+        filter.addAction("com.spotify.music.queuechanged");
+        registerReceiver(spotifyBroadcastReciever, filter);
+    }
+
+    @Override
+    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onStop();
+        unregisterReceiver(spotifyBroadcastReciever);
     }
 }

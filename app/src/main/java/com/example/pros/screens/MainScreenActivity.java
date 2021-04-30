@@ -2,6 +2,7 @@ package com.example.pros.screens;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pros.R;
 import com.example.pros.db.MultiPlayerGameDao;
+import com.example.pros.utils.SpotifyReceiver;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +42,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
     private boolean codeExists;
 
+    private SpotifyReceiver spotifyBroadcastReciever;
+    private IntentFilter filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,23 @@ public class MainScreenActivity extends AppCompatActivity {
 
         mainScreenPresenter = new MainScreenPresenter(this);
         mainScreenPresenter.update();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        spotifyBroadcastReciever = new SpotifyReceiver();
+        filter = new IntentFilter();
+        filter.addAction("com.spotify.music.playbackstatechanged");
+        filter.addAction("com.spotify.music.metadatachanged");
+        filter.addAction("com.spotify.music.queuechanged");
+        registerReceiver(spotifyBroadcastReciever, filter);
+    }
+
+    @Override
+    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onStop();
+        unregisterReceiver(spotifyBroadcastReciever);
     }
 
     @Override

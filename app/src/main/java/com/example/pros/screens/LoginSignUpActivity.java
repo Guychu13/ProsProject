@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.app.Dialog;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.pros.R;
 import com.example.pros.model.User;
+import com.example.pros.utils.SpotifyReceiver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,6 +43,8 @@ public class LoginSignUpActivity extends AppCompatActivity {
     private int PICK_IMAGE = 100;
     private Uri imageUri;
 
+    private SpotifyReceiver spotifyBroadcastReciever;
+    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,9 +193,20 @@ public class LoginSignUpActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        spotifyBroadcastReciever = new SpotifyReceiver();
+        filter = new IntentFilter();
+        filter.addAction("com.spotify.music.playbackstatechanged");
+        filter.addAction("com.spotify.music.metadatachanged");
+        filter.addAction("com.spotify.music.queuechanged");
+        registerReceiver(spotifyBroadcastReciever, filter);
+    }
 
-//    protected void openGalleryGroup() {
-//        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-//        startActivityForResult(gallery, PICK_IMAGE);
-//    }
+    @Override
+    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onStop();
+        unregisterReceiver(spotifyBroadcastReciever);
+    }
 }

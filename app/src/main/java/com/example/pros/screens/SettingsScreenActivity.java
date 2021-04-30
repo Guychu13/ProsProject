@@ -3,6 +3,7 @@ package com.example.pros.screens;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageButton;
 import com.example.pros.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.model.User;
+import com.example.pros.utils.SpotifyReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsScreenActivity extends AppCompatActivity {
@@ -18,6 +20,11 @@ public class SettingsScreenActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ImageButton logOutButton, musicOnButton, musicOffButton;
     private float xStart, yStart, xEnd, yEnd;
+    public static boolean musicMuted;
+
+    private SpotifyReceiver spotifyBroadcastReciever;
+    private IntentFilter filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +38,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
                 musicOffButton.setForeground(getDrawable(R.drawable.pressed_off_music_button));
                 musicOnButton.setForeground(getDrawable(R.drawable.unpressed_on_music_button));
                 stopService(new Intent(getApplicationContext(), AppMusicService.class));
+                musicMuted = true;
                 User.getInstance().setMusicOn(false);
             }
         });
@@ -41,6 +49,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
                 musicOffButton.setForeground(getDrawable(R.drawable.unpressed_off_music_button));
                 musicOnButton.setForeground(getDrawable(R.drawable.pressed_on_music_button));
                 startService(new Intent(getApplicationContext(), AppMusicService.class));
+                musicMuted = false;
                 User.getInstance().setMusicOn(true);
             }
         });
@@ -63,6 +72,23 @@ public class SettingsScreenActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        spotifyBroadcastReciever = new SpotifyReceiver();
+        filter = new IntentFilter();
+        filter.addAction("com.spotify.music.playbackstatechanged");
+        filter.addAction("com.spotify.music.metadatachanged");
+        filter.addAction("com.spotify.music.queuechanged");
+        registerReceiver(spotifyBroadcastReciever, filter);
+    }
+
+    @Override
+    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onStop();
+        unregisterReceiver(spotifyBroadcastReciever);
     }
 
     @Override
