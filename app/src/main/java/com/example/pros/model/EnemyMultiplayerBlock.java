@@ -16,8 +16,10 @@ import com.google.firebase.database.ValueEventListener;
 public class EnemyMultiplayerBlock extends EnemyBlock {
 
     boolean isP1;
-    public EnemyMultiplayerBlock(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
+    public EnemyMultiplayerBlock(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight, boolean isP1) {
         super(bitmap, xPos, yPos, windowWidth, windowHeight);
+
+        this.isP1 = isP1;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef;
