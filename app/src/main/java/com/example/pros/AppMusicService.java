@@ -15,8 +15,8 @@ import java.util.Random;
 public class AppMusicService extends Service {
 
     private MediaPlayer mediaPlayer;
-    private static int songNum;
-    private static int songMSecTime;
+    private static int songNum = 0;
+    private static int songMSecTime = 0;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -25,7 +25,7 @@ public class AppMusicService extends Service {
 
     public void onCreate() {
         playMusic();
-        songNum = 0;
+//        songNum = 0;
 //        if(FirebaseAuth.getInstance().getCurrentUser() != null){
 //            if(User.getInstance().isMusicOn()){
 //                playMusic();
@@ -65,8 +65,8 @@ public class AppMusicService extends Service {
             else if(songNum == 3){
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
             }
-            mediaPlayer.seekTo(songMSecTime);
         }
+        mediaPlayer.seekTo(songMSecTime);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
