@@ -54,7 +54,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
         mainScreenPresenter = new MainScreenPresenter(this);
         mainScreenPresenter.update();
-
     }
 
     @Override
