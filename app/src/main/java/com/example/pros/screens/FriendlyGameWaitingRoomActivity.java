@@ -4,18 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pros.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.db.MultiPlayerGameDao;
 import com.example.pros.db.Repository;
 import com.example.pros.model.MultiPlayerGame;
 import com.example.pros.model.User;
 import com.example.pros.utils.Observer;
+import com.example.pros.utils.SpotifyReceiver;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +36,9 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
     private String gameCode;
     private Button startGameButton;
     private MultiPlayerGameDao tempMultiPlayerGameDao;
-    String guestGameCodeEntered;
+    private String guestGameCodeEntered;
+    private SpotifyReceiver spotifyBroadcastReciever;
+    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,5 +194,24 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
         else{
             p2NameTextView.setText(MultiPlayerGame.getInstance().getP2PlayerName());
         }
+    }
+
+    @Override
+    protected void onPause() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onPause();
+        stopService(new Intent(getApplicationContext(), AppMusicService.class));
+        unregisterReceiver(spotifyBroadcastReciever);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        spotifyBroadcastReciever = new SpotifyReceiver();
+        filter = new IntentFilter();
+        filter.addAction("com.spotify.music.playbackstatechanged");
+        filter.addAction("com.spotify.music.metadatachanged");
+        filter.addAction("com.spotify.music.queuechanged");
+        registerReceiver(spotifyBroadcastReciever, filter);
     }
 }

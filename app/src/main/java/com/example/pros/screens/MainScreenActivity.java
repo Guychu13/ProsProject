@@ -16,8 +16,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pros.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.db.MultiPlayerGameDao;
+import com.example.pros.db.Repository;
 import com.example.pros.utils.SpotifyReceiver;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,11 +54,13 @@ public class MainScreenActivity extends AppCompatActivity {
 
         mainScreenPresenter = new MainScreenPresenter(this);
         mainScreenPresenter.update();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        startService(new Intent(getApplicationContext(), AppMusicService.class));
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");
@@ -66,8 +70,9 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
-        super.onStop();
+    protected void onPause() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onPause();
+        stopService(new Intent(getApplicationContext(), AppMusicService.class));
         unregisterReceiver(spotifyBroadcastReciever);
     }
 
@@ -169,6 +174,16 @@ public class MainScreenActivity extends AppCompatActivity {
                                 intent.putExtra("isHost", false);
                                 intent.putExtra("gameCode", gameCodeTyped);
                                 startActivity(intent);
+
+//                                if(Repository.getInstance().lobbyIsFull(gameCodeTyped)){
+//                                    Toast.makeText(MainScreenActivity.this, "Game is already full", Toast.LENGTH_LONG).show();
+//                                }
+//                                else {
+//                                    Intent intent = new Intent(MainScreenActivity.this, FriendlyGameWaitingRoomActivity.class);
+//                                    intent.putExtra("isHost", false);
+//                                    intent.putExtra("gameCode", gameCodeTyped);
+//                                    startActivity(intent);
+//                                }
                             }
                             else{
                                 Toast.makeText(MainScreenActivity.this, "Game code does not exist", Toast.LENGTH_LONG).show();

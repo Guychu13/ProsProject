@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.pros.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.model.Skin;
 import com.example.pros.model.User;
@@ -58,6 +59,7 @@ public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyc
     @Override
     protected void onResume() {
         super.onResume();
+        startService(new Intent(getApplicationContext(), AppMusicService.class));
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");
@@ -67,8 +69,9 @@ public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyc
     }
 
     @Override
-    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
-        super.onStop();
+    protected void onPause() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onPause();
+        stopService(new Intent(getApplicationContext(), AppMusicService.class));
         unregisterReceiver(spotifyBroadcastReciever);
     }
 

@@ -13,8 +13,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Random;
 
 public class AppMusicService extends Service {
-    private MediaPlayer mediaPlayer;
 
+    private MediaPlayer mediaPlayer;
+    private static int songNum;
+    private static int songMSecTime;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -23,6 +25,7 @@ public class AppMusicService extends Service {
 
     public void onCreate() {
         playMusic();
+        songNum = 0;
 //        if(FirebaseAuth.getInstance().getCurrentUser() != null){
 //            if(User.getInstance().isMusicOn()){
 //                playMusic();
@@ -34,14 +37,35 @@ public class AppMusicService extends Service {
     }
 
     public void playMusic(){
-        Random rg = new Random();
-        int num = rg.nextInt(3);
-        if (num == 0) {
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_dreams);
-        } else if (num == 1) {
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop1);
-        } else {
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
+        if(songNum == 0){
+            Random rg = new Random();
+            int num = rg.nextInt(3);
+            if (num == 0) {
+                songNum = 1;
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_dreams);
+            }
+            else if (num == 1) {
+                songNum = 2;
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop1);
+            }
+            else {
+                songNum = 3;
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
+            }
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
+        else{
+            if(songNum == 1){
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_dreams);
+            }
+            else if(songNum == 2){
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop1);
+            }
+            else if(songNum == 3){
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music_hiphop2);
+            }
+            mediaPlayer.seekTo(songMSecTime);
         }
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
@@ -49,7 +73,7 @@ public class AppMusicService extends Service {
 
     @Override
     public void onDestroy() {
-        mediaPlayer.stop();
+        mediaPlayer.pause();
+        songMSecTime = mediaPlayer.getCurrentPosition();
     }
-
 }

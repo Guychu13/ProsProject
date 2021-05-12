@@ -11,6 +11,7 @@ import android.os.Message;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.pros.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.model.User;
 import com.example.pros.utils.SpotifyReceiver;
@@ -138,6 +139,7 @@ public class GameScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        startService(new Intent(getApplicationContext(), AppMusicService.class));
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");
@@ -147,8 +149,9 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
-        super.onStop();
+    protected void onPause() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onPause();
+        stopService(new Intent(getApplicationContext(), AppMusicService.class));
         unregisterReceiver(spotifyBroadcastReciever);
     }
 }

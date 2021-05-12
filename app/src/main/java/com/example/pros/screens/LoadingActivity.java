@@ -22,15 +22,6 @@ public class LoadingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading_screen);
-        intent = new Intent(this, AppMusicService.class);
-        startService(intent);
-
-        spotifyBroadcastReciever = new SpotifyReceiver();
-        filter = new IntentFilter();
-        filter.addAction("com.spotify.music.playbackstatechanged");
-        filter.addAction("com.spotify.music.metadatachanged");
-        filter.addAction("com.spotify.music.queuechanged");
-        registerReceiver(spotifyBroadcastReciever, filter);
 
         new Timer().schedule(new TimerTask() {
             @Override
@@ -43,8 +34,21 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        spotifyBroadcastReciever = new SpotifyReceiver();
+        filter = new IntentFilter();
+        filter.addAction("com.spotify.music.playbackstatechanged");
+        filter.addAction("com.spotify.music.metadatachanged");
+        filter.addAction("com.spotify.music.queuechanged");
+        registerReceiver(spotifyBroadcastReciever, filter);
+    }
+
+    @Override
+    protected void onPause() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onPause();
+        stopService(new Intent(getApplicationContext(), AppMusicService.class));
         unregisterReceiver(spotifyBroadcastReciever);
     }
 }

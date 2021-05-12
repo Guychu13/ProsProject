@@ -77,6 +77,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        startService(new Intent(getApplicationContext(), AppMusicService.class));
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");
@@ -86,8 +87,9 @@ public class SettingsScreenActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
-        super.onStop();
+    protected void onPause() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onPause();
+        stopService(new Intent(getApplicationContext(), AppMusicService.class));
         unregisterReceiver(spotifyBroadcastReciever);
     }
 

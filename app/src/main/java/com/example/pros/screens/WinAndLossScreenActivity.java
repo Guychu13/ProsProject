@@ -3,12 +3,15 @@ package com.example.pros.screens;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pros.AppMusicService;
 import com.example.pros.R;
+import com.example.pros.utils.SpotifyReceiver;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +21,8 @@ public class WinAndLossScreenActivity extends AppCompatActivity {
     private Button toMainScreenButton;
     private TextView titleTextView;
     private TextView secondTextTextView;
+    private SpotifyReceiver spotifyBroadcastReciever;
+    private IntentFilter filter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,5 +54,24 @@ public class WinAndLossScreenActivity extends AppCompatActivity {
                 }, 500);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {//אולי יש צורך להעתיק את זה לכל מסך, צריך לבדוק את זה
+        super.onPause();
+        stopService(new Intent(getApplicationContext(), AppMusicService.class));
+        unregisterReceiver(spotifyBroadcastReciever);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        spotifyBroadcastReciever = new SpotifyReceiver();
+        filter = new IntentFilter();
+        filter.addAction("com.spotify.music.playbackstatechanged");
+        filter.addAction("com.spotify.music.metadatachanged");
+        filter.addAction("com.spotify.music.queuechanged");
+        registerReceiver(spotifyBroadcastReciever, filter);
     }
 }
