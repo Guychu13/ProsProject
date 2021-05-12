@@ -150,7 +150,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {//כל עוד האצבע על המסך ימשיך לעקוב אחרי האצבע ולזוז אחריה אבל כשמרימים את האצבע הבלוק ייעצר
         myBlock.setXTarget(event.getX());
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
@@ -191,7 +191,7 @@ public class GameView extends SurfaceView implements Runnable {
         gameBall.setXPos((float) (gameBall.getWindowWidth() * 0.5) - (gameBall.getBitmap().getWidth() / 2));
         gameBall.setYPos((float) (gameBall.getWindowHeight() * 0.5) - (gameBall.getBitmap().getHeight() / 2));
         myBlock.setXPos((float) (myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
-        myBlock.setXTarget(myBlock.getXPos());
+        myBlock.setXTarget(myBlock.getXPos());//כדי שאחרי גולים לא ישתגר לאיקס טארגט, אלא יישאר באמצע
         if(!isMultiplayer){
             enemyBlock.setXPos((float) (enemyBlock.getWindowWidth() * 0.5) - (enemyBlock.getBitmap().getWidth() / 2));
         }
