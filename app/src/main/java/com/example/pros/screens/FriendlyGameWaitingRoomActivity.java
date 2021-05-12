@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pros.AppMusicService;
+import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.db.MultiPlayerGameDao;
 import com.example.pros.db.Repository;
@@ -25,8 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Observable;
 import java.util.Random;
 
 public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implements Observer{

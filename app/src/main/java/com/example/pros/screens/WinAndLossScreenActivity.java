@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.pros.AppMusicService;
+import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.utils.SpotifyReceiver;
 

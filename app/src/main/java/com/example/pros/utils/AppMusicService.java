@@ -1,4 +1,4 @@
-package com.example.pros;
+package com.example.pros.utils;
 
 import android.app.Service;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+import com.example.pros.R;
 import com.example.pros.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 

@@ -11,7 +11,7 @@ import android.os.Message;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.pros.AppMusicService;
+import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.model.User;
 import com.example.pros.utils.SpotifyReceiver;

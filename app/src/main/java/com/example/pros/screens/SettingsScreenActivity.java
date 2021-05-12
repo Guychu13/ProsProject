@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.pros.AppMusicService;
+import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.model.User;
 import com.example.pros.utils.SpotifyReceiver;

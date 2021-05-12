@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import com.example.pros.AppMusicService;
+import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.utils.SpotifyReceiver;
 

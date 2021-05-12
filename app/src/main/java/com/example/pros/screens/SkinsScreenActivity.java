@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.pros.AppMusicService;
+import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.model.Skin;
 import com.example.pros.model.User;
