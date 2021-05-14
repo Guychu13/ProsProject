@@ -17,7 +17,6 @@ import java.util.TimerTask;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private Intent intent;
     private SpotifyReceiver spotifyBroadcastReciever;
     private IntentFilter filter;
 
