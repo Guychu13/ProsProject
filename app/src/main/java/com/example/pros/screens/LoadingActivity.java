@@ -44,6 +44,9 @@ public class LoadingActivity extends AppCompatActivity {
         findViewById(R.id.imageView_loadingScreen_spark2).setAnimation(ballAnimation);
         findViewById(R.id.imageView_loadingScreen_spark3).setAnimation(ballAnimation);
 
+        Animation titleAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_title_animation);
+        findViewById(R.id.textView_loadingScreen_title).setAnimation(titleAnimation);
+
     }
 
     @Override
