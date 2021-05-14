@@ -32,19 +32,27 @@ public class LoadingActivity extends AppCompatActivity {
                 finish();
             }
         }, 3000);
+
+        //בלוק תחתון
         Animation bottomBlockAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_bottom_block_animation);
-        findViewById(R.id.imageView_loadingScreen_bottomBlock).setAnimation(bottomBlockAnimation);
-        Animation topBlockAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_top_block_animation);
-        findViewById(R.id.imageView_loadingScreen_topBlock).setAnimation(topBlockAnimation);
-
+        findViewById(R.id.imageView_loadingScreen_bottomBlock).startAnimation(bottomBlockAnimation);
+        //בלוק עליון
+        final Animation topBlockAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_top_block_animation);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                findViewById(R.id.imageView_loadingScreen_topBlock).startAnimation(topBlockAnimation);
+            }
+        }, 500);
+        //כדור וניצוצות
         Animation ballAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_ball_and_sparks_animation);
-        findViewById(R.id.imageView_loadingScreen_ball).setAnimation(ballAnimation);
-        findViewById(R.id.imageView_loadingScreen_spark1).setAnimation(ballAnimation);
-        findViewById(R.id.imageView_loadingScreen_spark2).setAnimation(ballAnimation);
-        findViewById(R.id.imageView_loadingScreen_spark3).setAnimation(ballAnimation);
-
+        findViewById(R.id.imageView_loadingScreen_ball).startAnimation(ballAnimation);
+        findViewById(R.id.imageView_loadingScreen_spark1).startAnimation(ballAnimation);
+        findViewById(R.id.imageView_loadingScreen_spark2).startAnimation(ballAnimation);
+        findViewById(R.id.imageView_loadingScreen_spark3).startAnimation(ballAnimation);
+        //כותרת
         Animation titleAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_title_animation);
-        findViewById(R.id.textView_loadingScreen_title).setAnimation(titleAnimation);
+        findViewById(R.id.textView_loadingScreen_title).startAnimation(titleAnimation);
 
     }
 
