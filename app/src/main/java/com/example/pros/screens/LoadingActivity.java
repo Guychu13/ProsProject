@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
@@ -18,6 +20,7 @@ public class LoadingActivity extends AppCompatActivity {
     private Intent intent;
     private SpotifyReceiver spotifyBroadcastReciever;
     private IntentFilter filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,16 @@ public class LoadingActivity extends AppCompatActivity {
                 finish();
             }
         }, 3000);
+        Animation bottomBlockAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_bottom_block_animation);
+        findViewById(R.id.imageView_loadingScreen_bottomBlock).setAnimation(bottomBlockAnimation);
+        Animation topBlockAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_top_block_animation);
+        findViewById(R.id.imageView_loadingScreen_topBlock).setAnimation(topBlockAnimation);
+
+        Animation ballAnimation = AnimationUtils.loadAnimation(this, R.anim.loading_screen_ball_and_sparks_animation);
+        findViewById(R.id.imageView_loadingScreen_ball).setAnimation(ballAnimation);
+        findViewById(R.id.imageView_loadingScreen_spark1).setAnimation(ballAnimation);
+        findViewById(R.id.imageView_loadingScreen_spark2).setAnimation(ballAnimation);
+        findViewById(R.id.imageView_loadingScreen_spark3).setAnimation(ballAnimation);
 
     }
 
