@@ -15,23 +15,42 @@ import com.example.pros.model.User;
 import com.example.pros.utils.SpotifyReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * 	מחלקה זו מייצגת את מסך ההגדרות של האפליקציה.
+ */
 public class SettingsScreenActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ImageButton logOutButton, musicOnButton, musicOffButton;
     private float xStart, yStart, xEnd, yEnd;
-    public static boolean musicMuted;
+    /**
+     * משתנה בוליאני סטטי המציין האם המשתמש השתיק את המוזיקה באפליקציה.
+     */
+    public static boolean musicMuted = false;
 
     private SpotifyReceiver spotifyBroadcastReciever;
     private IntentFilter filter;
 
+    /**
+     * פעולה זו היא הפעולה הראשונה המופעלת בעת כניסה למסך, ובעת הפעלתה היא מצמידה מאזינים שיפעילו את הפעולות המתאימות בעת לחיצה על כפתור ההפעלה או הכיבוי של המוזיקה.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_screen);
         logOutButton = findViewById(R.id.imageButton_settingsScreen_loginButton);
-
         musicOffButton = findViewById(R.id.imageButton_settingsScreen_musicOff);
+        musicOnButton = findViewById(R.id.imageButton_settingsScreen_musicOn);
+
+        if(musicMuted){
+            musicOffButton.setForeground(getDrawable(R.drawable.pressed_off_music_button));
+            musicOnButton.setForeground(getDrawable(R.drawable.unpressed_on_music_button));
+        }
+        else{
+            musicOffButton.setForeground(getDrawable(R.drawable.unpressed_off_music_button));
+            musicOnButton.setForeground(getDrawable(R.drawable.pressed_on_music_button));
+        }
         musicOffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +61,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
                 User.getInstance().setMusicOn(false);
             }
         });
-        musicOnButton = findViewById(R.id.imageButton_settingsScreen_musicOn);
+
         musicOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +74,10 @@ public class SettingsScreenActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * פעולה זו מבצעת את תהליך ההתנתקות של משתמש מן האפליקציה לאחר לחיצה על הכפתור המתאים במסך.
+     * @param view
+     */
     public void onLogOut(View view) {
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
@@ -77,7 +100,9 @@ public class SettingsScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");

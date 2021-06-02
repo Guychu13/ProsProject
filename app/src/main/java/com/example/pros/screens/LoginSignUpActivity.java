@@ -28,6 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
+/**
+ * 	מחלקה זו מייצגת את מסך הטעינה וההתחברות אל האפליקציה.
+ */
 public class LoginSignUpActivity extends AppCompatActivity {
 
     private EditText emailEditText;
@@ -35,7 +38,9 @@ public class LoginSignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private Task<AuthResult> task;
-
+    /**
+     * שם המשתמש הנבחר.
+     */
     private String userNameChosen;
     private ImageButton chooseDialogButton;
     private ImageButton addImageButton;
@@ -47,6 +52,10 @@ public class LoginSignUpActivity extends AppCompatActivity {
     private SpotifyReceiver spotifyBroadcastReciever;
     private IntentFilter filter;
 
+    /**
+     * פעולה זו היא הפעולה הראשונה המופעלת בעת כניסה למסך. בפעולה זו מתבצעת בדיקה המגלה האם המשתמש כבר מחובר, ואם כן, מדלגת על המסך המקושר אל המחלקה ומעבירה את המשתמש למסך הראשי של האפליקציה.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +90,10 @@ public class LoginSignUpActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * פעולה זו מחפשת את המייל והסיסמה שהזין המשתמש, ואם אכן קיים משתמש עם פרטים אלו בבסיס הנתונים מעבירה את המשתמש אל המסך הראשי. במידה ולא, תוצג הודעה מתאימה.
+     * @param view
+     */
     public void onLogIn(View view) {
         String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
@@ -104,6 +116,10 @@ public class LoginSignUpActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * פעולה זו בודקת את תקינות הקלט שהוזן, ואם הקלט תקין ולא קיים כבר בבסיס הנתונים היא יוצרת עצם חדש של משתמש ושומרת אותו בבסיס הנתונים.
+     * @param view
+     */
     public void onRegister(View view) {
         final String emailInput = emailEditText.getText().toString();
         String passwordInput = passwordEditText.getText().toString();
@@ -196,7 +212,9 @@ public class LoginSignUpActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");

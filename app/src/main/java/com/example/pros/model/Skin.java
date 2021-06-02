@@ -1,12 +1,32 @@
 package com.example.pros.model;
 
+/**
+ * 	מחלקה זו מייצגת סקין במשחק.
+ */
 public class Skin {
-
+    /**
+     * 	שמו של הסקין.
+     */
     private String name;
+    /**
+     * 	המשימה הדורשת השלמה על מנת לפתוח את הסקין.
+     */
     private String mission;
+    /**
+     * 	האם הסקין הוא הסקין הנבחר באותו הרגע.
+     */
     private Boolean selected;
+    /**
+     * 	האם המשתמש פתח את הסקין לשימוש או לא.
+     */
     private Boolean unlocked;
+    /**
+     * 	מזהה התמונה של הסקין בקבצי האפליקציה.
+     */
     private int image;
+    /**
+     * 	מספר הנצחונות כאשר הסקין היה הסקין הנבחר.
+     */
     private int wins;
 
     public Skin(){

@@ -182,4 +182,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
+    <ImageView
+        android:id="@+id/imageButton_mainScreen_menu"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRight"
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontalUp"
+        app:srcCompat="@drawable/main_screen_three_dots" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

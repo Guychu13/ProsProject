@@ -1,9 +1,14 @@
 package com.example.pros.screens;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
@@ -25,11 +31,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * מחלקה זו מייצגת את המסך הראשי באפליקציה והיא מקושרת אל קובץ ה-xml של המסך הראשי.
+ */
 public class MainScreenActivity extends AppCompatActivity {
 
     private Dialog joinGameDialog;
     private EditText gameCodeDialogEditText;
     private Button joinGameDialogButton;
+    /**
+     * קוד ההצטרפות של החדר אליו המשתמש ירצה להצטרף.
+     */
     private String gameCodeTyped;
     boolean gameCodeExists;
     private MultiPlayerGameDao multiPlayerGameDao;
@@ -57,7 +69,9 @@ public class MainScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");
@@ -108,6 +122,28 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onStart();
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.main_screen, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
+//    public void openMenu(View view){
+//        this.openMenu(view);
+//    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.button_about:
+//                startActivity(new Intent(MainScreenActivity.this, AboutScreenActivity.class));
+//                return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+
 
     public void setUserNameGreetText(String userName) {//עדיין יש את החלק של הפיירבייס למעלה שעושה אותו דבר
         userGreet = findViewById(R.id.textView_mainScreen_usernameGreet);
@@ -141,6 +177,10 @@ public class MainScreenActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * פעולה זו בודקת האם אכן קיים חדר המתנה עם הקוד שהוקלד, ובמידה וכן, מצרפת את המשתמש.
+     * @param view
+     */
     public void goToJoinGameDialog(View view) {
         joinGameDialog = new Dialog(MainScreenActivity.this);
         joinGameDialog.setContentView(R.layout.dialog_join_online_game);

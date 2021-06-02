@@ -2,13 +2,34 @@ package com.example.pros.db;
 
 import com.example.pros.screens.FriendlyGameWaitingRoomActivity;
 
+/**
+ *מחלקה זו היא בעצם Data Object, וטיפוס זה משמש לשמירה בבסיס הנתונים.
+ *  הנתונים נשמרים בבסיס הנתונים כטיפוס הזה, אך הוא אינו הטיפוס בו מתבצע השימוש בקוד.
+ *  מתבצעת בקוד המרה מהטיפוס הזה אל טיפוס זהה לחלוטין אליו בתכונותיו, ובו מתבצע השימוש בקוד.
+ */
 public class MultiPlayerGameDao {
 
+    /**
+     * מיקום הבלוקים של השחקנים על ציר ה-X במסך.
+     */
     public int p1BitmapXPos, p2BitmapXPos;
+    /**
+     * שמות השחקנים המשתתפים במשחק.
+     */
     public String  p1PlayerName, p2PlayerName;
+    /**
+     * המזהה בקבצי האפליקציה של תמונת הסקין הנוכחי של כל אחד מהשחקנים.
+     */
     public int p1SkinImageID, p2SkinImageID;
+    /**
+     *קוד המשחק.
+     */
     public String gameCode;
+    /**
+     * 	משתנה בוליאני המסמל אם המשחק התחיל.
+     */
     public boolean gameStarted;
+    public boolean ballIsMoving;
 
     public MultiPlayerGameDao() {
 
@@ -76,5 +97,13 @@ public class MultiPlayerGameDao {
 
     public void setGameStarted(boolean gameStarted) {
         this.gameStarted = gameStarted;
+    }
+
+    public boolean isBallIsMoving() {
+        return ballIsMoving;
+    }
+
+    public void setBallIsMoving(boolean ballIsMoving) {
+        this.ballIsMoving = ballIsMoving;
     }
 }

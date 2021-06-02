@@ -4,10 +4,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+/**
+ * 	מחלקה זו היא מחלקה אבסטרקטית המורישה לכל האובייקטים במשחק.
+ */
 public abstract class GameObject {
-
+    /**
+     * 	תמונת הסקין.
+     */
     protected Bitmap bitmap;
+    /**
+     * 	שיעורי ה-X וה-Y של האובייקט.
+     */
     protected float xPos, yPos;
+    /**
+     * האורך והרוחב של מרחב המשחק.
+     */
     protected int windowWidth, windowHeight;
 
     public GameObject(Bitmap bitmap, float xPos, float yPos, int windowWidth, int windowHeight) {
@@ -18,6 +29,10 @@ public abstract class GameObject {
         this.windowHeight = windowHeight;
     }
 
+    /**
+     * הפעולה מציירת את האובייקט על לוח המשחק.
+     * @param canvas
+     */
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         if (canvas != null) {

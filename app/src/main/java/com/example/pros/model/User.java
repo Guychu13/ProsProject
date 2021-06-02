@@ -12,16 +12,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * מחלקה זו היא המחלקה המייצגת את המשתמש, איתה עובדים בקוד.
+ */
 public class User implements Observer{
-
+    /**
+     * שם המשתמש.
+     */
     private String userName;
+    /**
+     * 	מספר הנצחונות של השחקן.
+     */
     private int numOfWins;
+    /**
+     * רשימה המכילה את כל הסקינים במשחק והאם המשתמש פתח אותם, המכילה עצמים מטיפוס Skin.
+     */
     private ArrayList<Skin> allSkins;
+    /**
+     * 	המזהה בקבצי האפליקציה של תמונת הסקין הנבחר של השחקן.
+     */
     private int chosenSkinImageId;
     private boolean musicOn;
     private String photoImageURL;
+    /**
+     * 	ה-id של המשתמש בבסיס הנתונים.
+     */
     private String firebaseUserId;
+    /**
+     * המחלקה היא Singleton לכן יש צורך בתכונה סטטית מאותו הטיפוס של המחלקה.
+     */
     private static User instance = null;
+    /**
+     * רשימה המכילה את כל הקלאסים(שמממשים את המחלקה Observer) שצריכים להיות מעודכנים כאשר מתבצע שינוי במחלקה הזו.
+     */
     private ArrayList<Observer> observers = new ArrayList<>();
 
     private User() {
@@ -133,6 +156,10 @@ public class User implements Observer{
         observers.add(observer);
     }
 
+    /**
+     * פעולה זו היא הפעולה המופעלת כאשר המחלקה אליה מאזינה המחלקה הנ"ל, מעדכנת את המאזינים לה על שינוי.
+     * הפעולה מקבלת את המסר שהיה שינוי, ומעדכנת את נתוניה.
+     */
     @Override
     public void update() {
         UserDao user = Repository.getInstance().getUser();
@@ -151,6 +178,10 @@ public class User implements Observer{
         }
     }
 
+    /**
+     * פעולה זו יוצרת עצם חדש של משתמש ושומרת אותו בבסיס הנתונים.
+     * @param userName
+     */
     public void createNewUser(String userName){
         UserDao newUser = new UserDao();
         newUser.setUserName(userName);

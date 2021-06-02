@@ -15,11 +15,18 @@ import com.example.pros.utils.SpotifyReceiver;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 	מחלקה זו מייצגת את מסך הטעינה של האפליקציה.
+ */
 public class LoadingActivity extends AppCompatActivity {
 
     private SpotifyReceiver spotifyBroadcastReciever;
     private IntentFilter filter;
 
+    /**
+     * פעולה זו היא הפעולה הראשונה המופעלת בעת כניסה למסך. בפעולה זו מוחלות האנימציות על האיורים השונים במסך הטעינה, ומבצע המעבר אל המסך הבא.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +66,9 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");

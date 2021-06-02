@@ -18,8 +18,14 @@ import com.example.pros.model.User;
 
 import java.util.ArrayList;
 
+/**
+ * מחלקה זו היא המחלקה האחראית על תפקוד רשימת הסקינים במסך בחירת הסקינים.
+ */
 public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdapter.ViewHolder> {
     private Context context;
+    /**
+     * רשימה המכילה את כל הסקינים במשחק, המכילה עצמים מטיפוס Skin.
+     */
     private ArrayList<Skin> skins;
     private ItemClickListener listener;
 
@@ -37,6 +43,11 @@ public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdap
         return new ViewHolder(view);
     }
 
+    /**
+     * פעולה זו היא הפעולה האחראית על השמת הנתונים המתאימים בכל שורה ברשימה וזיהוי לחיצה על שורה ברשימה.
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.textViewSkinName.setText(skins.get(position).getName());
@@ -46,7 +57,6 @@ public class SkinsRecyclerAdapter extends RecyclerView.Adapter<SkinsRecyclerAdap
             @Override
             public void onClick(View v) {
                 listener.onClick(position);
-
             }
         });
     }

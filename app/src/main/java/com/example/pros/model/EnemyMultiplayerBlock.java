@@ -13,9 +13,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * מחלקה זו היא המחלקה המייצגת את הבלוק של אויבו של המשתמש באפליקציה בזמן משחק מקוון.
+ */
 public class EnemyMultiplayerBlock extends EnemyBlock {
-
+    /**
+     * 	משתנה בוליאני המסמל האם הבלוק הוא של יוצר המשחק(P1).
+     */
     boolean isP1;
+
+    /**
+     * הפעולה הבונה של המחלקה, בה מתבצעת השמה של מאזין על התכונה של שיעור ה-X של האובייקט בבסיס הנתונים.
+     * @param bitmap
+     * @param xPos
+     * @param yPos
+     * @param windowWidth
+     * @param windowHeight
+     * @param isP1
+     */
     public EnemyMultiplayerBlock(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight, boolean isP1) {
         super(bitmap, xPos, yPos, windowWidth, windowHeight);
 

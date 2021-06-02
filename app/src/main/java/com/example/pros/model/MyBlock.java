@@ -15,14 +15,31 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * מחלקה זו היא המחלקה המייצגת את הבלוק של המשתמש באפליקציה בזמן משחק.
+ */
 public class MyBlock extends GameObject
 
 {
-
+    /**
+     * שיעור ה-X שלכיוונו הבלוק יתקדם.
+     */
     private float xTarget;
+    /**
+     * 	ניקוד השחקן בעת משחק.
+     */
     private int score;
+    /**
+     * מהירות הבלוק.
+     */
     private int xSpeed;
+    /**
+     * משתנה בוליאני המסמל אם הבלוק הוא חלק ממשחק מקוון או לא.
+     */
     private boolean isMultiplayer;
+    /**
+     * 	משתנה בוליאני המסמל האם הבלוק הוא של יוצר המשחק(P1).
+     */
     private boolean isP1;
 
     public MyBlock(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight, boolean isMultiplayer) {
@@ -33,6 +50,9 @@ public class MyBlock extends GameObject
         this.xTarget = xPos;
     }
 
+    /**
+     * פעולה זו מבצעת את שינוי שיעור ה-X של הבלוק בקוד, מה שגורם לו לנוע בעת ציורו על המסך.
+     */
     public void move() {
         if (xPos < xTarget) {
             for (int i = 0; i < Math.abs(xSpeed); i++) {//כדי שאם יש לחיצה ארוכה הוא יזוז בצעד צעד עד שהוא לא יכול יותר. אם זה זז 20 20 אז הוא לא יסכים לזוז אם הוא נגיד רחוק 18 מהמסגרת
@@ -66,6 +86,11 @@ public class MyBlock extends GameObject
         return false;
     }
 
+    /**
+     * פעולה זו מחזירה את שיעור ה-X של נקודת ההתנגשות של הכדור עם הבלוק.
+     * @param other
+     * @return
+     */
     public float getCollisionXLocation(GameObject other) {
         float left = Math.max(xPos, other.getXPos());
         float right = Math.min(xPos + bitmap.getWidth(), other.getXPos() + other.getBitmap().getWidth());
@@ -93,6 +118,10 @@ public class MyBlock extends GameObject
         }
     }
 
+    /**
+     * פעולה זו מעדכנת את שיעור ה-X של הבלוק, ובמשחק מקוון גם מעדכנת את שיעורו בבסיס הנתונים.
+     * @param xPos
+     */
     @Override
     public void setXPos(float xPos) {
         this.xPos = xPos;

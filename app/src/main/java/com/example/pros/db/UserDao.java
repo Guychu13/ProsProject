@@ -5,14 +5,34 @@ import com.example.pros.model.Skin;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * מחלקה זו היא בעצם Data Object, וטיפוס זה משמש לשמירה בבסיס הנתונים.
+ * הנתונים נשמרים בבסיס הנתונים כטיפוס הזה, אך הוא אינו הטיפוס בו מתבצע השימוש בקוד.
+ * מתבצעת בקוד המרה מהטיפוס הזה אל טיפוס זהה לחלוטין אליו בתכונותיו, ובו מתבצע השימוש בקוד.
+ */
 public class UserDao {
 
+    /**
+     * שם המשתמש.
+     */
     private String userName;
+    /**
+     * מספר הנצחונות של השחקן.
+     */
     private int numOfWins;
+    /**
+     * רשימה המכילה את כל הסקינים במשחק והאם המשתמש פתח אותם, המכילה עצמים מטיפוס Skin.
+     */
     private ArrayList<Skin> allSkins;
+    /**
+     * 	המזהה בקבצי האפליקציה של תמונת הסקין הנבחר של השחקן.
+     */
     private int chosenSkinImageId;
     private boolean musicOn;
     private String photoImageURL;
+    /**
+     * ה-id של המשתמש בבסיס הנתונים.
+     */
     private String firebaseUserId;
 
     public UserDao() {

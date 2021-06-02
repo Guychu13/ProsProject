@@ -27,5 +27,8 @@
     <string name="friendlyGameWaitingRoomScreen_belowTitle">Lobby code:</string>
     <string name="friendlyGameWaitingRoomScreen_vs">VS</string>
     <string name="friendlyGameWaitingRoomScreen_questionMarks">-???-</string>
-    <string name="joinGameDialog_title">Type your <br/>game code</string>
+    <string name="joinGameDialog_title">Type your <br />game code</string>
+    <string name="aboutScreen_title">About.</string>
+    <string name="aboutScreen_text">Hey, this is my game!<br /> The game is a simple and classic Pong game,<br />Enjoy! ;)</string>
+    <string name="aboutScreen_buttonText">To Main Screen</string>
 </resources>

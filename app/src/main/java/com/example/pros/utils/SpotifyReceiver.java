@@ -6,8 +6,15 @@ import android.content.Intent;
 
 import com.example.pros.screens.SettingsScreenActivity;
 
+/**
+ * 	מחלקה זו מייצגת את ה-Broadcast Receiver באפליקציה.
+ */
 public class SpotifyReceiver extends BroadcastReceiver {
-
+    /**
+     * 	פעולה זו אחראית על ביצוע המשימה של המחלקה.
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving

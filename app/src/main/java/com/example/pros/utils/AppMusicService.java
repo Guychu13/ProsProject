@@ -13,10 +13,19 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Random;
 
+/**
+ * 	מחלקה זו מייצגת את מוזיקת הרקע של האפליקציה.
+ */
 public class AppMusicService extends Service {
 
     private MediaPlayer mediaPlayer;
+    /**
+     * 	מספר השיר שמתנגן כעת.
+     */
     private static int songNum = 0;
+    /**
+     * הנקודה המדויקת בה השיר נעצר לאחר יציאה מ-Activity מסויים.
+     */
     private static int songMSecTime = 0;
     @Nullable
     @Override
@@ -37,6 +46,9 @@ public class AppMusicService extends Service {
 //        }
     }
 
+    /**
+     * פעולה זו היא הפעולה האחראית על הפעלת המוזיקה.
+     */
     public void playMusic(){
         if(songNum == 0){
             Random rg = new Random();
@@ -72,6 +84,9 @@ public class AppMusicService extends Service {
         mediaPlayer.start();
     }
 
+    /**
+     * פעולה זו היא הפעולה המופעלת כאשר המוזיקה נעצרת.
+     */
     @Override
     public void onDestroy() {
         mediaPlayer.pause();

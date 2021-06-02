@@ -16,12 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-<!--        <receiver-->
-<!--            android:name=".utils.SpotifyReceiver"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true"></receiver>-->
-
+        <activity android:name=".screens.AboutScreenActivity"></activity>
+        <!-- <receiver -->
+        <!-- android:name=".utils.SpotifyReceiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"></receiver> -->
         <activity android:name=".screens.FriendlyGameWaitingRoomActivity" />
         <activity android:name=".screens.WinAndLossScreenActivity" />
         <activity android:name=".screens.GameScreenActivity" />

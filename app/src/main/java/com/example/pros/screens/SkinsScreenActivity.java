@@ -18,8 +18,13 @@ import com.example.pros.utils.SpotifyReceiver;
 
 import java.util.ArrayList;
 
+/**
+ * 	מחלקה זו מייצגת את מסך בחירת הסקינים באפליקציה.
+ */
 public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyclerAdapter.ItemClickListener {
-
+    /**
+     * רשימה המכילה את כל הסקינים במשחק, המכילה עצמים מטיפוס Skin.
+     */
     private ArrayList<Skin> allSkins;
     private RecyclerView recyclerView;
     private float xStart, yStart, xEnd, yEnd;
@@ -44,6 +49,10 @@ public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyc
         });
     }
 
+    /**
+     * 	פעולה זו מבצעת את השינוי בנתוני המשתמש לאחר שנבחר סקין אחר.
+     * @param position
+     */
     @Override
     public void onClick(int position) {
         User.getInstance().setChosenSkinImageId(allSkins.get(position).getImage());
@@ -59,7 +68,9 @@ public class SkinsScreenActivity extends AppCompatActivity implements SkinsRecyc
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");

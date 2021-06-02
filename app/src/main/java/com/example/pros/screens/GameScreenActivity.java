@@ -11,6 +11,8 @@ import android.os.Message;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.pros.db.Repository;
+import com.example.pros.model.MultiPlayerGame;
 import com.example.pros.utils.AppMusicService;
 import com.example.pros.R;
 import com.example.pros.model.User;
@@ -18,6 +20,9 @@ import com.example.pros.utils.SpotifyReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * המחלקה היא המחלקה המנהלת את מסך המשחק, והיא מקושרת אל קובץ ה-xml של מסך המשחק.
+ */
 public class GameScreenActivity extends AppCompatActivity {
 
     private FrameLayout frameLayout;
@@ -26,14 +31,35 @@ public class GameScreenActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private TextView scoreTextView, timerTextView, smileyTextView;
+    /**
+     * הזמן הנותר לתום המשחק.
+     */
     private int gameTimerSecondsLeft;
+    /**
+     * 	כמות השניות שהמשחק מושהה לאחר הבקעת שער של אחד השחקנים.
+     */
     private int timerPauseDurationMilliSecs;
+    /**
+     * 	הניקוד של כל אחד מן הבלוקים.
+     */
     private int myBlockScore, enemyCpuBlockScore;
+    /**
+     * 	משתנה בוליאני המסמל אם הארכת זמן כבר בוצעה.
+     */
     private boolean didOvertime;
+    /**
+     * 	משתנה המסמל האם מסך הניצחון/הפסד הופיע.
+     */
     private boolean winScreenHasAppeared;
 
     private Intent originIntent;
+    /**
+     * משתנה בוליאני המסמל אם הבלוק הוא חלק ממשחק מקוון או לא.
+     */
     private boolean isMultiplayer;
+    /**
+     * 	משתנה בוליאני המסמל האם הבלוק הוא של יוצר המשחק(P1).
+     */
     private boolean isP1;
 
     private SpotifyReceiver spotifyBroadcastReciever;
@@ -80,7 +106,10 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     public class ScoreHandler extends Handler {
-
+        /**
+         * 	הפעולה מופעלת לאחר שער, ומעדכנת את הניקוד בלוח התוצאות.
+         * @param msg
+         */
         @Override
         public void handleMessage(@NonNull Message msg) {
 
@@ -92,6 +121,9 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     public class GameTimer implements Runnable {
+        /**
+         * 	פעולה זו מנהלת את שעון המשחק ומפעילה את מסך הניצחון/הפסד בעת סיומו.
+         */
         @Override
         public void run() {
             if (timerPauseDurationMilliSecs != 0) {
@@ -139,7 +171,9 @@ public class GameScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");

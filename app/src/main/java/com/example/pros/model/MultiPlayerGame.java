@@ -9,15 +9,38 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+/**
+ * מחלקה זו היא המחלקה המכילה את פרטי המשחק איתה עובדים בקוד. המחלקה היא Singleton.
+ */
 public class MultiPlayerGame implements Observer {
-
+    /**
+     * מיקום הבלוקים של השחקנים על ציר ה-X במסך.
+     */
     public float p1BitmapXPos, p2BitmapXPos;
+    /**
+     * שמות השחקנים המשתתפים במשחק.
+     */
     public String  p1PlayerName, p2PlayerName;
+    /**
+     * המזהה בקבצי האפליקציה של תמונת הסקין הנוכחי של כל אחד מהשחקנים.
+     */
     public int p1SkinImageID, p2SkinImageID;
+    /**
+     * קוד המשחק.
+     */
     public String gameCode;
+    /**
+     * רשימה המכילה את כל הקלאסים(שמממשים את המחלקה Observer) שצריכים להיות מעודכנים כאשר מתבצע שינוי במחלקה הזו.
+     */
     private ArrayList<Observer> observers = new ArrayList<>();
+    /**
+     * משתנה בוליאני המסמל אם המשחק התחיל.
+     */
     public boolean gameStarted;
-
+    public boolean ballIsMoving;
+    /**
+     * המחלקה היא Singleton לכן יש צורך בתכונה סטטית מאותו הטיפוס של המחלקה.
+     */
     private static MultiPlayerGame instance = null;
 
     private MultiPlayerGame(){
@@ -100,6 +123,19 @@ public class MultiPlayerGame implements Observer {
         Repository.getInstance().saveGameStarted(gameCode, gameStarted);
     }
 
+    public boolean isBallIsMoving() {
+        return ballIsMoving;
+    }
+
+    public void setBallIsMoving(boolean ballIsMoving) {
+        this.ballIsMoving = ballIsMoving;
+        Repository.getInstance().saveBallIsMoving(gameCode, ballIsMoving);
+    }
+
+    /**
+     * פעולה זו היא הפעולה המופעלת כאשר המחלקה אליה מאזינה המחלקה הנ"ל, מעדכנת את המאזינים לה על שינוי.
+     * הפעולה מקבלת את המסר שהיה שינוי, ומעדכנת את נתוניה.
+     */
     @Override
     public void update() {
         MultiPlayerGameDao multiPlayerGameDao = Repository.getInstance().getMultiPlayerGameDao();
@@ -111,6 +147,7 @@ public class MultiPlayerGame implements Observer {
         this.p2PlayerName = multiPlayerGameDao.getP2PlayerName();
         this.p2SkinImageID = multiPlayerGameDao.getP2SkinImageID();
         this.gameStarted = multiPlayerGameDao.isGameStarted();
+        this.ballIsMoving = multiPlayerGameDao.isBallIsMoving();
         notifyObservers();
     }
 
@@ -120,6 +157,12 @@ public class MultiPlayerGame implements Observer {
         }
     }
 
+    /**
+     * פעולה זו יוצרת עצם חדש של משחק מקוון ושומרת אותו בבסיס הנתונים.
+     * @param gameCode
+     * @param p1Name
+     * @param p1ChosenSkinImageId
+     */
     public void createNewMultiPlayerGame(String gameCode, String p1Name, int p1ChosenSkinImageId){
         MultiPlayerGameDao newMultiPlayerGameDao = new MultiPlayerGameDao();
         newMultiPlayerGameDao.setGameCode(gameCode);
@@ -130,6 +173,7 @@ public class MultiPlayerGame implements Observer {
         newMultiPlayerGameDao.setP2BitmapXPos(0);
         newMultiPlayerGameDao.setP2SkinImageID(gameCode, 0);
         newMultiPlayerGameDao.setGameStarted(false);
+        newMultiPlayerGameDao.setBallIsMoving(false);
         Repository.getInstance().saveMultiPlayerGame(newMultiPlayerGameDao);
     }
 

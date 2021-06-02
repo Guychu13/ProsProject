@@ -23,11 +23,24 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * מחלקה זו היא מהמחלקות המרכזיות ביותר באפליקצייה.
+ * היא מהווה את המקום היחידי בו נוצר קשר עם בסיס הנתונים, והיא האחראית הבלעדית על האזנה אליו ועל עדכונו.
+ */
 public class Repository {
 
+    /**
+     * המחלקה היא Singleton לכן יש צורך בתכונה סטטית מאותו הטיפוס של המחלקה.
+     */
     private static Repository instance = null;
+    /**
+     * רשימה המכילה את כל הקלאסים(שמממשים את המחלקה Observer) שצריכים להיות מעודכנים כאשר מתבצע שינוי במחלקה הזו.
+     */
     private ArrayList<Observer> observers = new ArrayList<>();
 
+    /**
+     * הנתונים הנשמרים בבסיס הנתונים המשמשים כ- Data Object’s(Dao), מהם מתבצעת המרה לטיפוסים איתם מתבצעת העבודה בקוד.
+     */
     private UserDao user;
     private MultiPlayerGameDao multiPlayerGame;
 
@@ -36,6 +49,10 @@ public class Repository {
 
 //    private float enemyXPos;
 
+    /**
+     * הפעולה מחזירה את העצם הקיים של המחלקה, או בונה עצם חדש במקרה ואין אחד קיים כבר בקוד.
+     * @return
+     */
     public static Repository getInstance(){
         if(instance == null){
             instance = new Repository();
@@ -60,10 +77,17 @@ public class Repository {
         });
     }
 
+    /**
+     * פעולה זו היא פעולה שבעזרתה מחלקות אחרות המממשות את הממשק Observer יכולות להאזין לשינויים המתבצעים במחלקה הזו כאשר מופעלת הפעולה notifyObservers.
+     * @param observer
+     */
     public void register(Observer observer) {
         observers.add(observer);
     }
 
+    /**
+     * פעולה זו מעדכנת את כל ה-Observers הרשומים אצל המחלקה שהתבצע שינוי, מה שמפעיל במחלקות המאזינות את הפעולה update().
+     */
     private void notifyObservers(){
         for(int i = 0; i < observers.size(); i++){
             observers.get(i).update();
@@ -162,30 +186,26 @@ public class Repository {
         myRef.setValue(gameStarted);
     }
 
-//    public void setListenerOnEnemyXPos(boolean isP1){
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef;
-//        if(isP1){
-//            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p1BitmapXPos");
-//        }
-//        else{
-//            myRef = database.getReference("Pros").child("gameCodes").child(MultiPlayerGame.getInstance().getGameCode()).child("p2BitmapXPos");
-//        }
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                enemyXPos = snapshot.getValue(Float.class);
-//                notifyObservers();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    public void saveBallIsMoving(String gameCode, boolean ballIsMoving) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("ballIsMoving");
+        myRef.setValue(ballIsMoving);
+    }
 
-//    public float getEnemyXPos() {
-//        return enemyXPos;
-//    }
+    public void setListenerOnBallIsMoving(String gameCode){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Pros").child("gameCodes").child(gameCode).child("ballIsMoving");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                multiPlayerGame.setBallIsMoving(snapshot.getValue(Boolean.class));
+                notifyObservers();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

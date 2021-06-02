@@ -31,7 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/choose_username_button" />
+                />
 
             <TextView
                 android:id="@+id/textView_skinsRow_name"
@@ -63,6 +63,16 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView_skinsRow_image"
                 app:layout_constraintTop_toBottomOf="@+id/textView_skinsRow_name"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/imageView_skinsRow_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView_skinsRow_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView_skinsRow_image"
+                app:srcCompat="@drawable/lock" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,9 @@ import com.example.pros.utils.SpotifyReceiver;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 	מחלקה זו מייצגת את מסך הניצחון/הפסד שיוצג למשתמשים בתום משחק.
+ */
 public class WinAndLossScreenActivity extends AppCompatActivity {
 
     private Button toMainScreenButton;
@@ -23,6 +26,11 @@ public class WinAndLossScreenActivity extends AppCompatActivity {
     private TextView secondTextTextView;
     private SpotifyReceiver spotifyBroadcastReciever;
     private IntentFilter filter;
+
+    /**
+     * פעולה זו היא הפעולה הראשונה המופעלת בעת כניסה למסך. בפעולה זו מתבצעת הבדיקה הקובעת האם המסך יוצג כמסך ניצחון או הפסד, ומוצגים הטקסטים המתאימים.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +74,9 @@ public class WinAndLossScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");

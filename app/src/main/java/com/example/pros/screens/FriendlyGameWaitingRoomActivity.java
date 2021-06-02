@@ -27,10 +27,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
+/**
+ * מחלקה זו זה מייצג את מסך ההמתנה לפני משחק מקוון.
+ */
 public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implements Observer{
 
 
     private TextView p1NameTextView, p2NameTextView, lobbyCodeTextView;
+    /**
+     * קוד ההצטרפות לחדר ההמתנה.
+     */
     private String gameCode;
     private Button startGameButton;
     private MultiPlayerGameDao tempMultiPlayerGameDao;
@@ -38,6 +44,10 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
     private SpotifyReceiver spotifyBroadcastReciever;
     private IntentFilter filter;
 
+    /**
+     * פעולה זו היא הפעולה הראשונה שמופעלת בעת כניסה למסך, ובה מתבצעת ההפרדה בין המשתמש שיצר את החדר לבין המשתמש שהצטרף אל החדר.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +157,10 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
         }
     }
 
-
+    /**
+     * הפעולה בוחרת באופן רנדומלי מספרים ויוצרת קוד משחק חדש שאינו קיים בבסיס הנתונים.
+     * @return
+     */
     private String createGameCode(){
         StringBuilder code = new StringBuilder();
         int limit;
@@ -165,6 +178,12 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
         }
         return createGameCode();
     }
+
+    /**
+     * הפעולה בודקת האם קוד מסוים קיים כבר בבסיס הנתונים.
+     * @param gameCode
+     * @return
+     */
     public boolean GameCodeExists(String gameCode){
         tempMultiPlayerGameDao = null;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -183,6 +202,10 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
         return tempMultiPlayerGameDao != null;
     }
 
+    /**
+     * פעולה זו היא הפעולה המופעלת כאשר המחלקה אליה מאזינה המחלקה הנ"ל, מעדכנת את המאזינים לה על שינוי.
+     * הפעולה מקבלת את המסר שהיה שינוי, ומעדכנת את נתוניה.
+     */
     @Override
     public void update() {
         p1NameTextView.setText(MultiPlayerGame.getInstance().getP1PlayerName());
@@ -204,7 +227,9 @@ public class FriendlyGameWaitingRoomActivity extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(getApplicationContext(), AppMusicService.class));
+        if(!SettingsScreenActivity.musicMuted){
+            startService(new Intent(getApplicationContext(), AppMusicService.class));
+        }
         spotifyBroadcastReciever = new SpotifyReceiver();
         filter = new IntentFilter();
         filter.addAction("com.spotify.music.playbackstatechanged");

@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
+import com.example.pros.db.Repository;
 import com.example.pros.model.Background;
 import com.example.pros.model.Ball;
 import com.example.pros.model.EnemyBlock;
@@ -20,22 +21,65 @@ import com.example.pros.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 	המחלקה האחראית על כל הלוגיקה בפועל של המשחק.
+ */
 public class GameView extends SurfaceView implements Runnable {
-
+    /**
+     * ה-  Thread עליו מתנהל המשחק.
+     */
     protected Thread gameTread;
+    /**
+     * 	הבלוק של המשתמש.
+     */
     private MyBlock myBlock;
+    /**
+     * 	הבלוק של אויבו של המשתמש.
+     */
     private EnemyBlock enemyBlock;
+    /**
+     * 	כדור המשחק.
+     */
     private Ball gameBall;
+    /**
+     * רקע מסך המשחק.
+     */
     private Background gameBackground;
+    /**
+     * 	ה-  Handler המטפל בלוח הניקוד בעת משחק.
+     */
     private GameScreenActivity.ScoreHandler scoreHandler;
+    /**
+     * משתנה בוליאני המסמל האם המשחק נגמר.
+     */
     private boolean gameOver;
-
+    /**
+     * התמונה של בלוק המשתמש.
+     */
     private Bitmap myBlockBitmap;
+    /**
+     * התמונה של הבלוק של אויבו של המשתמש.
+     */
     private Bitmap enemyBlockBitmap;
-
+    /**
+     * משתנה בוליאני המסמל אם הבלוק הוא חלק ממשחק מקוון או לא.
+     */
     private boolean isMultiplayer;
+    /**
+     * 	משתנה בוליאני המסמל האם הבלוק הוא של יוצר המשחק(P1).
+     */
     private boolean isP1;
 
+    /**
+     * הפעולה הבונה של המחלקה. בה מתבצעת הבנייה של האובייקטים השונים במשחק, ומופעלת לולאת המשחק.
+     * @param context
+     * @param isMultiplayer
+     * @param isP1
+     * @param windowHeight
+     * @param windowWidth
+     * @param myPlayerSkinImageID
+     * @param scoreHandler
+     */
     public GameView(Context context, boolean isMultiplayer, boolean isP1, int windowHeight, int windowWidth, int myPlayerSkinImageID, GameScreenActivity.ScoreHandler scoreHandler) {
         super(context);
 
@@ -91,6 +135,7 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundBitmap = Bitmap.createScaledBitmap(backgroundBitmap, windowWidth, windowHeight, false);
         gameBackground = new Background(backgroundBitmap, 0, 0, windowWidth, windowHeight);
 
+        Repository.getInstance().setListenerOnBallIsMoving(MultiPlayerGame.getInstance().getGameCode());
         gameTread.start();
         gameOver = false;
     }
@@ -99,12 +144,16 @@ public class GameView extends SurfaceView implements Runnable {
         gameOver = true;
     }
 
+    /**
+     * הפעולה המכילה את לולאת המשחק, בה מתבצעת ציור האובייקטים, תזוזת האובייקטים ובדיקות יציאה מהמסך והבקעת שערים.
+     */
     @Override
     public void run() {
         resetGame();
         new Timer().schedule(new TimerTask() {
             public void run() {
                 giveBallInitialSpeed();
+                MultiPlayerGame.getInstance().setBallIsMoving(true);
                 while (!gameOver) {
                     if (gameBall.checkCollision(myBlock) || gameBall.checkCollision(enemyBlock)) {
                         gameBall.setySpeed(gameBall.getySpeed() * -1);
@@ -134,7 +183,9 @@ public class GameView extends SurfaceView implements Runnable {
                         scoreHandler.sendMessage(goalMessage);
                         try {
 //                            myBlock.setXTarget((float)(myBlock.getWindowWidth() * 0.5) - (myBlock.getBitmap().getWidth() / 2));
+                            MultiPlayerGame.getInstance().setBallIsMoving(false);//מעדכן מתי הכדור בהשהייה
                             Thread.sleep(3000);
+                            MultiPlayerGame.getInstance().setBallIsMoving(true);//מעדכן מתי חזר לזוז
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -149,6 +200,11 @@ public class GameView extends SurfaceView implements Runnable {
 //        finalScoreHandler.sendMessage(finalScoreMessage);
     }
 
+    /**
+     * הפעולה המזהה נגיעות והחלקות על המסך ומעדכנת את ה-X אליו ינוע הבלוק של המשתמש.
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {//כל עוד האצבע על המסך ימשיך לעקוב אחרי האצבע ולזוז אחריה אבל כשמרימים את האצבע הבלוק ייעצר
         myBlock.setXTarget(event.getX());
@@ -161,6 +217,9 @@ public class GameView extends SurfaceView implements Runnable {
         return true;
     }
 
+    /**
+     * הפעולה המציירת את האובייקטים על המסך.
+     */
     private void drawSurface() {
         if (getHolder().getSurface().isValid()) {
             Canvas canvas = getHolder().lockCanvas();
@@ -176,10 +235,13 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void move() {
         myBlock.move();
-        gameBall.move();
+        if(isMultiplayer && MultiPlayerGame.getInstance().isBallIsMoving()){//רוצה שהכדור יזוז במולטיפלייר רק אם בפיירבייס כתוב שהוא זז
+            gameBall.move();
+        }
         if(!isMultiplayer){
             enemyBlock.setxTarget(gameBall.getXPos());
             enemyBlock.move();
+            gameBall.move();//זה היה מחוץ לif כלשהו
         }
     }
 
@@ -187,6 +249,9 @@ public class GameView extends SurfaceView implements Runnable {
         return gameBall.checkWhoScored() == 1 || gameBall.checkWhoScored() == 2;
     }
 
+    /**
+     * הפעולה המאתחלת את מיקומי האובייקטים לאחר הבקעת שער ובתחילת המשחק.
+     */
     public void resetGame() {
         gameBall.setXPos((float) (gameBall.getWindowWidth() * 0.5) - (gameBall.getBitmap().getWidth() / 2));
         gameBall.setYPos((float) (gameBall.getWindowHeight() * 0.5) - (gameBall.getBitmap().getHeight() / 2));

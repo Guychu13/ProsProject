@@ -3,9 +3,15 @@ package com.example.pros.model;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+/**
+ * 	מחלקה זו מייצגת את כדור המשחק.
+ */
 public class Ball extends GameObject {
 
     private int lastPlayerTouched;
+    /**
+     *	מהירות הכדור בציר ה-X וה-Y.
+     */
     private int xSpeed, ySpeed;
 
     public Ball(Bitmap bitmap, int xPos, int yPos, int windowWidth, int windowHeight) {
@@ -39,7 +45,9 @@ public class Ball extends GameObject {
         this.ySpeed = ySpeed;
     }
 
-    //    @Override
+    /**
+     * פעולה זו מבצעת את שינוי שיעורי ה-X וה-Y של הכדור בקוד, מה שגורם לו לנוע בעת ציורו על המסך.
+     */
     public void move() {
 
         checkIfCollisionSideBoarders(windowWidth, windowHeight);
@@ -59,6 +67,11 @@ public class Ball extends GameObject {
         }
     }
 
+    /**
+     * פעולה זו בודקת האם הכדור התנגש עם אובייקט משחק אחר.
+     * @param other
+     * @return
+     */
     public boolean checkCollision(GameObject other) {
         float left = Math.max(xPos, other.getXPos());
         float right = Math.min(xPos + bitmap.getWidth(), other.getXPos() + other.getBitmap().getWidth());
@@ -75,6 +88,11 @@ public class Ball extends GameObject {
         return false;
     }
 
+    /**
+     * פעולה זו מונעת מן הכדור לעבור את גבולות המסך ואחראית על שינוי כיוון תנועתו בעת מפגש עם אחד מגבולות המסך.
+     * @param boardWidth
+     * @param boardHeight
+     */
     public void checkIfCollisionSideBoarders(int boardWidth, int boardHeight) {
 
         if (xPos + bitmap.getWidth() >= boardWidth && xSpeed > 0) {
@@ -88,6 +106,10 @@ public class Ball extends GameObject {
 //        }
     }
 
+    /**
+     * פעולה זו בודקת האם אחד השחקנים הבקיע שער, ואם כן מחזירה את מספר המבקיע.
+     * @return
+     */
     public int checkWhoScored() {
         if (yPos + bitmap.getHeight() >= windowHeight) {
             return 2;
